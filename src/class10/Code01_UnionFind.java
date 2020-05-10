@@ -20,14 +20,15 @@ public class Code01_UnionFind {
 		public HashMap<Node<V>, Integer> sizeMap;
 
 		public UnionSet(List<V> values) {
-			for (V value : values) {
-				Node<V> node = new Node<>(value);
-				nodes.put(value, node);
+			for (V cur : values) {
+				Node<V> node = new Node<>(cur);
+				nodes.put(cur, node);
 				parents.put(node, node);
 				sizeMap.put(node, 1);
 			}
 		}
 
+		// 从点cur开始，一直往上找，找到不能再往上的代表点，返回
 		public Node<V> findFather(Node<V> cur) {
 			Stack<Node<V>> path = new Stack<>();
 			while (cur != parents.get(cur)) {
@@ -57,15 +58,11 @@ public class Code01_UnionFind {
 			if (aHead != bHead) {
 				int aSetSize = sizeMap.get(aHead);
 				int bSetSize = sizeMap.get(bHead);
-				if (aSetSize >= bSetSize) {
-					parents.put(bHead, aHead);
-					sizeMap.put(aHead, aSetSize + bSetSize);
-					sizeMap.remove(bHead);
-				} else {
-					parents.put(aHead, bHead);
-					sizeMap.put(bHead, aSetSize + bSetSize);
-					sizeMap.remove(aHead);
-				}
+				Node<V> big = aSetSize >= bSetSize ? aHead : bHead;
+				Node<V> small = big == aHead ? bHead : aHead;
+				parents.put(small, big);
+				sizeMap.put(big, aSetSize + bSetSize);
+				sizeMap.remove(small);
 			}
 		}
 	}

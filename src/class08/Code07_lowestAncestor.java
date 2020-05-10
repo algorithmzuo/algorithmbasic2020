@@ -20,6 +20,7 @@ public class Code07_lowestAncestor {
 		if (head == null) {
 			return null;
 		}
+		// key的父节点是value
 		HashMap<Node, Node> parentMap = new HashMap<>();
 		parentMap.put(head, null);
 		fillParentMap(head, parentMap);
@@ -52,6 +53,7 @@ public class Code07_lowestAncestor {
 		return process(head, o1, o2).ans;
 	}
 
+	// 任何子树，
 	public static class Info {
 		public Node ans;
 		public boolean findO1;
@@ -64,15 +66,19 @@ public class Code07_lowestAncestor {
 		}
 	}
 
-	public static Info process(Node head, Node o1, Node o2) {
-		if (head == null) {
+	public static Info process(Node X, Node o1, Node o2) {
+		if (X == null) {
 			return new Info(null, false, false);
 		}
-		Info leftInfo = process(head.left, o1, o2);
-		Info rightInfo = process(head.right, o1, o2);
-
-		boolean findO1 = head == o1 || leftInfo.findO1 || rightInfo.findO1;
-		boolean findO2 = head == o2 || leftInfo.findO2 || rightInfo.findO2;
+		Info leftInfo = process(X.left, o1, o2);
+		Info rightInfo = process(X.right, o1, o2);
+		boolean findO1 = X == o1 || leftInfo.findO1 || rightInfo.findO1;
+		boolean findO2 = X == o2 || leftInfo.findO2 || rightInfo.findO2;
+		// 	O1和O2最初的交汇点在哪？
+		// 1) 在左树上已经提前交汇了
+		// 2) 在右树上已经提前交汇了
+		// 3) 没有在左树或者右树上提前交汇，O1  O2 全了
+		// 4) 
 		Node ans = null;
 		if (leftInfo.ans != null) {
 			ans = leftInfo.ans;
@@ -82,7 +88,7 @@ public class Code07_lowestAncestor {
 		}
 		if (ans == null) {
 			if (findO1 && findO2) {
-				ans = head;
+				ans = X;
 			}
 		}
 		return new Info(ans, findO1, findO2);

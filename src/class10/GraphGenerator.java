@@ -7,10 +7,11 @@ public class GraphGenerator {
 	// [weight, from节点上面的值，to节点上面的值]
 	public static Graph createGraph(Integer[][] matrix) {
 		Graph graph = new Graph();
-		for (int i = 0; i < matrix.length; i++) { // matrix[0][0], matrix[0][1]  matrix[0][2]
-			Integer from = matrix[i][0];
-			Integer to = matrix[i][1];
-			Integer weight = matrix[i][2];
+		for (int i = 0; i < matrix.length; i++) { 
+			// matrix[0][0], matrix[0][1]  matrix[0][2]
+			Integer weight = matrix[i][0];
+			Integer from = matrix[i][1];
+			Integer to = matrix[i][2];
 			if (!graph.nodes.containsKey(from)) {
 				graph.nodes.put(from, new Node(from));
 			}

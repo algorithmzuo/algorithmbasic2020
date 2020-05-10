@@ -23,7 +23,14 @@ public class Code01_LowestLexicography {
 		return lowest;
 	}
 
-	public static void process(String[] strs, HashSet<Integer> use, String path, ArrayList<String> all) {
+	// strs里放着所有的字符串
+	// 已经使用过的字符串的下标，在use里登记了，不要再使用了
+	// 之前使用过的字符串，拼接成了-> path
+	// 用all收集所有可能的拼接结果
+	public static void process(String[] strs, 
+			HashSet<Integer> use, 
+			String path, 
+			ArrayList<String> all) {
 		if (use.size() == strs.length) {
 			all.add(path);
 		} else {

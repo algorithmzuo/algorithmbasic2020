@@ -56,6 +56,7 @@ public class Code05_MaxSubBSTHead {
 		return process(head).maxSubBSTHead;
 	}
 
+	// 每一棵子树
 	public static class Info {
 		public Node maxSubBSTHead;
 		public int maxSubBSTSize;
@@ -70,14 +71,14 @@ public class Code05_MaxSubBSTHead {
 		}
 	}
 
-	public static Info process(Node head) {
-		if (head == null) {
+	public static Info process(Node X) {
+		if (X == null) {
 			return null;
 		}
-		Info leftInfo = process(head.left);
-		Info rightInfo = process(head.right);
-		int min = head.value;
-		int max = head.value;
+		Info leftInfo = process(X.left);
+		Info rightInfo = process(X.right);
+		int min = X.value;
+		int max = X.value;
 		Node maxSubBSTHead = null;
 		int maxSubBSTSize = 0;
 		if (leftInfo != null) {
@@ -94,9 +95,9 @@ public class Code05_MaxSubBSTHead {
 				maxSubBSTSize = rightInfo.maxSubBSTSize;
 			}
 		}
-		if ((leftInfo == null ? true : (leftInfo.maxSubBSTHead == head.left && leftInfo.max < head.value))
-				&& (rightInfo == null ? true : (rightInfo.maxSubBSTHead == head.right && rightInfo.min > head.value))) {
-			maxSubBSTHead = head;
+		if ((leftInfo == null ? true : (leftInfo.maxSubBSTHead == X.left && leftInfo.max < X.value))
+				&& (rightInfo == null ? true : (rightInfo.maxSubBSTHead == X.right && rightInfo.min > X.value))) {
+			maxSubBSTHead = X;
 			maxSubBSTSize = (leftInfo == null ? 0 : leftInfo.maxSubBSTSize)
 					+ (rightInfo == null ? 0 : rightInfo.maxSubBSTSize) + 1;
 		}

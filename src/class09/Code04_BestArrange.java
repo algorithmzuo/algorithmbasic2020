@@ -22,11 +22,19 @@ public class Code04_BestArrange {
 		return process(programs, 0, 0);
 	}
 
+	// 还剩什么会议都放在programs里
+	// done 之前已经安排了多少会议，数量
+	// timeLine目前来到的时间点是什么
+	
+	// 目前来到timeLine的时间点，已经安排了done多的会议，剩下的会议programs可以自由安排
+	// 返回能安排的最多会议数量
 	public static int process(Program[] programs, int done, int timeLine) {
 		if (programs.length == 0) {
 			return done;
 		}
+		// 还有会议可以选择
 		int max = done;
+		// 当前安排的会议是什么会，每一个都枚举
 		for (int i = 0; i < programs.length; i++) {
 			if (programs[i].start >= timeLine) {
 				Program[] next = copyButExcept(programs, i);

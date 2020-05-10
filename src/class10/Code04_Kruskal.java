@@ -1,58 +1,16 @@
 package class10;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
 
 //undirected graph only
 public class Code04_Kruskal {
-	
-	public static class MySets{
-		public HashMap<Node, List<Node>>  setMap;
-		public MySets(List<Node> nodes) {
-			for(Node cur : nodes) {
-				List<Node> set = new ArrayList<Node>();
-				set.add(cur);
-				setMap.put(cur, set);
-			}
-		}
-		
-		
-		public boolean isSameSet(Node from, Node to) {
-			List<Node> fromSet  = setMap.get(from);
-			List<Node> toSet = setMap.get(to);
-			return fromSet == toSet;
-		}
-		
-		
-		public void union(Node from, Node to) {
-			List<Node> fromSet  = setMap.get(from);
-			List<Node> toSet = setMap.get(to);
-			for(Node toNode : toSet) {
-				fromSet.add(toNode);
-				setMap.put(toNode, fromSet);
-			}
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// Union-Find Set
 	public static class UnionFind {
 		// key 某一个节点， value key节点往上的节点
