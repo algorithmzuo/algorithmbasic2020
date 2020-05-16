@@ -6,21 +6,32 @@ public class Code08_CardsInLine {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
-		return Math.max(f(arr, 0, arr.length - 1), s(arr, 0, arr.length - 1));
+		return Math.max(
+				f(arr, 0, arr.length - 1),
+				s(arr, 0, arr.length - 1)
+				);
 	}
 
-	public static int f(int[] arr, int i, int j) {
-		if (i == j) {
-			return arr[i];
+	public static int f(int[] arr, int L, int R) {
+		if (L == R) {
+			return arr[L];
 		}
-		return Math.max(arr[i] + s(arr, i + 1, j), arr[j] + s(arr, i, j - 1));
+		
+		return Math.max(
+				arr[L] + s(arr, L + 1, R),
+				arr[R] + s(arr, L, R - 1)
+				);
 	}
 
+	// i..j
 	public static int s(int[] arr, int i, int j) {
 		if (i == j) {
 			return 0;
 		}
-		return Math.min(f(arr, i + 1, j), f(arr, i, j - 1));
+		return Math.min(
+				f(arr, i + 1, j), // arr[i]
+				f(arr, i, j - 1)  // arr[j]
+				);
 	}
 
 	public static int win2(int[] arr) {
@@ -40,9 +51,11 @@ public class Code08_CardsInLine {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 1, 9, 1 };
-		System.out.println(win1(arr));
-		System.out.println(win2(arr));
+		int[] arr = { 4,7,9,5 };
+		// A 4 9
+		// B 7 5
+		System.out.println(f(arr,0,3));
+		System.out.println(s(arr,0,3));
 
 	}
 

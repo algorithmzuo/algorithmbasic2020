@@ -9,6 +9,7 @@ public class Code06_ConvertToLetterString {
 		return process(str.toCharArray(), 0);
 	}
 
+	// str[0...i-1]已经转化完了，固定了
 	// i之前的位置，如何转化已经做过决定了, 不用再关心
 	// i... 有多少种转化的结果
 	public static int process(char[] str, int i) {
@@ -19,6 +20,8 @@ public class Code06_ConvertToLetterString {
 		if (str[i] == '0') {
 			return 0;
 		}
+		
+		// i没有到终止位置
 		// str[i]字符不是‘0’
 		if (str[i] == '1') {
 			int res = process(str, i + 1); // i自己作为单独的部分，后续有多少种方法

@@ -6,7 +6,11 @@ public class Code07_Knapsack {
 		return process(w, v, 0, 0, bag);
 	}
 
+	// 不变 ： w[]  v[]  bag
 	// index... 最大价值
+	// 0..index-1上做了货物的选择，使得你已经达到的重量是多少alreadyW
+	// 如果返回-1，认为没有方案
+	// 如果不返回-1，认为返回的值是真实价值
 	public static int process(int[] w, int[] v, int index, int alreadyW, int bag) {
 		if (alreadyW > bag) {
 			return -1;
@@ -30,11 +34,11 @@ public class Code07_Knapsack {
 	}
 
 	// 只剩下rest的空间了，
-	// index...货物自由选择，但是不要超过rest的空间
-	// 返回能够获得的最大价值
+	// index...货物自由选择，但是剩余空间不要小于0
+	// 返回 index...货物能够获得的最大价值
 	public static int process(int[] w, int[] v, int index, int rest) {
-		if (rest <= 0) { // base case 1
-			return 0;
+		if (rest < 0) { // base case 1
+			return -1;
 		}
 		// rest >=0
 		if (index == w.length) { // base case 2
@@ -42,9 +46,10 @@ public class Code07_Knapsack {
 		}
 		// 有货也有空间
 		int p1 = process(w, v, index + 1, rest);
-		int p2 = Integer.MIN_VALUE;
-		if (rest >= w[index]) {
-			p2 = v[index] + process(w, v, index + 1, rest - w[index]);
+		int p2 = -1;
+		int p2Next = process(w, v, index + 1, rest - w[index]);
+		if(p2Next!=-1) {
+			p2 = v[index] + p2Next;
 		}
 		return Math.max(p1, p2);
 	}

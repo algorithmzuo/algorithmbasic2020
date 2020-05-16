@@ -14,6 +14,10 @@ public class Code02_PrintAllSubsquences {
 		return ans;
 	}
 
+	// str固定，不变
+	// index此时来到的位置, 要  or 不要
+	// 如果index来到了str中的终止位置，把沿途路径所形成的答案，放入ans中
+	// 之前做出的选择，就是path
 	public static void process1(char[] str, int index, List<String> ans, String path) {
 		if (index == str.length) {
 			ans.add(path);
@@ -37,7 +41,9 @@ public class Code02_PrintAllSubsquences {
 		return ans;
 	}
 
-	public static void process2(char[] str, int index, HashSet<String> set, String path) {
+	// str  index  set
+	public static void process2(char[] str, int index,
+			HashSet<String> set, String path) {
 		if (index == str.length) {
 			set.add(path);
 			return;

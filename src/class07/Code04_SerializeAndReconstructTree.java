@@ -101,6 +101,7 @@ public class Code04_SerializeAndReconstructTree {
 		if (poslist == null || poslist.size() == 0) {
 			return null;
 		}
+		// 左右中  ->  stack(中右左)
 		Stack<String> stack = new Stack<>();
 		while (!poslist.isEmpty()) {
 			stack.push(poslist.poll());
