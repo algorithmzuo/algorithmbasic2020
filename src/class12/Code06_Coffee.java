@@ -93,18 +93,58 @@ public class Code06_Coffee {
 	}
 
 	// 方法二，洗咖啡杯的方式和原来一样，只是这个暴力版本减少了一个可变参数
+
+	// process(drinks, 3, 10, 0,0)
+	// a 洗一杯的时间 固定变量
+	// b 自己挥发干净的时间 固定变量
+	// drinks 每一个员工喝完的时间 固定变量
+	// drinks[0..index-1]都已经干净了，不用你操心了
+	// drinks[index...]都想变干净，这是我操心的，washLine表示洗的机器何时可用
+	// drinks[index...]变干净，最少的时间点返回
 	public static int process(int[] drinks, int a, int b, int index, int washLine) {
 		if (index == drinks.length - 1) {
 			return Math.min(Math.max(washLine, drinks[index]) + a, drinks[index] + b);
 		}
+		// 剩不止一杯咖啡
 		// wash是我当前的咖啡杯，洗完的时间
-		int wash = Math.max(washLine, drinks[index]) + a;
+		int wash = Math.max(washLine, drinks[index]) + a;// 洗，index一杯，结束的时间点
+		// index+1...变干净的最早时间
 		int next1 = process(drinks, a, b, index + 1, wash);
+		// index....
 		int p1 = Math.max(wash, next1);
-		int dry = drinks[index] + b;
+		int dry = drinks[index] + b; // 挥发，index一杯，结束的时间点
 		int next2 = process(drinks, a, b, index + 1, washLine);
 		int p2 = Math.max(dry, next2);
 		return Math.min(p1, p2);
+	}
+
+	public static int dp(int[] drinks, int a, int b) {
+		if (a >= b) {
+			return drinks[drinks.length - 1] + b;
+		}
+		// a < b
+		int N = drinks.length;
+		int limit = 0; // 咖啡机什么时候可用
+		for (int i = 0; i < N; i++) {
+			limit = Math.max(limit, drinks[i]) + a;
+		}
+		int[][] dp = new int[N][limit + 1];
+		// N-1行，所有的值
+		for (int washLine = 0; washLine <= limit; washLine++) {
+			dp[N - 1][washLine] = Math.min(Math.max(washLine, drinks[N - 1]) + a, drinks[N - 1] + b);
+		}
+		for(int index = N - 2; index >=0;index--) {
+			for(int washLine = 0; washLine <= limit; washLine++) {
+				int p1 = Integer.MAX_VALUE;
+				int wash = Math.max(washLine, drinks[index]) + a;
+				if(wash <= limit) {
+					p1 = Math.max(wash, dp[index+1][wash]);
+				}
+				int p2 = Math.max(drinks[index] + b, dp[index + 1][washLine]);
+				dp[index][washLine] = Math.min(p1, p2);
+			}
+		}
+		return dp[0][0];
 	}
 
 	// 方法三：最终版本，把方法二洗咖啡杯的暴力尝试进一步优化成动态规划
@@ -156,27 +196,40 @@ public class Code06_Coffee {
 	}
 
 	public static void main(String[] args) {
+		int[] arr = {1,1,5,5,7,10,12,12,12,12,12,12,15};
+		int a = 3;
+		int b = 10;
+		System.out.println(process(arr, a, b, 0, 0));
+		System.out.println(dp(arr, a, b));
+		
+		
+		
+		
+		
+		
+		
+		
 		int len = 5;
 		int max = 9;
 		int testTime = 50000;
-		for (int i = 0; i < testTime; i++) {
-			int[] arr = randomArray(len, max);
-			int n = (int) (Math.random() * 5) + 1;
-			int a = (int) (Math.random() * 5) + 1;
-			int b = (int) (Math.random() * 10) + 1;
-			int ans1 = minTime1(arr, n, a, b);
-			int ans2 = minTime2(arr, n, a, b);
-			int ans3 = minTime3(arr, n, a, b);
-			if (ans1 != ans2 || ans2 != ans3) {
-				printArray(arr);
-				System.out.println("n : " + n);
-				System.out.println("a : " + a);
-				System.out.println("b : " + b);
-				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
-				System.out.println("===============");
-				break;
-			}
-		}
+//		for (int i = 0; i < testTime; i++) {
+//			int[] arr = randomArray(len, max);
+//			int n = (int) (Math.random() * 5) + 1;
+//			int a = (int) (Math.random() * 5) + 1;
+//			int b = (int) (Math.random() * 10) + 1;
+//			int ans1 = minTime1(arr, n, a, b);
+//			int ans2 = minTime2(arr, n, a, b);
+//			int ans3 = minTime3(arr, n, a, b);
+//			if (ans1 != ans2 || ans2 != ans3) {
+//				printArray(arr);
+//				System.out.println("n : " + n);
+//				System.out.println("a : " + a);
+//				System.out.println("b : " + b);
+//				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
+//				System.out.println("===============");
+//				break;
+//			}
+//		}
 
 	}
 

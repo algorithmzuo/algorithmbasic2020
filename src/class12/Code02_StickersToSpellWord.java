@@ -6,15 +6,17 @@ import java.util.HashMap;
 public class Code02_StickersToSpellWord {
 
 	public static int minStickers1(String[] stickers, String target) {
+		
 		int n = stickers.length;
-		int[][] map = new int[n][26];
-		HashMap<String, Integer> dp = new HashMap<>();
+		
+		int[][] map = new int[n][26];// stickers -> [26] [26] [26]
 		for (int i = 0; i < n; i++) {
 			char[] str = stickers[i].toCharArray();
 			for (char c : str) {
 				map[i][c - 'a']++;
 			}
 		}
+		HashMap<String, Integer> dp = new HashMap<>();
 		dp.put("", 0);
 		return process1(dp, map, target);
 	}
@@ -22,37 +24,46 @@ public class Code02_StickersToSpellWord {
 	// dp 傻缓存，如果t已经算过了，直接返回dp中的值
 	// t 剩余的目标
 	// 0..N每一个字符串所含字符的词频统计
-	public static int process1(HashMap<String, Integer> dp, int[][] map, String t) {
-		if (dp.containsKey(t)) {
-			return dp.get(t);
+	// 返回值是-1，map 中的贴纸  怎么都无法rest
+	public static int process1(
+			HashMap<String, Integer> dp,
+			int[][] map, 
+			String rest) {
+		if (dp.containsKey(rest)) {
+			return dp.get(rest);
 		}
-		int ans = Integer.MAX_VALUE;
-		int n = map.length;
-		int[] tmap = new int[26];
-		char[] target = t.toCharArray();
+		// 以下就是正式的递归调用过程
+		int ans = Integer.MAX_VALUE; // ans -> 搞定rest，使用的最少的贴纸数量 
+		int n = map.length; // N种贴纸
+		int[] tmap = new int[26]; // tmap 去替代 rest
+		char[] target = rest.toCharArray();
 		for (char c : target) {
 			tmap[c - 'a']++;
 		}
 		for (int i = 0; i < n; i++) {
+			// 枚举当前第一张贴纸是谁？
 			if (map[i][target[0] - 'a'] == 0) {
 				continue;
 			}
 			StringBuilder sb = new StringBuilder();
-			for (int j = 0; j < 26; j++) {
+			// i 贴纸， j 枚举a~z字符
+			for (int j = 0; j < 26; j++) { // 
 				if (tmap[j] > 0) { // j这个字符是target需要的
 					for (int k = 0; k < Math.max(0, tmap[j] - map[i][j]); k++) {
 						sb.append((char) ('a' + j));
 					}
 				}
 			}
+			// sb ->  i
 			String s = sb.toString();
 			int tmp = process1(dp, map, s);
 			if (tmp != -1) {
 				ans = Math.min(ans, 1 + tmp);
 			}
 		}
-		dp.put(t, ans == Integer.MAX_VALUE ? -1 : ans);
-		return dp.get(t);
+		// ans 系统最大  rest
+		dp.put(rest, ans == Integer.MAX_VALUE ? -1 : ans);
+		return dp.get(rest);
 	}
 
 	public static int minStickers2(String[] stickers, String target) {
@@ -127,6 +138,15 @@ public class Code02_StickersToSpellWord {
 		int ans = min == Integer.MAX_VALUE ? -1 : min;
 		dp.put(key, ans);
 		return ans;
+	}
+	
+	public static void main(String[] args) {
+		String[] arr = {"aaaa","bbaa","ccddd"};
+		String str = "abcccccdddddbbbaaaaa";
+		System.out.println(minStickers1(arr, str));
+		System.out.println(minStickers2(arr, str));
+		
+		
 	}
 
 }
