@@ -1,7 +1,5 @@
 package class12;
 
-import java.util.HashMap;
-
 public class Code09_CoinsWay {
 
 	// arr中都是正数且无重复值，返回组成aim的方法数

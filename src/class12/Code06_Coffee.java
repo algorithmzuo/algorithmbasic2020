@@ -133,12 +133,12 @@ public class Code06_Coffee {
 		for (int washLine = 0; washLine <= limit; washLine++) {
 			dp[N - 1][washLine] = Math.min(Math.max(washLine, drinks[N - 1]) + a, drinks[N - 1] + b);
 		}
-		for(int index = N - 2; index >=0;index--) {
-			for(int washLine = 0; washLine <= limit; washLine++) {
+		for (int index = N - 2; index >= 0; index--) {
+			for (int washLine = 0; washLine <= limit; washLine++) {
 				int p1 = Integer.MAX_VALUE;
 				int wash = Math.max(washLine, drinks[index]) + a;
-				if(wash <= limit) {
-					p1 = Math.max(wash, dp[index+1][wash]);
+				if (wash <= limit) {
+					p1 = Math.max(wash, dp[index + 1][wash]);
 				}
 				int p2 = Math.max(drinks[index] + b, dp[index + 1][washLine]);
 				dp[index][washLine] = Math.min(p1, p2);
@@ -196,40 +196,33 @@ public class Code06_Coffee {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = {1,1,5,5,7,10,12,12,12,12,12,12,15};
-		int a = 3;
-		int b = 10;
-		System.out.println(process(arr, a, b, 0, 0));
-		System.out.println(dp(arr, a, b));
-		
-		
-		
-		
-		
-		
-		
-		
+		int[] test = { 1, 1, 5, 5, 7, 10, 12, 12, 12, 12, 12, 12, 15 };
+		int a1 = 3;
+		int b1 = 10;
+		System.out.println(process(test, a1, b1, 0, 0));
+		System.out.println(dp(test, a1, b1));
+
 		int len = 5;
 		int max = 9;
 		int testTime = 50000;
-//		for (int i = 0; i < testTime; i++) {
-//			int[] arr = randomArray(len, max);
-//			int n = (int) (Math.random() * 5) + 1;
-//			int a = (int) (Math.random() * 5) + 1;
-//			int b = (int) (Math.random() * 10) + 1;
-//			int ans1 = minTime1(arr, n, a, b);
-//			int ans2 = minTime2(arr, n, a, b);
-//			int ans3 = minTime3(arr, n, a, b);
-//			if (ans1 != ans2 || ans2 != ans3) {
-//				printArray(arr);
-//				System.out.println("n : " + n);
-//				System.out.println("a : " + a);
-//				System.out.println("b : " + b);
-//				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
-//				System.out.println("===============");
-//				break;
-//			}
-//		}
+		for (int i = 0; i < testTime; i++) {
+			int[] arr = randomArray(len, max);
+			int n = (int) (Math.random() * 5) + 1;
+			int a = (int) (Math.random() * 5) + 1;
+			int b = (int) (Math.random() * 10) + 1;
+			int ans1 = minTime1(arr, n, a, b);
+			int ans2 = minTime2(arr, n, a, b);
+			int ans3 = minTime3(arr, n, a, b);
+			if (ans1 != ans2 || ans2 != ans3) {
+				printArray(arr);
+				System.out.println("n : " + n);
+				System.out.println("a : " + a);
+				System.out.println("b : " + b);
+				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
+				System.out.println("===============");
+				break;
+			}
+		}
 
 	}
 
