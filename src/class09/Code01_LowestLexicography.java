@@ -27,10 +27,7 @@ public class Code01_LowestLexicography {
 	// 已经使用过的字符串的下标，在use里登记了，不要再使用了
 	// 之前使用过的字符串，拼接成了-> path
 	// 用all收集所有可能的拼接结果
-	public static void process(String[] strs, 
-			HashSet<Integer> use, 
-			String path, 
-			ArrayList<String> all) {
+	public static void process(String[] strs, HashSet<Integer> use, String path, ArrayList<String> all) {
 		if (use.size() == strs.length) {
 			all.add(path);
 		} else {
@@ -68,7 +65,7 @@ public class Code01_LowestLexicography {
 		char[] ans = new char[(int) (Math.random() * strLen) + 1];
 		for (int i = 0; i < ans.length; i++) {
 			int value = (int) (Math.random() * 5);
-			ans[i] = (char) (97 + value);
+			ans[i] = (Math.random() <= 0.5) ? (char) (65 + value) : (char) (97 + value);
 		}
 		return String.valueOf(ans);
 	}
@@ -95,10 +92,21 @@ public class Code01_LowestLexicography {
 		int arrLen = 6;
 		int strLen = 5;
 		int testTimes = 100000;
+		String[] arr = generateRandomStringArray(arrLen, strLen);
+		System.out.println("先打印一个生成的字符串");
+		for (String str : arr) {
+			System.out.print(str + ",");
+		}
+		System.out.println();
+		System.out.println("test begin");
 		for (int i = 0; i < testTimes; i++) {
 			String[] arr1 = generateRandomStringArray(arrLen, strLen);
 			String[] arr2 = copyStringArray(arr1);
 			if (!lowestString1(arr1).equals(lowestString2(arr2))) {
+				for (String str : arr1) {
+					System.out.print(str + ",");
+				}
+				System.out.println();
 				System.out.println("Oops!");
 			}
 		}
