@@ -23,14 +23,19 @@ public class Code09_MaxHappy {
 		return process1(boss, false);
 	}
 
+	// 当前来到的节点叫cur，
+	// up表示cur的上级是否来，
+	// 该函数含义：
+	// 如果up为true，表示在cur上级已经确定来，的情况下，cur整棵树能够提供最大的快乐值是多少？
+	// 如果up为false，表示在cur上级已经确定不来，的情况下，cur整棵树能够提供最大的快乐值是多少？
 	public static int process1(Employee cur, boolean up) {
-		if (up) {
+		if (up) { // 如果cur的上级来的话，cur没得选，只能不来
 			int ans = 0;
 			for (Employee next : cur.nexts) {
 				ans += process1(next, false);
 			}
 			return ans;
-		} else {
+		} else { // 如果cur的上级不来的话，cur可以选，可以来也可以不来
 			int p1 = cur.happy;
 			int p2 = 0;
 			for (Employee next : cur.nexts) {
