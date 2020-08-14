@@ -1,6 +1,7 @@
 package class02;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Code01_ReverseList {
 
@@ -87,6 +88,7 @@ public class Code01_ReverseList {
 		return list.get(N - 1);
 	}
 
+	// for test
 	public static Node generateRandomLinkedList(int len, int value) {
 		int size = (int) (Math.random() * (len + 1));
 		if (size == 0) {
@@ -104,6 +106,7 @@ public class Code01_ReverseList {
 		return head;
 	}
 
+	// for test
 	public static DoubleNode generateRandomDoubleList(int len, int value) {
 		int size = (int) (Math.random() * (len + 1));
 		if (size == 0) {
@@ -122,76 +125,93 @@ public class Code01_ReverseList {
 		return head;
 	}
 
-	// 要求无环，有环别用这个函数
-	public static boolean checkLinkedListEqual(Node head1, Node head2) {
-		while (head1 != null && head2 != null) {
-			if (head1.value != head2.value) {
-				return false;
-			}
-			head1 = head1.next;
-			head2 = head2.next;
+	// for test
+	public static List<Integer> getLinkedListOriginOrder(Node head) {
+		List<Integer> ans = new ArrayList<>();
+		while (head != null) {
+			ans.add(head.value);
+			head = head.next;
 		}
-		return head1 == null && head2 == null;
+		return ans;
 	}
 
-	// 要求无环，有环别用这个函数
-	public static boolean checkDoubleListEqual(DoubleNode head1, DoubleNode head2) {
-		boolean null1 = head1 == null;
-		boolean null2 = head2 == null;
-		if (null1 && null2) {
-			return true;
-		}
-		if (null1 ^ null2) {
-			return false;
-		}
-		if (head1.last != null || head2.last != null) {
-			return false;
-		}
-		DoubleNode end1 = null;
-		DoubleNode end2 = null;
-		while (head1 != null && head2 != null) {
-			if (head1.value != head2.value) {
+	// for test
+	public static boolean checkLinkedListReverse(List<Integer> origin, Node head) {
+		for (int i = origin.size() - 1; i >= 0; i--) {
+			if (!origin.get(i).equals(head.value)) {
 				return false;
 			}
-			end1 = head1;
-			end2 = head2;
-			head1 = head1.next;
-			head2 = head2.next;
+			head = head.next;
 		}
-		if (head1 != null || head2 != null) {
-			return false;
-		}
-		while (end1 != null && end2 != null) {
-			if (end1.value != end2.value) {
-				return false;
-			}
-			end1 = end1.last;
-			end2 = end2.last;
-		}
-		return end1 == null && end2 == null;
+		return true;
 	}
 
+	// for test
+	public static List<Integer> getDoubleListOriginOrder(DoubleNode head) {
+		List<Integer> ans = new ArrayList<>();
+		while (head != null) {
+			ans.add(head.value);
+			head = head.next;
+		}
+		return ans;
+	}
+
+	// for test
+	public static boolean checkDoubleListReverse(List<Integer> origin, DoubleNode head) {
+		DoubleNode end = null;
+		for (int i = origin.size() - 1; i >= 0; i--) {
+			if (!origin.get(i).equals(head.value)) {
+				return false;
+			}
+			end = head;
+			head = head.next;
+		}
+		for (int i = 0; i < origin.size(); i++) {
+			if (!origin.get(i).equals(end.value)) {
+				return false;
+			}
+			end = end.last;
+		}
+		return true;
+	}
+
+	// for test
 	public static void main(String[] args) {
 		int len = 50;
 		int value = 100;
 		int testTime = 100000;
+		System.out.println("test begin!");
 		for (int i = 0; i < testTime; i++) {
 			Node node1 = generateRandomLinkedList(len, value);
-			Node reverse1 = reverseLinkedList(node1);
-			Node back1 = testReverseLinkedList(reverse1);
-			if (!checkLinkedListEqual(node1, back1)) {
-				System.out.println("oops!");
-				break;
+			List<Integer> list1 = getLinkedListOriginOrder(node1);
+			node1 = reverseLinkedList(node1);
+			if (!checkLinkedListReverse(list1, node1)) {
+				System.out.println("Oops1!");
 			}
-			DoubleNode node2 = generateRandomDoubleList(len, value);
-			DoubleNode reverse2 = reverseDoubleList(node2);
-			DoubleNode back2 = testReverseDoubleList(reverse2);
-			if (!checkDoubleListEqual(node2, back2)) {
-				System.out.println("oops!");
-				break;
+
+			Node node2 = generateRandomLinkedList(len, value);
+			List<Integer> list2 = getLinkedListOriginOrder(node2);
+			node2 = testReverseLinkedList(node2);
+			if (!checkLinkedListReverse(list2, node2)) {
+				System.out.println("Oops2!");
 			}
+
+			DoubleNode node3 = generateRandomDoubleList(len, value);
+			List<Integer> list3 = getDoubleListOriginOrder(node3);
+			node3 = reverseDoubleList(node3);
+			if (!checkDoubleListReverse(list3, node3)) {
+				System.out.println("Oops3!");
+			}
+
+			DoubleNode node4 = generateRandomDoubleList(len, value);
+			List<Integer> list4 = getDoubleListOriginOrder(node4);
+			node4 = reverseDoubleList(node4);
+			if (!checkDoubleListReverse(list4, node4)) {
+				System.out.println("Oops4!");
+			}
+
 		}
-		System.out.println("finish!");
+		System.out.println("test finish!");
 
 	}
 
