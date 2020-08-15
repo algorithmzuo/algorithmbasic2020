@@ -12,16 +12,15 @@ public class Code02_DeleteGivenValue {
 	}
 
 	public static Node removeValue(Node head, int num) {
+		// head来到第一个不需要删的位置
 		while (head != null) {
 			if (head.value != num) {
 				break;
 			}
 			head = head.next;
 		}
-		// head来到 第一个不需要删的位置
 		Node pre = head;
 		Node cur = head;
-		// 
 		while (cur != null) {
 			if (cur.value == num) {
 				pre.next = cur.next;
