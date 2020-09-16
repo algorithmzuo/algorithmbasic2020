@@ -42,7 +42,7 @@ public class Code04_CopyListWithRandom {
 		// 1 -> 2
 		// 1 -> 1' -> 2
 		while (cur != null) {
-			// cur 老   next 老的下一个
+			// cur 老 next 老的下一个
 			next = cur.next;
 			cur.next = new Node(cur.value);
 			cur.next.next = next;
@@ -54,13 +54,13 @@ public class Code04_CopyListWithRandom {
 		// 1 -> 1' -> 2 -> 2'
 		while (cur != null) {
 			// cur 老
-			// cur.next  新 copy
+			// cur.next 新 copy
 			next = cur.next.next;
 			curCopy = cur.next;
 			curCopy.rand = cur.rand != null ? cur.rand.next : null;
 			cur = next;
 		}
-		// head  head.next
+		// head head.next
 		Node res = head.next;
 		cur = head;
 		// split
@@ -117,11 +117,18 @@ public class Code04_CopyListWithRandom {
 		head.next.next.next.next.rand = null; // 5 -> null
 		head.next.next.next.next.next.rand = head.next.next.next; // 6 -> 4
 
+		System.out.println("原始链表：");
 		printRandLinkedList(head);
+		System.out.println("=========================");
 		res1 = copyListWithRand1(head);
+		System.out.println("方法一的拷贝链表：");
 		printRandLinkedList(res1);
+		System.out.println("=========================");
 		res2 = copyListWithRand2(head);
+		System.out.println("方法二的拷贝链表：");
 		printRandLinkedList(res2);
+		System.out.println("=========================");
+		System.out.println("经历方法二拷贝之后的原始链表：");
 		printRandLinkedList(head);
 		System.out.println("=========================");
 
