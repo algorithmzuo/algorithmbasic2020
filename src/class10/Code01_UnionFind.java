@@ -20,6 +20,9 @@ public class Code01_UnionFind {
 		public HashMap<Node<V>, Integer> sizeMap;
 
 		public UnionSet(List<V> values) {
+			nodes = new HashMap<>();
+			parents = new HashMap<>();
+			sizeMap = new HashMap<>();
 			for (V cur : values) {
 				Node<V> node = new Node<>(cur);
 				nodes.put(cur, node);
