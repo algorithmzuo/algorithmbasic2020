@@ -12,12 +12,8 @@ public class Code04_BSExist {
 		int R = sortedArr.length - 1;
 		int mid = 0;
 		// L..R
-		while (L < R) {
-			// mid = (L+R) / 2;
-			// L 10亿  R 18亿
-			// mid = L + (R - L) / 2
-			// N / 2    N >> 1
-			mid = L + ((R - L) >> 1); // mid = (L + R) / 2
+		while (L < R) { // L..R 至少两个数的时候
+			mid = L + ((R - L) >> 1);
 			if (sortedArr[mid] == num) {
 				return true;
 			} else if (sortedArr[mid] > num) {

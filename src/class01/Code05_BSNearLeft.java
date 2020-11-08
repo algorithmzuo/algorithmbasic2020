@@ -9,7 +9,7 @@ public class Code05_BSNearLeft {
 		int L = 0;
 		int R = arr.length - 1;
 		int index = -1; // 记录最左的对号
-		while (L <= R) {
+		while (L <= R) { // 至少一个数的时候
 			int mid = L + ((R - L) >> 1);
 			if (arr[mid] >= value) {
 				index = mid;

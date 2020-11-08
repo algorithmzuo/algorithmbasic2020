@@ -3,8 +3,17 @@ package class01;
 public class Test {
 	
 	public static void main(String[] args) {
-		int a = 6;
-		int b = 6;
+
+		
+		
+		
+		
+		
+		int a = 16;
+		int b = 603;
+		
+		System.out.println(a);
+		System.out.println(b);
 		
 		
 		a = a ^ b;
@@ -19,6 +28,23 @@ public class Test {
 		
 		
 		int[] arr = {3,1,100};
+		
+		int i = 0;
+		int j = 0;
+		
+		arr[i] = arr[i] ^ arr[j];
+		arr[j] = arr[i] ^ arr[j];
+		arr[i] = arr[i] ^ arr[j];
+		
+		System.out.println(arr[i] + " , " + arr[j]);
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		System.out.println(arr[0]);
 		System.out.println(arr[2]);
