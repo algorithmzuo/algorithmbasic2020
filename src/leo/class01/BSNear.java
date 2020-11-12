@@ -25,8 +25,10 @@ public class BSNear {
         int index = -1;
         int L = 0;
         int R = arr.length - 1;
+        int mid = 0;
         while (L <= R) {
-            int mid = L + ((R - L) >> 1);
+            //mid = (L + R) / 2; 不安全 有溢出的风险
+            mid = L + ((R - L) >> 1);
             if (arr[mid] >= value) {
                 index = mid;
                 R = mid - 1;
@@ -80,7 +82,8 @@ public class BSNear {
         int R = arr.length - 1;
         int mid = 0;
         while (L <= R) {
-            mid = (L + R) >> 1;
+            //mid = (L + R) / 2; 不安全 有溢出的风险
+            mid = L + ((R - L) >> 1);
             if (arr[mid] <= value) {
                 index = mid;
                 L = mid + 1;

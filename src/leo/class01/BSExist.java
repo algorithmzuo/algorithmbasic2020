@@ -30,6 +30,7 @@ public class BSExist {
         int mid = 0;
         while (L < R) {
             //右移一位表示除以2
+            //mid = (L + R) / 2; 不安全 有溢出的风险
             mid = L + ((R - L) >> 1);
             if (arr[mid] == value) {
                 return true;
