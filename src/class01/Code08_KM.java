@@ -22,25 +22,31 @@ public class Code08_KM {
 		return -1;
 	}
 
+	public static HashMap<Integer, Integer> map = new HashMap<>();
+
 	// 请保证arr中，只有一种数出现了K次，其他数都出现了M次
 	public static int onlyKTimes(int[] arr, int k, int m) {
+		if (map.size() == 0) {
+			mapCreater(map);
+		}
 		int[] t = new int[32];
 		// t[0] 0位置的1出现了几个
 		// t[i] i位置的1出现了几个
 		for (int num : arr) {
-			for (int i = 0; i <= 31; i++) {
-				t[i] += (num >> i) & 1;
+			while (num != 0) {
+				int rightOne = num & (-num);
+				t[map.get(rightOne)]++;
+				num ^= rightOne;
 			}
 		}
 		int ans = 0;
 		for (int i = 0; i < 32; i++) {
-			if (t[i] % m == 0) {
-				continue;
-			}
-			if (t[i] % m == k) {
-				ans |= (1 << i);
-			} else {
-				return -1;
+			if (t[i] % m != 0) {
+				if (t[i] % m == k) {
+					ans |= (1 << i);
+				} else {
+					return -1;
+				}
 			}
 		}
 		if (ans == 0) {
@@ -55,6 +61,14 @@ public class Code08_KM {
 			}
 		}
 		return ans;
+	}
+
+	public static void mapCreater(HashMap<Integer, Integer> map) {
+		int value = 1;
+		for (int i = 0; i < 32; i++) {
+			map.put(value, i);
+			value <<= 1;
+		}
 	}
 
 	public static int[] randomArray(int maxKinds, int range, int k, int m) {
@@ -100,8 +114,8 @@ public class Code08_KM {
 	}
 
 	public static void main(String[] args) {
-		int kinds = 4;
-		int range = 200;
+		int kinds = 5;
+		int range = 30;
 		int testTime = 100000;
 		int max = 9;
 		System.out.println("测试开始");
