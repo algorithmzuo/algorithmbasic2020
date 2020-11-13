@@ -1,5 +1,7 @@
 package leo.util;
 
+import org.omg.CORBA.IRObject;
+
 import java.util.Arrays;
 
 /**
@@ -130,14 +132,14 @@ public class ArrayUtil {
         arrName = arrName == null ? "arr" : arrName;
         arrStr.append(" " + arrName + " = [");
         if (arr == null || arr.length <= 0) {
-            System.out.println();
             arrStr.append("]");
+            System.out.println(arrStr);
+            return;
         }
 
         for (int i = 0; i < arr.length; i++) {
-            arrStr.append(" " + arr[i] + ",");
+            arrStr.append(" " + arr[i] + (i==arr.length-1?"":","));
         }
-        arrStr.substring(0, arrStr.length() - 2);
         arrStr.append(" ]");
         System.out.println(arrStr);
     }
@@ -152,6 +154,31 @@ public class ArrayUtil {
     public static void printArr(int[] arr) {
         printArr(arr, null);
 
+    }
+
+    /**
+     * 功能描述 : 随机生成无序数组且任意相邻的数不相等
+     * @author Leo
+     * @date 2020/11/13 11:21 上午
+     * @param maxSize
+     * @param range
+     * @return int[]
+     */
+    public static int[] randomAdjacentNotEqualArray(int maxSize, int range) {
+        int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
+        Integer preNum = null;
+        for (int i = 0; i < arr.length; i++) {
+            int randomNum = (int) ((range + 1) * Math.random() - range  * Math.random());
+
+            if (preNum != null) {
+                while (preNum == randomNum) {
+                    randomNum = (int) ((range + 1) * Math.random() - range  * Math.random());
+                }
+            }
+            preNum = randomNum;
+            arr[i] = randomNum;
+        }
+        return arr;
     }
 
 
