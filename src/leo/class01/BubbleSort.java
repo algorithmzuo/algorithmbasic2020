@@ -47,7 +47,31 @@ public class BubbleSort {
     }
 
 
+    public static void bubbleSort3(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
 
+    public static void bubbleSort4(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
 
     /**
      * 功能描述 : 交换
@@ -72,14 +96,14 @@ public class BubbleSort {
 
 
     public static void main(String[] args){
-        int maxSize = 500;
+        int maxSize = 50;
         int range = 20;
-        int testOfTime = 100000;
+        int testOfTime = 1000;
         boolean succeed = true;
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            bubbleSort2(arr);
+            bubbleSort4(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;

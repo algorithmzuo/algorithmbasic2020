@@ -81,6 +81,20 @@ public class SelectionSort {
         }
     }
 
+    public static void selectionSort5(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = 0; i < arr.length-1; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    swap(arr, i, j);
+                }
+            }
+        }
+    }
+
+
 
     /**
      * 功能描述 : 交换
@@ -107,12 +121,12 @@ public class SelectionSort {
     public static void main(String[] args){
         int maxSize = 100;
         int range = 50;
-        int testOfTime = 100000;
+        int testOfTime = 20;
         boolean succeed = true;
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            selectionSort4(arr);
+            selectionSort5(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;

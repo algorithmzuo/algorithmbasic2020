@@ -4,7 +4,7 @@ package leo.class01;
  * @author Leo
  * @ClassName BSAwesome
  * @DATE 2020/11/12 5:09 下午
- * @Description 在无序数组中,且无序数组任意相邻的数不相等,找到一个局部最小值.>value<
+ * @Description 在无序数组中,且无序数组任意相邻的数不相等,找到一个局部最小值的位置.>value<
  */
 public class BSAwesome {
 
