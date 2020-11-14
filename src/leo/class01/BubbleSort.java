@@ -14,6 +14,7 @@ public class BubbleSort {
 
     /**
      * 功能描述 : 冒泡算法 O(n²)
+     * 将最大的数放到后面
      * @author Leo
      * @date 2020/11/11 10:09 下午
      * @param arr
@@ -60,7 +61,34 @@ public class BubbleSort {
         }
     }
 
-    public static void bubbleSort4(int[] arr) {
+    public static void bubbleSort4(int[] arr)  {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+    public static void bubbleSort5(int[] arr){
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+
+    public static void bubbleSort6(int[] arr) {
         if (arr.length < 2 || arr == null) {
             return;
         }
@@ -103,7 +131,7 @@ public class BubbleSort {
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            bubbleSort4(arr);
+            bubbleSort6(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;

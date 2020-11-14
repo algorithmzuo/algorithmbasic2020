@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class BSExist {
 
     /**
-     * 功能描述 : 二分查找某数是否存在
+     * 功能描述 : 在有序数组中,二分查找某数是否存在
      * @author Leo
      * @date 2020/11/12 10:36 上午
      * @param arr 有序数组
@@ -87,6 +87,28 @@ public class BSExist {
     }
 
 
+    public static boolean exist4(int[] arr, int value) {
+        if (arr.length == 0 || arr == null) {
+            return false;
+        }
+        int L = 0;
+        int R = arr.length - 1;
+        int mid = 0;
+
+        while (L < R) {
+            mid = L + ((R - L) >> 1);
+            if (arr[mid] > value) {
+                R = mid - 1;
+            } else if (arr[mid] < value) {
+                L = mid - 1;
+            }else{
+                return true;
+            }
+        }
+        return arr[L] == value;
+    }
+
+
     /**
      * 功能描述 : test
      * @author Leo
@@ -109,13 +131,13 @@ public class BSExist {
 
         int maxSize = 50;
         int range = 500;
-        int testTime  = 10;
+        int testTime  = 1000;
         boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] sortArr = ArrayUtil.randomSortArray(maxSize, range);
             int value = (int) ((range + 1) * Math.random() - (range + 1) * Math.random());
 
-            if (exist3(sortArr, value) != exist(sortArr, value)) {
+            if (exist4(sortArr, value) != exist(sortArr, value)) {
                 succeed = false;
                 ArrayUtil.printArr(sortArr);
                 break;

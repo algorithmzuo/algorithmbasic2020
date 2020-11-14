@@ -66,6 +66,29 @@ public class InsertionSort {
         }
     }
 
+    public static void insertionSort4(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = i-1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+                swap(arr, j, j+1);
+
+            }
+        }
+    }
+
+
+    public static void insertionSort5(int[] arr){
+        if (arr == null || arr.length < 0) {
+            return;
+        }
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+                swap(arr, j, j + 1);
+            }
+        }
+    }
 
     private static void swap(int[] arr, int i, int j) {
         if (arr == null
@@ -86,12 +109,12 @@ public class InsertionSort {
     public static void main(String[] args){
         int maxSize = 50;
         int range = 80;
-        int testOfTime = 100000;
+        int testOfTime = 1000;
         boolean succeed = true;
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            insertionSort3(arr);
+            insertionSort5(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;
