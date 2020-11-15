@@ -101,6 +101,32 @@ public class BubbleSort {
         }
     }
 
+    public static void bubbleSort7(int[] arr) {
+        if (arr.length == 0 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
+    public static void bubbleSort8(int[] arr) {
+        if (arr.length == 0 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                }
+            }
+        }
+    }
+
     /**
      * 功能描述 : 交换
      * @author Leo
@@ -131,7 +157,7 @@ public class BubbleSort {
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            bubbleSort6(arr);
+            bubbleSort8(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;
