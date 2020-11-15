@@ -2,8 +2,6 @@ package class03;
 
 public class Code01_MergeSort {
 
-
-
 	// 递归方法实现
 	public static void mergeSort1(int[] arr) {
 		if (arr == null || arr.length < 2) {
@@ -12,8 +10,10 @@ public class Code01_MergeSort {
 		process(arr, 0, arr.length - 1);
 	}
 
-	// arr[L...R]范围上，变成有序的
-	// L...R    N    T(N) = 2*T(N/2) + O(N)  ->
+	// 请把arr[L..R]排有序
+	// l...r  N
+	// T(N) = 2 * T(N / 2) + O(N)
+	// O(N * logN)
 	public static void process(int[] arr, int L, int R) {
 		if (L == R) { // base case
 			return;
@@ -50,21 +50,22 @@ public class Code01_MergeSort {
 			return;
 		}
 		int N = arr.length;
-		int mergeSize = 1;// 当前有序的，左组长度
+		// 步长
+		int mergeSize = 1;
 		while (mergeSize < N) { // log N
+			// 当前左组的，第一个位置
 			int L = 0;
-			// 0.... 
 			while (L < N) {
-				// L...M  左组（mergeSize）
 				int M = L + mergeSize - 1;
 				if (M >= N) {
 					break;
 				}
-				//  L...M   M+1...R(mergeSize)
 				int R = Math.min(M + mergeSize, N - 1);
+				// L .... M   M + 1..... R
 				merge(arr, L, M, R);
 				L = R + 1;
 			}
+			// 防止溢出
 			if (mergeSize > N / 2) {
 				break;
 			}
