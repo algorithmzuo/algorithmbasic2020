@@ -24,6 +24,9 @@ public class Code01_ReverseList {
 		}
 	}
 
+	//  head
+	//   a    ->   b    ->  c  ->  null
+	//   c    ->   b    ->  a  ->  null
 	public static Node reverseLinkedList(Node head) {
 		Node pre = null;
 		Node next = null;
