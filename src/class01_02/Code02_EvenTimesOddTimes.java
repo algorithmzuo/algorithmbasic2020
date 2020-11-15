@@ -1,6 +1,6 @@
-package class01;
+package class01_02;
 
-public class Code07_EvenTimesOddTimes {
+public class Code02_EvenTimesOddTimes {
 
 	// arr中，只有一种数，出现奇数次
 	public static void printOddTimesNum1(int[] arr) {

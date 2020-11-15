@@ -1,6 +1,6 @@
-package class01;
+package class01_02;
 
-public class Test {
+public class Code01_Swap {
 	
 	public static void main(String[] args) {
 

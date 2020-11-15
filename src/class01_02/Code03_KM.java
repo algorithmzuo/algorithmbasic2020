@@ -1,9 +1,9 @@
-package class01;
+package class01_02;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Code08_KM {
+public class Code03_KM {
 
 	public static int test(int[] arr, int k, int m) {
 		HashMap<Integer, Integer> map = new HashMap<>();

@@ -1,4 +1,4 @@
-package class03;
+package class03_04;
 
 // 这道题直接在leetcode测评：
 // https://leetcode.com/problems/count-of-range-sum/

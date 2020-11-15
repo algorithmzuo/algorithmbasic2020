@@ -1,60 +1,76 @@
-package class03;
+package class03_04;
 
-public class Code03_ReversePair {
+public class Code01_MergeSort {
 
-	public static int reverPairNumber(int[] arr) {
+	// 递归方法实现
+	public static void mergeSort1(int[] arr) {
 		if (arr == null || arr.length < 2) {
-			return 0;
+			return;
 		}
-		return process(arr, 0, arr.length - 1);
+		process(arr, 0, arr.length - 1);
 	}
 
-	// arr[L..R]既要排好序，也要求逆序对数量返回
-	// 所有merge时，产生的逆序对数量，累加，返回
-	// 左 排序 merge并产生逆序对数量
-	// 右 排序 merge并产生逆序对数量
-	public static int process(int[] arr, int l, int r) {
-		if (l == r) {
-			return 0;
+	// 请把arr[L..R]排有序
+	// l...r  N
+	// T(N) = 2 * T(N / 2) + O(N)
+	// O(N * logN)
+	public static void process(int[] arr, int L, int R) {
+		if (L == R) { // base case
+			return;
 		}
-		// l < r
-		int mid = l + ((r - l) >> 1);
-		return process(arr, l, mid) + process(arr, mid + 1, r) + merge(arr, l, mid, r);
+		int mid = L + ((R - L) >> 1);
+		process(arr, L, mid);
+		process(arr, mid + 1, R);
+		merge(arr, L, mid, R);
 	}
 
-	public static int merge(int[] arr, int L, int m, int r) {
-		int[] help = new int[r - L + 1];
-		int i = help.length - 1;
-		int p1 = m;
-		int p2 = r;
-		int res = 0;
-		while (p1 >= L && p2 > m) {
-			res += arr[p1] > arr[p2] ? (p2 - m) : 0;
-			help[i--] = arr[p1] > arr[p2] ? arr[p1--] : arr[p2--];
+	public static void merge(int[] arr, int L, int M, int R) {
+		int[] help = new int[R - L + 1];
+		int i = 0;
+		int p1 = L;
+		int p2 = M + 1;
+		while (p1 <= M && p2 <= R) {
+			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
 		}
-		while (p1 >= L) {
-			help[i--] = arr[p1--];
+		// 要么p1越界了，要么p2越界了
+		while (p1 <= M) {
+			help[i++] = arr[p1++];
 		}
-		while (p2 > m) {
-			help[i--] = arr[p2--];
+		while (p2 <= R) {
+			help[i++] = arr[p2++];
 		}
 		for (i = 0; i < help.length; i++) {
 			arr[L + i] = help[i];
 		}
-		return res;
 	}
 
-	// for test
-	public static int comparator(int[] arr) {
-		int ans = 0;
-		for (int i = 0; i < arr.length; i++) {
-			for (int j = i + 1; j < arr.length; j++) {
-				if (arr[i] > arr[j]) {
-					ans++;
-				}
-			}
+	// 非递归方法实现
+	public static void mergeSort2(int[] arr) {
+		if (arr == null || arr.length < 2) {
+			return;
 		}
-		return ans;
+		int N = arr.length;
+		// 步长
+		int mergeSize = 1;
+		while (mergeSize < N) { // log N
+			// 当前左组的，第一个位置
+			int L = 0;
+			while (L < N) {
+				int M = L + mergeSize - 1;
+				if (M >= N) {
+					break;
+				}
+				int R = Math.min(M + mergeSize, N - 1);
+				// L .... M   M + 1..... R
+				merge(arr, L, M, R);
+				L = R + 1;
+			}
+			// 防止溢出
+			if (mergeSize > N / 2) {
+				break;
+			}
+			mergeSize <<= 1;
+		}
 	}
 
 	// for test
@@ -113,18 +129,20 @@ public class Code03_ReversePair {
 		int testTime = 500000;
 		int maxSize = 100;
 		int maxValue = 100;
-		System.out.println("测试开始");
+		boolean succeed = true;
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
-			if (reverPairNumber(arr1) != comparator(arr2)) {
-				System.out.println("Oops!");
+			mergeSort1(arr1);
+			mergeSort2(arr2);
+			if (!isEqual(arr1, arr2)) {
+				succeed = false;
 				printArray(arr1);
 				printArray(arr2);
 				break;
 			}
 		}
-		System.out.println("测试结束");
+		System.out.println(succeed ? "Nice!" : "Oops!");
 	}
 
 }

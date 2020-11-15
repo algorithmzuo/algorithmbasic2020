@@ -1,67 +1,35 @@
-package class03;
+package class01_01;
 
-public class Code02_SmallSum {
+import java.util.Arrays;
 
-	public static int smallSum(int[] arr) {
+public class Code02_BubbleSort {
+
+	public static void bubbleSort(int[] arr) {
 		if (arr == null || arr.length < 2) {
-			return 0;
+			return;
 		}
-		return process(arr, 0, arr.length - 1);
+		// 0 ~ N-1
+		// 0 ~ N-2
+		// 0 ~ N-3
+		for (int e = arr.length - 1; e > 0; e--) { // 0 ~ e
+			for (int i = 0; i < e; i++) {
+				if (arr[i] > arr[i + 1]) {
+					swap(arr, i, i + 1);
+				}
+			}
+		}
 	}
 
-	// arr[L..R]既要排好序，也要求小和返回
-	// 所有merge时，产生的小和，累加
-	// 左 排序   merge
-	// 右 排序  merge
-	// merge
-	public static int process(int[] arr, int l, int r) {
-		if (l == r) {
-			return 0;
-		}
-		// l < r
-		int mid = l + ((r - l) >> 1);
-		return 
-				process(arr, l, mid) 
-				+ 
-				process(arr, mid + 1, r) 
-				+ 
-				merge(arr, l, mid, r);
-	}
-
-	public static int merge(int[] arr, int L, int m, int r) {
-		int[] help = new int[r - L + 1];
-		int i = 0;
-		int p1 = L;
-		int p2 = m + 1;
-		int res = 0;
-		while (p1 <= m && p2 <= r) {
-			res += arr[p1] < arr[p2] ? (r - p2 + 1) * arr[p1] : 0;
-			help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
-		}
-		while (p1 <= m) {
-			help[i++] = arr[p1++];
-		}
-		while (p2 <= r) {
-			help[i++] = arr[p2++];
-		}
-		for (i = 0; i < help.length; i++) {
-			arr[L + i] = help[i];
-		}
-		return res;
+	// 交换arr的i和j位置上的值
+	public static void swap(int[] arr, int i, int j) {
+		arr[i] = arr[i] ^ arr[j];
+		arr[j] = arr[i] ^ arr[j];
+		arr[i] = arr[i] ^ arr[j];
 	}
 
 	// for test
-	public static int comparator(int[] arr) {
-		if (arr == null || arr.length < 2) {
-			return 0;
-		}
-		int res = 0;
-		for (int i = 1; i < arr.length; i++) {
-			for (int j = 0; j < i; j++) {
-				res += arr[j] < arr[i] ? arr[j] : 0;
-			}
-		}
-		return res;
+	public static void comparator(int[] arr) {
+		Arrays.sort(arr);
 	}
 
 	// for test
@@ -116,7 +84,7 @@ public class Code02_SmallSum {
 	}
 
 	// for test
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		int testTime = 500000;
 		int maxSize = 100;
 		int maxValue = 100;
@@ -124,14 +92,19 @@ public class Code02_SmallSum {
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
-			if (smallSum(arr1) != comparator(arr2)) {
+			bubbleSort(arr1);
+			comparator(arr2);
+			if (!isEqual(arr1, arr2)) {
 				succeed = false;
-				printArray(arr1);
-				printArray(arr2);
 				break;
 			}
 		}
 		System.out.println(succeed ? "Nice!" : "Fucking fucked!");
+
+		int[] arr = generateRandomArray(maxSize, maxValue);
+		printArray(arr);
+		bubbleSort(arr);
+		printArray(arr);
 	}
 
 }

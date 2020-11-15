@@ -1,4 +1,4 @@
-package class01;
+package class01_01;
 
 public class Code06_BSAwesome {
 

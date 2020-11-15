@@ -1,4 +1,4 @@
-package class03;
+package class03_04;
 
 public class Code04_BiggerThanRightTwice {
 

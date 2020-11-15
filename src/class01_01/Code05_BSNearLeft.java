@@ -1,21 +1,21 @@
-package class01;
+package class01_01;
 
 import java.util.Arrays;
 
-public class Code05_BSNearRight {
+public class Code05_BSNearLeft {
 
-	// 在arr上，找满足<=value的最右位置
+	// 在arr上，找满足>=value的最左位置
 	public static int nearestIndex(int[] arr, int value) {
 		int L = 0;
 		int R = arr.length - 1;
-		int index = -1; // 记录最右的对号
-		while (L <= R) {
+		int index = -1; // 记录最左的对号
+		while (L <= R) { // 至少一个数的时候
 			int mid = L + ((R - L) >> 1);
-			if (arr[mid] <= value) {
+			if (arr[mid] >= value) {
 				index = mid;
-				L = mid + 1;
-			} else {
 				R = mid - 1;
+			} else {
+				L = mid + 1;
 			}
 		}
 		return index;
@@ -23,8 +23,8 @@ public class Code05_BSNearRight {
 
 	// for test
 	public static int test(int[] arr, int value) {
-		for (int i = arr.length - 1; i >= 0; i--) {
-			if (arr[i] <= value) {
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] >= value) {
 				return i;
 			}
 		}
@@ -39,7 +39,7 @@ public class Code05_BSNearRight {
 		}
 		return arr;
 	}
-
+	
 	// for test
 	public static void printArray(int[] arr) {
 		if (arr == null) {

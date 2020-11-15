@@ -1,4 +1,4 @@
-package class02;
+package class02_03;
 
 public class Code04_RingArray {
 
