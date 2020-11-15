@@ -4,8 +4,8 @@ public class Code04_RingArray {
 
 	public static class MyQueue {
 		private int[] arr;
-		private int pushi;
-		private int polli;
+		private int pushi;// end
+		private int polli;// begin
 		private int size;
 		private final int limit;
 
@@ -19,7 +19,7 @@ public class Code04_RingArray {
 
 		public void push(int value) {
 			if (size == limit) {
-				throw new RuntimeException("栈满了，不能再加了");
+				throw new RuntimeException("队列满了，不能再加了");
 			}
 			size++;
 			arr[pushi] = value;
@@ -28,7 +28,7 @@ public class Code04_RingArray {
 
 		public int pop() {
 			if (size == 0) {
-				throw new RuntimeException("栈空了，不能再拿了");
+				throw new RuntimeException("队列空了，不能再拿了");
 			}
 			size--;
 			int ans = arr[polli];
