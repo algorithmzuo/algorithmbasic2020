@@ -52,6 +52,39 @@ public class KM {
     }
 
 
+    public static int onlyKTimes1(int[] arr, int k, int m) {
+        int[] t = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i < t.length; i++) {
+                t[i] += (num >> i) & 1;
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < t.length; i++) {
+            if (t[i] % m != 0) {
+                ans |= 1 << i;
+            }
+        }
+        return ans;
+    }
+
+    public static int onlyKTimes2(int[] arr, int k, int m) {
+        int[] t = new int[32];
+        for(int num:arr){
+            for (int i = 0; i < t.length; i++) {
+                t[i] += (num >> i) & 1;
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < t.length; i++) {
+            if (t[i] % m != 0) {
+                ans |= 1 << i;
+            }
+        }
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         int maxKinds = 8;
         int range = 50;
@@ -66,16 +99,47 @@ public class KM {
             if (k == m) {
                 m++;
             }
-            int[] arr = randomArray(maxKinds, range, k, m);
+            int[] arr = randomArray1(maxKinds, range, k, m);
 
-            int ans = onlyKTimes(arr, k, m);
+            int ans = onlyKTimes2(arr, k, m);
             int ans2 = testForOnlyKTimes(arr, k, m);
             if (ans != ans2) {
+                System.out.println(ans);
+                System.out.println(ans2);
                 System.out.println("出错了!!");
                 break;
             }
         }
         System.out.println("结束");
+    }
+
+
+    private static int[] randomArray1(int maxKinds, int range, int k, int m) {
+        //k
+        int kNumber = randomInt(range);
+        //随机生成共有几种数
+        int kinds = (int) (maxKinds * Math.random() + 1);
+        int arrLength = k + (kinds - 1) * m;
+        int[] arr = new int[arrLength];
+
+        int index = 0;
+        HashSet<Integer> set = new HashSet<>();
+        for (; index < k; index++) {
+            arr[index] = kNumber;
+        }
+        kinds--;
+        set.add(kNumber);
+        while (kinds != 0) {
+            int curNum = 0;
+            do {
+                curNum = randomInt(range);
+            } while (set.contains(curNum));
+            for (int i = 0; i < m; i++) {
+                arr[index++] = curNum;
+            }
+            kinds--;
+        }
+        return arr;
     }
 
     /**
