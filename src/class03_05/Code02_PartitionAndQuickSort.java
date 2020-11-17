@@ -1,6 +1,6 @@
 package class03_05;
 
-public class Code01_PartitionAndQuickSort {
+public class Code02_PartitionAndQuickSort {
 
 	public static void swap(int[] arr, int i, int j) {
 		int tmp = arr[i];

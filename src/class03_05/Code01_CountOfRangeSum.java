@@ -1,8 +1,8 @@
-package class03_04;
+package class03_05;
 
 // 这道题直接在leetcode测评：
 // https://leetcode.com/problems/count-of-range-sum/
-public class Code05_CountOfRangeSum {
+public class Code01_CountOfRangeSum {
 
 	public static int countRangeSum(int[] nums, int lower, int upper) {
 		if (nums == null || nums.length == 0) {

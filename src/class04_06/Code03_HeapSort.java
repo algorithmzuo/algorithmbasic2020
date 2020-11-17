@@ -1,9 +1,9 @@
-package class04;
+package class04_06;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-public class Code04_HeapSort {
+public class Code03_HeapSort {
 
 	// 堆排序额外空间复杂度O(1)
 	public static void heapSort(int[] arr) {

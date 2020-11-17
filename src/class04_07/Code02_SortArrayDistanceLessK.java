@@ -1,9 +1,9 @@
-package class04;
+package class04_07;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-public class Code05_SortArrayDistanceLessK {
+public class Code02_SortArrayDistanceLessK {
 
 	public static void sortedArrDistanceLessK(int[] arr, int k) {
 		if (k == 0) {
