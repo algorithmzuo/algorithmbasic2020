@@ -151,6 +151,27 @@ public class BSExist {
         return arr[L] == value;
     }
 
+
+    public static boolean exist7(int[] arr, int value) {
+        if (arr.length == 0 || arr == null) {
+            return false;
+        }
+        int L = 0;
+        int R = arr.length - 1;
+        int mid = 0;
+        while (L < R) {
+            mid = L + ((R - L) >> 1);
+            if (arr[mid] == value) {
+                return true;
+            } else if (arr[mid] > value) {
+                R = mid - 1;
+            } else if (arr[mid] < value) {
+                L = mid + 1;
+            }
+        }
+        return arr[L] == value;
+    }
+
     /**
      * 功能描述 : test
      * @author Leo
@@ -179,7 +200,7 @@ public class BSExist {
             int[] sortArr = ArrayUtil.randomSortArray(maxSize, range);
             int value = (int) ((range + 1) * Math.random() - (range + 1) * Math.random());
 
-            if (exist6(sortArr, value) != exist(sortArr, value)) {
+            if (exist7(sortArr, value) != exist(sortArr, value)) {
                 succeed = false;
                 ArrayUtil.printArr(sortArr);
                 break;

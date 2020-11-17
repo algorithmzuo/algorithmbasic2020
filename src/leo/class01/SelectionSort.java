@@ -162,6 +162,20 @@ public class SelectionSort {
         }
     }
 
+    public static void selectionSort11(int[] arr) {
+        if (arr.length == 0 || arr == null) {
+            return;
+        }
+        for (int i = 0; i < arr.length-1; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    swap(arr, i, j);
+                }
+
+            }
+        }
+    }
+
 
     /**
      * 功能描述 : 交换
@@ -193,7 +207,7 @@ public class SelectionSort {
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            selectionSort10(arr);
+            selectionSort11(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;

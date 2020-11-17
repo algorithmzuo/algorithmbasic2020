@@ -1,5 +1,7 @@
 package leo.class01;
 
+import sun.applet.Main;
+
 /**
  * @author Leo
  * @ClassName EvenTimesOddTimes
@@ -41,6 +43,15 @@ public class EvenTimesOddTimes {
     }
 
     public static void printOdd3(int[] arr) {
+        int eor = 0;
+        for (int i = 0; i < arr.length; i++) {
+            eor ^= arr[i];
+        }
+        System.out.println(eor);
+
+    }
+
+    public static void printOdd4(int[] arr) {
         int eor = 0;
         for (int i = 0; i < arr.length; i++) {
             eor ^= arr[i];
@@ -126,6 +137,29 @@ public class EvenTimesOddTimes {
 
     }
 
+    public static void printOddTwo5(int[] arr) {
+        int eor = 0;
+        for (int i = 0; i < arr.length; i++) {
+            eor ^= arr[i];
+        }
+        int rightOne = eor & (-eor);
+        int eorOther = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if ((rightOne & arr[i]) != 0) {
+                eorOther ^= arr[i];
+            }
+        }
+        System.out.println(eorOther + "  " + (eor ^ eorOther));
+    }
 
+
+    public static void main(String[] args){
+        int[] arrOne = {1, 1, 5, 5, 8, 1, 8, 5, 5};
+
+        printOdd4(arrOne);
+        int[] arrTwo = {1, 1, 9, 5, 5, 8, 1, 8, 9, 5, 5, 5};
+        printOddTwo5(arrTwo);
+
+    }
 
 }
