@@ -189,6 +189,26 @@ public class BSNear {
         return index;
     }
 
+    public static int BSNearLeft9(int[] arr, int value) {
+        if (arr.length == 0 || arr == null) {
+            return -1;
+        }
+        int L = 0;
+        int R = arr.length - 1;
+        int mid = 0;
+        int index = -1;
+        while (L <= R) {
+            mid = L + ((R - L) >> 1);
+            if (arr[mid] >= value) {
+                index = mid;
+                R = mid - 1;
+            } else {
+                L = mid + 1;
+            }
+        }
+        return index;
+    }
+
     /**
      * 功能描述 : 在有序数组中找出>=某个数最左侧的位置(for test)
      * @author Leo
@@ -349,6 +369,28 @@ public class BSNear {
         return index;
     }
 
+    public static int BSNearRight7(int[] arr, int value) {
+        if (arr.length == 0 || arr == null) {
+            return -1;
+        }
+        int L = 0;
+        int R = arr.length - 1;
+        int mid = 0;
+        int index = -1;
+        while (L <= R) {
+            mid = L + ((R - L) >> 1);
+            if (arr[mid] <= value) {
+                index = mid;
+                L = mid + 1;
+            }else{
+                R = mid - 1;
+            }
+
+        }
+        return index;
+    }
+
+
     public static int forTestBSNearRight(int[] arr, int value) {
         int index = -1;
         if (arr == null || arr.length == 0) {
@@ -371,7 +413,7 @@ public class BSNear {
         for (int i = 0; i < testTime; i++) {
             int[] sortArr = randomArray(maxSize, range);
             int value = (int) ((range + 1) * Math.random() - (range + 1) * Math.random());
-            final int res1 = BSNearLeft8(sortArr, value);
+            /*final int res1 = BSNearLeft9(sortArr, value);
             final int res2 = forTestBSNearLeft(sortArr, value);
             if (res1 != res2) {
                 success = false;
@@ -379,8 +421,8 @@ public class BSNear {
                 System.out.println("BSNearLeft=" + res1);
                 System.out.println("forTestBSNearLeft=" + res2);
                 break;
-            }
-            /*final int res3 = BSNearRight6(sortArr, value);
+            }*/
+            final int res3 = BSNearRight7(sortArr, value);
             final int res4 = forTestBSNearRight(sortArr, value);
             if (res3 != res4) {
                 success = false;
@@ -388,7 +430,7 @@ public class BSNear {
                 System.out.println("BSNearRight=" + res3);
                 System.out.println("forTestBSNearRight=" + res4);
                 break;
-            }*/
+            }
         }
         System.out.println(success ? "Nice!!" : "Fucking Fucked!");
     }

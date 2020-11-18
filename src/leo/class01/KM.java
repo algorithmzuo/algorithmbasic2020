@@ -1,5 +1,7 @@
 package leo.class01;
 
+import class01.Code08_KM;
+
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -119,10 +121,44 @@ public class KM {
     }
 
 
+    public static int onlyKTime5(int[] arr, int k, int m) {
+        int[] t = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i < t.length; i++) {
+                t[i] += (num >> i) & 1;
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < t.length; i++) {
+            if (t[i] % m != 0) {
+                if (t[i] % m == k) {
+                    ans |= (1 << i);
+                }else{
+                    return -1;
+                }
+            }
+        }
+
+        if (ans == 0) {
+            int count = 0;
+            for (int num : arr) {
+
+                if (num == 0) {
+                    count++;
+                }
+            }
+            if (count != k) {
+                return -1;
+            }
+        }
+
+        return ans;
+    }
+
     public static void main(String[] args) {
-        int maxKinds = 8;
+        int maxKinds = 20;
         int range = 50;
-        int testTimes = 1000;
+        int testTimes = 10000;
         int max = 9;
         System.out.println("开始");
         for (int i = 0; i < testTimes; i++) {
@@ -133,15 +169,15 @@ public class KM {
             if (k == m) {
                 m++;
             }
-            int[] arr = randomArray2(maxKinds, range, k, m);
+            int[] arr = randomArray(maxKinds, range, k, m);
 
-            int ans = onlyKTime4(arr, k, m);
+            int ans = onlyKTime5(arr, k, m);
             int ans2 = testForOnlyKTimes(arr, k, m);
             if (ans != ans2) {
                 System.out.println(ans);
                 System.out.println(ans2);
                 System.out.println("出错了!!");
-                break;
+//                break;
             }
         }
         System.out.println("结束");
@@ -192,12 +228,12 @@ public class KM {
         int numKinds = (int) (maxKinds * Math.random() + 2);
         //出现k的数
         int kValue = randomInt(range);
+        int Ktime = Math.random() < 0.5 ? k : (int) ((Math.random() * (m - 1)) + 1);
         //arr长度
-        int[] arr = new int[k + (numKinds - 1) * m];
-
+        int[] arr = new int[Ktime + (numKinds - 1) * m];
 
         int index = 0;
-        for (; index < k; index++) {
+        for (; index < Ktime; index++) {
             arr[index] = kValue;
         }
         numKinds--;

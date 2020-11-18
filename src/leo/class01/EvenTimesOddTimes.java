@@ -2,6 +2,8 @@ package leo.class01;
 
 import sun.applet.Main;
 
+import java.nio.ByteOrder;
+
 /**
  * @author Leo
  * @ClassName EvenTimesOddTimes
@@ -55,6 +57,15 @@ public class EvenTimesOddTimes {
         int eor = 0;
         for (int i = 0; i < arr.length; i++) {
             eor ^= arr[i];
+        }
+        System.out.println(eor);
+
+    }
+
+    public static void printOdd5(int[] arr) {
+        int eor = 0;
+        for (int num : arr) {
+            eor ^= num;
         }
         System.out.println(eor);
 
@@ -152,13 +163,28 @@ public class EvenTimesOddTimes {
         System.out.println(eorOther + "  " + (eor ^ eorOther));
     }
 
+    public static void printOddTwo6(int[] arr) {
+        int eor = 0;
+        for (int num : arr) {
+            eor ^= num;
+        }
+        //找出最右侧出现1的位置
+        int rightOne = eor & (-eor);
+        int eorOther = 0;
+        for (int num : arr) {
+            if ((rightOne & num) != 0) {
+                eorOther ^= num;
+            }
+        }
+        System.out.println(eorOther + "  " + (eor ^ eorOther));
+    }
 
     public static void main(String[] args){
         int[] arrOne = {1, 1, 5, 5, 8, 1, 8, 5, 5};
 
-        printOdd4(arrOne);
+        printOdd5(arrOne);
         int[] arrTwo = {1, 1, 9, 5, 5, 8, 1, 8, 9, 5, 5, 5};
-        printOddTwo5(arrTwo);
+        printOddTwo6(arrTwo);
 
     }
 
