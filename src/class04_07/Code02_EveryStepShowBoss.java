@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-public class Code03_EveryStepShowBoss {
+public class Code02_EveryStepShowBoss {
 
 	public static class Customer {
 		public int value;
