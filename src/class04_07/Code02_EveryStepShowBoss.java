@@ -10,12 +10,12 @@ public class Code02_EveryStepShowBoss {
 	public static class Customer {
 		public int value;
 		public int buy;
-		public int order;
+		public int enterTime;
 
 		public Customer(int v, int b, int o) {
 			value = v;
 			buy = b;
-			order = 0;
+			enterTime = 0;
 		}
 	}
 
@@ -23,7 +23,7 @@ public class Code02_EveryStepShowBoss {
 
 		@Override
 		public int compare(Customer o1, Customer o2) {
-			return o1.buy != o2.buy ? (o2.buy - o1.buy) : (o1.order - o2.order);
+			return o1.buy != o2.buy ? (o2.buy - o1.buy) : (o1.enterTime - o2.enterTime);
 		}
 
 	}
@@ -32,7 +32,7 @@ public class Code02_EveryStepShowBoss {
 
 		@Override
 		public int compare(Customer o1, Customer o2) {
-			return o1.buy != o2.buy ? (o1.buy - o2.buy) : (o1.order - o2.order);
+			return o1.buy != o2.buy ? (o1.buy - o2.buy) : (o1.enterTime - o2.enterTime);
 		}
 
 	}
@@ -42,19 +42,15 @@ public class Code02_EveryStepShowBoss {
 		private HeapGreater<Customer> candHeap;
 		private HeapGreater<Customer> daddyHeap;
 		private final int daddyLimit;
-		public int ctime;
-		public int dtime;
 
 		public WhosYourDaddy(int limit) {
 			customers = new HashMap<Integer, Customer>();
 			candHeap = new HeapGreater<>(new CandidateComparator());
 			daddyHeap = new HeapGreater<>(new DaddyComparator());
 			daddyLimit = limit;
-			ctime = 0;
-			dtime = 0;
 		}
 
-		public void operate(int number, boolean buyOrRefund) {
+		public void operate(int time, int number, boolean buyOrRefund) {
 			if (!buyOrRefund && !customers.containsKey(number)) {
 				return;
 			}
@@ -72,10 +68,10 @@ public class Code02_EveryStepShowBoss {
 			}
 			if (!candHeap.contains(c) && !daddyHeap.contains(c)) {
 				if (daddyHeap.size() < daddyLimit) {
-					c.order = dTime++;
+					c.enterTime = time;
 					daddyHeap.push(c);
 				} else {
-					c.order = cTime++;
+					c.enterTime = time;
 					candHeap.push(c);
 				}
 			} else if (candHeap.contains(c)) {
@@ -91,7 +87,7 @@ public class Code02_EveryStepShowBoss {
 					daddyHeap.resign(c);
 				}
 			}
-			daddyMove();
+			daddyMove(time);
 		}
 
 		public List<Integer> getDaddies() {
@@ -103,20 +99,20 @@ public class Code02_EveryStepShowBoss {
 			return ans;
 		}
 
-		private void daddyMove() {
+		private void daddyMove(int time) {
 			if (candHeap.isEmpty()) {
 				return;
 			}
 			if (daddyHeap.size() < daddyLimit) {
 				Customer p = candHeap.pop();
-				p.order = dTime++;
+				p.enterTime = time;
 				daddyHeap.push(p);
 			} else {
 				if (candHeap.peek().buy > daddyHeap.peek().buy) {
 					Customer oldDaddy = daddyHeap.pop();
 					Customer newDaddy = candHeap.pop();
-					oldDaddy.order = cTime++;
-					newDaddy.order = dTime++;
+					oldDaddy.enterTime = time;
+					newDaddy.enterTime = time;
 					daddyHeap.push(newDaddy);
 					candHeap.push(oldDaddy);
 				}
@@ -129,19 +125,14 @@ public class Code02_EveryStepShowBoss {
 		List<List<Integer>> ans = new ArrayList<>();
 		WhosYourDaddy whoDaddies = new WhosYourDaddy(k);
 		for (int i = 0; i < arr.length; i++) {
-			whoDaddies.operate(arr[i], op[i]);
+			whoDaddies.operate(i, arr[i], op[i]);
 			ans.add(whoDaddies.getDaddies());
 		}
 		return ans;
 	}
 
-	public static int cTime = 0;
-	public static int dTime = 0;
-
 	public static List<List<Integer>> compare(int[] arr, boolean[] op, int k) {
 		HashMap<Integer, Customer> map = new HashMap<>();
-		cTime = 0;
-		dTime = 0;
 		ArrayList<Customer> cands = new ArrayList<>();
 		ArrayList<Customer> daddy = new ArrayList<>();
 		List<List<Integer>> ans = new ArrayList<>();
@@ -166,10 +157,10 @@ public class Code02_EveryStepShowBoss {
 			}
 			if (!cands.contains(c) && !daddy.contains(c)) {
 				if (daddy.size() < k) {
-					c.order = dTime++;
+					c.enterTime = i;
 					daddy.add(c);
 				} else {
-					c.order = cTime++;
+					c.enterTime = i;
 					cands.add(c);
 				}
 			}
@@ -177,20 +168,20 @@ public class Code02_EveryStepShowBoss {
 			cleanZeroBuy(daddy);
 			cands.sort(new CandidateComparator());
 			daddy.sort(new DaddyComparator());
-			move(cands, daddy, k);
+			move(cands, daddy, k, i);
 			ans.add(getCurAns(daddy));
 		}
 
 		return ans;
 	}
 
-	public static void move(ArrayList<Customer> cands, ArrayList<Customer> daddy, int k) {
+	public static void move(ArrayList<Customer> cands, ArrayList<Customer> daddy, int k, int time) {
 		if (cands.isEmpty()) {
 			return;
 		}
 		if (daddy.size() < k) {
 			Customer c = cands.get(0);
-			c.order = dTime++;
+			c.enterTime = time;
 			daddy.add(c);
 			cands.remove(0);
 		} else {
@@ -199,8 +190,8 @@ public class Code02_EveryStepShowBoss {
 				daddy.remove(0);
 				Customer newDaddy = cands.get(0);
 				cands.remove(0);
-				newDaddy.order = dTime++;
-				oldDaddy.order = cTime++;
+				newDaddy.enterTime = time;
+				oldDaddy.enterTime = time;
 				daddy.add(newDaddy);
 				cands.add(oldDaddy);
 			}
@@ -274,9 +265,9 @@ public class Code02_EveryStepShowBoss {
 	}
 
 	public static void main(String[] args) {
-		int maxValue = 20;
-		int maxLen = 200;
-		int maxK = 10;
+		int maxValue = 10;
+		int maxLen = 100;
+		int maxK = 6;
 		int testTimes = 100000;
 		System.out.println("测试开始");
 		for (int i = 0; i < testTimes; i++) {
