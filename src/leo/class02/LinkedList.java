@@ -26,7 +26,7 @@ public class LinkedList {
         }
     }
 
-    public class DoubleNode{
+    public static class DoubleNode{
         int value;
         DoubleNode pre;
         DoubleNode next;
@@ -105,6 +105,19 @@ public class LinkedList {
         return pre;
     }
 
+    public static Node reverseNode5(Node head) {
+        Node pre = null;
+        Node next = null;
+        while (head != null) {
+
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
 
     public static DoubleNode reverseDoubleNode(DoubleNode head) {
         DoubleNode pre = null;
@@ -119,6 +132,31 @@ public class LinkedList {
         return pre;
     }
 
+    public static DoubleNode reverseDoubleNode1(DoubleNode head) {
+        DoubleNode pre = null;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.pre = next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
+    public static DoubleNode reverseDoubleNode2(DoubleNode head) {
+        DoubleNode pre = null;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.pre = next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
 
     /**
      * 功能描述 : 随机生成单链表
@@ -146,6 +184,34 @@ public class LinkedList {
 
     }
 
+    /**
+     * 功能描述 : 随机生成双向链表
+     * @author Leo
+     * @date 2020/11/19 10:39 上午
+     * @param sizeMix
+     * @param range
+     * @return leo.class02.LinkedList.DoubleNode
+     */
+    public static DoubleNode randomDoubleNode(int sizeMix, int range) {
+
+        int length = randomInt(sizeMix);
+        if (length == 0) {
+            return null;
+        }
+        DoubleNode head = new DoubleNode(randomInt(range));
+        DoubleNode pre = head;
+        length--;
+        while (length != 0) {
+            DoubleNode cur = new DoubleNode(randomInt(range));
+            pre.next = cur;
+            cur.pre = pre;
+            pre = cur;
+            length--;
+        }
+        return head;
+
+    }
+
     public static int randomInt(int range) {
         return (int) (Math.random() * (range + 1));
     }
@@ -161,7 +227,7 @@ public class LinkedList {
     public static boolean verifyReverseListAndNode(List<Node> nodeList, Node node) {
         Node cur = node;
         for (int i = nodeList.size() - 1; i >= 0; i--) {
-            if (cur==null||cur != nodeList.get(i)) {
+            if (cur == null || !cur.equals(nodeList.get(i))) {
                 return false;
             }
             cur = cur.next;
@@ -186,21 +252,59 @@ public class LinkedList {
         return list;
     }
 
+    /**
+     * 功能描述 : doubleNode转list
+     * @author Leo
+     * @date 2020/11/19 10:42 上午
+     * @param doubleNode
+     * @return java.util.List<leo.class02.LinkedList.DoubleNode>
+     */
+    public static List<DoubleNode> DoubleNodeToList(DoubleNode doubleNode) {
+        List<DoubleNode> list = new ArrayList<>();
+        DoubleNode cur = doubleNode;
+        while (cur != null) {
+            list.add(cur);
+            cur = cur.next;
+        }
+        return list;
+    }
+
+    public static boolean verifyReverseListAndDoubleNode(List<DoubleNode> doubleNodeList, DoubleNode doubleNode) {
+        DoubleNode cur = doubleNode;
+        for (int i = doubleNodeList.size() - 1; i >= 0; i--) {
+            if (cur == null || !cur.equals(doubleNodeList.get(i))) {
+                return false;
+            }
+            cur = cur.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args){
         int maxSize = 40;
         int range = 90;
-        int testTime = 1000;
+        int testTime = 10000;
         System.out.println("测试开始");
         for (int i = 0; i < testTime; i++) {
             Node head = randomNode(maxSize, range);
             List<Node> nodeList = nodeToList(head);
-            Node node = reverseNode4(head);
+            Node node = reverseNode5(head);
             if (!verifyReverseListAndNode(nodeList, node)) {
                 System.out.println("nodeFuck!!");
                 break;
             }
+            DoubleNode doubleNodeHead = randomDoubleNode(maxSize, range);
+            List<DoubleNode> doubleNodeList = DoubleNodeToList(doubleNodeHead);
+            DoubleNode doubleNode = reverseDoubleNode2(doubleNodeHead);
+            if (!verifyReverseListAndDoubleNode(doubleNodeList, doubleNode)) {
+                System.out.println("doubleNodeFuck!!");
+                break;
+            }
         }
         System.out.println("测试结束");
+
+
+
     }
 
 }
