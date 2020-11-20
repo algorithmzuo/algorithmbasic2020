@@ -85,6 +85,26 @@ public class DeleteGivenValue {
 
     }
 
+
+    public static Node removeNodeOfValue2(Node head, int value) {
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        Node cur = head;
+        Node pre = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else{
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
     /**
      * 功能描述 : 双链表删除某个给定值
      * @author Leo
@@ -162,12 +182,40 @@ public class DeleteGivenValue {
         while (cur != null) {
             if (cur.value == value) {
                 pre.next = cur.next;
-                cur.pre = pre;
             }else{
+                cur.pre = pre;
                 pre = cur;
             }
             cur = cur.next;
         }
+        return head;
+    }
+
+    public static DoubleNode removeDoubleNodeOfValue3(DoubleNode head, int value) {
+        while (head != null) {
+            if (head.value != value) {
+                break;
+
+            }
+            head = head.next;
+        }
+        if (head != null && head.pre != null) {
+            head.pre = null;
+        }
+        DoubleNode cur = head;
+        DoubleNode pre = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else{
+                if (cur.pre != pre) {
+                    cur.pre = pre;
+                }
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+
         return head;
     }
 
@@ -277,14 +325,14 @@ public class DeleteGivenValue {
         for (int i = 0; i < testTime; i++) {
             int value = randomInt(range);
             Node nodeHead = randomNode(sizeMax, range);
-            Node node = removeNodeOfValue1(nodeHead, value);
+            Node node = removeNodeOfValue2(nodeHead, value);
 
             if (!verifyRemoveNodeOfValue(node,value)) {
                 System.out.println("node fuck!");
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(sizeMax, range);
-            DoubleNode doubleNode = removeDoubleNodeOfValue2(doubleNodeHead, value);
+            DoubleNode doubleNode = removeDoubleNodeOfValue3(doubleNodeHead, value);
             if (!verifyRemoveDoubleNodeOfValue(doubleNode, value)) {
                 System.out.println("doubleNode fuck");
                 break;
