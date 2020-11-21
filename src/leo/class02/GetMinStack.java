@@ -14,7 +14,7 @@ import java.util.Stack;
 public class GetMinStack {
 
     /**
-     * 只有最小值入栈,最小值只入一次栈
+     * 每个数进数据栈，最小栈只有栈顶要更新才加  省一点点空间
      */
     public static class MyStack1{
 
@@ -49,6 +49,45 @@ public class GetMinStack {
 
 
 
+
+    }
+
+
+    public static class MyStack3{
+
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack3() {
+            data = new Stack<>();
+            min = new Stack<>();
+        }
+
+        public void push(int value) {
+            if (min.isEmpty() || this.getMin() >= value) {
+                min.push(value);
+            }
+            data.push(value);
+        }
+
+        public Integer pop() {
+            if (data.isEmpty()) {
+                throw new RuntimeException("Stack is Empty");
+            }
+            int value = data.pop();
+            if (value == this.getMin()) {
+                min.pop();
+            }
+            return value;
+        }
+
+
+        public Integer getMin() {
+            if (min.isEmpty()) {
+                throw new RuntimeException("stack is empty");
+            }
+            return min.peek();
+        }
 
     }
 
@@ -92,6 +131,45 @@ public class GetMinStack {
 
 
 
+    }
+
+
+    public static class MyStack4{
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack4() {
+            this.data = new Stack<>();
+            this.min = new Stack<>();
+        }
+
+        public void push(int value) {
+            try {
+                if (data.isEmpty() || this.getMin() > value) {
+                    this.min.push(value);
+                } else {
+                    min.push(this.getMin());
+                }
+            } catch (Exception e) {
+                this.min.push(value);
+            }
+            this.data.push(value);
+        }
+
+        public Integer pop() throws Exception {
+            if (data.isEmpty()) {
+                throw new Exception("Stack is Empty!");
+            }
+            this.min.pop();
+            return this.data.pop();
+        }
+
+        public int getMin() throws Exception {
+            if (this.min.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            return min.peek();
+        }
     }
 
     /**
@@ -184,7 +262,7 @@ public class GetMinStack {
         System.out.println("Start!");
 
         for (int i = 0; i < testTime; i++) {
-            MyStackOfList myStack = new MyStackOfList();
+            MyStack4 myStack = new MyStack4();
             TestMyStack testMyStack = new TestMyStack();
             for (int j = 0; j < forTime; j++) {
                 if (Math.random() < 0.5) {

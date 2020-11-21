@@ -8,12 +8,12 @@ import java.util.LinkedList;
  * @author Leo
  * @ClassName RingArray
  * @DATE 2020/11/20 2:53 下午
- * @Description 使用数字实现队列
+ * @Description 使用数组实现队列
  */
 public class RingArray {
 
     /**
-     * 使用数字实现队列
+     * 使用数组实现队列
      */
     public static class MyQueue {
         int[] arr;
@@ -57,13 +57,56 @@ public class RingArray {
     }
 
 
+    public static class MyQueue1{
+        private int[] arr;
+        private int size;
+        private int push;
+        private int poll;
+        private final int limit;
+
+        public MyQueue1(int limit) {
+            arr = new int[limit];
+            this.size = 0;
+            this.push = 0;
+            this.poll = 0;
+            this.limit = limit;
+        }
+
+        public void push(int value) {
+            if (size == limit) {
+                throw new RuntimeException("队列满了");
+            }
+            arr[push] = value;
+            size++;
+            push = nextIndex(push);
+        }
+
+        public int poll() {
+            if (size == 0) {
+                throw new RuntimeException("队列空了");
+            }
+            int value = arr[poll];
+            size--;
+            poll = nextIndex(poll);
+            return value;
+        }
+
+        public int nextIndex(int i) {
+            return i < limit - 1 ? i + 1 : 0;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+    }
+
     public static void main(String[] args) {
         int testTime = 10000;
         int range = 100;
         int sizeMax = 80;
         for (int i = 0; i < testTime; i++) {
             int length = randomInt(sizeMax);
-            MyQueue myQueue = new MyQueue(length);
+            MyQueue1 myQueue = new MyQueue1(length);
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < length; j++) {
                 int value = randomInt(range);

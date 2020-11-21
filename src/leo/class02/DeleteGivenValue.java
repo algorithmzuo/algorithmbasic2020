@@ -219,6 +219,60 @@ public class DeleteGivenValue {
         return head;
     }
 
+    public static DoubleNode removeDoubleNodeOfValue4(DoubleNode head, int value) {
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        if (head != null) {
+            head.pre = null;
+        }
+        DoubleNode pre = head;
+        DoubleNode cur = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else{
+                if (cur.pre != pre) {
+                    cur.pre = pre;
+                }
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
+
+    public static DoubleNode removeDoubleNodeOfValue5(DoubleNode head, int value) {
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        if (head != null && head.pre != null) {
+            head.pre = null;
+        }
+
+        DoubleNode pre = head;
+        DoubleNode cur = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else{
+                if (cur.pre != pre) {
+                    cur.pre = pre;
+                }
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
     /**
      * 功能描述 : 验证单链表删除结果
      * @author Leo
@@ -332,7 +386,7 @@ public class DeleteGivenValue {
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(sizeMax, range);
-            DoubleNode doubleNode = removeDoubleNodeOfValue3(doubleNodeHead, value);
+            DoubleNode doubleNode = removeDoubleNodeOfValue5(doubleNodeHead, value);
             if (!verifyRemoveDoubleNodeOfValue(doubleNode, value)) {
                 System.out.println("doubleNode fuck");
                 break;

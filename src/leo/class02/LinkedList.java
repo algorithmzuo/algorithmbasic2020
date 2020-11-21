@@ -130,6 +130,31 @@ public class LinkedList {
         return pre;
     }
 
+
+    public static Node reverseNode7(Node head) {
+        Node pre = head;
+        Node next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
+    public static Node reverseNode8(Node head) {
+        Node pre = head;
+        Node next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
     public static DoubleNode reverseDoubleNode(DoubleNode head) {
         DoubleNode pre = null;
         DoubleNode next;
@@ -181,6 +206,20 @@ public class LinkedList {
         }
         return pre;
 
+    }
+
+
+    public static DoubleNode reverseDoubleNode4(DoubleNode head) {
+        DoubleNode pre = head;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            head.pre = next;
+            pre = head;
+            head = next;
+        }
+        return pre;
     }
 
     /**
@@ -313,14 +352,14 @@ public class LinkedList {
         for (int i = 0; i < testTime; i++) {
             Node head = randomNode(maxSize, range);
             List<Node> nodeList = nodeToList(head);
-            Node node = reverseNode6(head);
+            Node node = reverseNode8(head);
             if (!verifyReverseListAndNode(nodeList, node)) {
                 System.out.println("nodeFuck!!");
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(maxSize, range);
             List<DoubleNode> doubleNodeList = DoubleNodeToList(doubleNodeHead);
-            DoubleNode doubleNode = reverseDoublerNode3(doubleNodeHead);
+            DoubleNode doubleNode = reverseDoubleNode4(doubleNodeHead);
             if (!verifyReverseListAndDoubleNode(doubleNodeList, doubleNode)) {
                 System.out.println("doubleNodeFuck!!");
                 break;
