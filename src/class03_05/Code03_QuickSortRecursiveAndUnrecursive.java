@@ -53,6 +53,7 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 	}
 
 	// 快排非递归版本需要的辅助类
+	// 要处理的是什么范围上的排序
 	public static class Op {
 		public int l;
 		public int r;
@@ -63,7 +64,7 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		}
 	}
 
-	// 快排非递归版本
+	// 快排3.0 非递归版本
 	public static void quickSort2(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -77,7 +78,7 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		stack.push(new Op(0, el - 1));
 		stack.push(new Op(er + 1, N - 1));
 		while (!stack.isEmpty()) {
-			Op op = stack.pop();
+			Op op = stack.pop(); // op.l  ... op.r
 			if (op.l < op.r) {
 				swap(arr, op.l + (int) (Math.random() * (op.r - op.l + 1)), op.r);
 				equalArea = netherlandsFlag(arr, op.l, op.r);

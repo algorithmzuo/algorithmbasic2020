@@ -11,7 +11,7 @@ public class Code01_MergeSort {
 	}
 
 	// 请把arr[L..R]排有序
-	// l...r  N
+	// l...r N
 	// T(N) = 2 * T(N / 2) + O(N)
 	// O(N * logN)
 	public static void process(int[] arr, int L, int R) {
@@ -56,12 +56,11 @@ public class Code01_MergeSort {
 			// 当前左组的，第一个位置
 			int L = 0;
 			while (L < N) {
-				int M = L + mergeSize - 1;
-				if (M >= N) {
+				if (mergeSize >= N - L) {
 					break;
 				}
-				int R = Math.min(M + mergeSize, N - 1);
-				// L .... M   M + 1..... R
+				int M = L + mergeSize - 1;
+				int R = M + Math.min(mergeSize, N - M - 1);
 				merge(arr, L, M, R);
 				L = R + 1;
 			}
@@ -129,20 +128,20 @@ public class Code01_MergeSort {
 		int testTime = 500000;
 		int maxSize = 100;
 		int maxValue = 100;
-		boolean succeed = true;
+		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
 			mergeSort1(arr1);
 			mergeSort2(arr2);
 			if (!isEqual(arr1, arr2)) {
-				succeed = false;
+				System.out.println("出错了！");
 				printArray(arr1);
 				printArray(arr2);
 				break;
 			}
 		}
-		System.out.println(succeed ? "Nice!" : "Oops!");
+		System.out.println("测试结束");
 	}
 
 }

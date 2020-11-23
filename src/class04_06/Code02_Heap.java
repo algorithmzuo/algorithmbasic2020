@@ -1,5 +1,8 @@
 package class04_06;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 public class Code02_Heap {
 
 	public static class MyMaxHeap {
@@ -39,29 +42,34 @@ public class Code02_Heap {
 			return ans;
 		}
 
+		
+		
+		
+		
+		
+		// 新加进来的数，现在停在了index位置，请依次往上移动，
+		// 移动到0位置，或者干不掉自己的父亲了，停！
 		private void heapInsert(int[] arr, int index) {
-			// arr[index]
-			// arr[index] 不比 arr[index父]大了 ， 停
-			// index = 0;
+			// [index]    [index-1]/2
+			// index == 0
 			while (arr[index] > arr[(index - 1) / 2]) {
 				swap(arr, index, (index - 1) / 2);
 				index = (index - 1) / 2;
 			}
 		}
 
-		// 从index位置，往下看，不断的下沉，
-		// 停：我的孩子都不再比我大；已经没孩子了
+		// 从index位置，往下看，不断的下沉
+		// 停：较大的孩子都不再比index位置的数大；已经没孩子了
 		private void heapify(int[] arr, int index, int heapSize) {
 			int left = index * 2 + 1;
-			while (left < heapSize) {
-				// 左右两个孩子中，谁大，谁把自己的下标给largest
-				// 右  ->  1) 有右孩子   && 2）右孩子的值比左孩子大才行
-				// 否则，左
+			while (left < heapSize) { // 如果有左孩子，有没有右孩子，可能有可能没有！
+				// 把较大孩子的下标，给largest
 				int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
 				largest = arr[largest] > arr[index] ? largest : index;
 				if (largest == index) {
 					break;
 				}
+				// index和较大孩子，要互换
 				swap(arr, largest, index);
 				index = largest;
 				left = index * 2 + 1;
@@ -116,7 +124,42 @@ public class Code02_Heap {
 
 	}
 
+	
+	public static class MyComparator implements Comparator<Integer>{
+
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			return o2 - o1;
+		}
+		
+	}
+	
 	public static void main(String[] args) {
+		// 小根堆
+		PriorityQueue<Integer> heap = new PriorityQueue<>(new MyComparator());
+		heap.add(5);
+		heap.add(5);
+		heap.add(5);
+		heap.add(3);
+		//  5 , 3
+		System.out.println(heap.peek());
+		heap.add(7);
+		heap.add(0);
+		heap.add(7);
+		heap.add(0);
+		heap.add(7);
+		heap.add(0);
+		System.out.println(heap.peek());
+		while(!heap.isEmpty()) {
+			System.out.println(heap.poll());
+		}
+		
+		
+		
+		
+		
+		
+		
 		int value = 1000;
 		int limit = 100;
 		int testTimes = 1000000;
