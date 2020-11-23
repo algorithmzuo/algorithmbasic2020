@@ -105,6 +105,27 @@ public class DeleteGivenValue {
         }
         return head;
     }
+
+    public static Node removeNodeOfValue3(Node head, int value) {
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        Node pre = head;
+        Node cur = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else {
+                pre = head;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
     /**
      * 功能描述 : 双链表删除某个给定值
      * @author Leo
@@ -245,7 +266,6 @@ public class DeleteGivenValue {
         return head;
     }
 
-
     public static DoubleNode removeDoubleNodeOfValue5(DoubleNode head, int value) {
         while (head != null) {
             if (head.value != value) {
@@ -379,7 +399,7 @@ public class DeleteGivenValue {
         for (int i = 0; i < testTime; i++) {
             int value = randomInt(range);
             Node nodeHead = randomNode(sizeMax, range);
-            Node node = removeNodeOfValue2(nodeHead, value);
+            Node node = removeNodeOfValue3(nodeHead, value);
 
             if (!verifyRemoveNodeOfValue(node,value)) {
                 System.out.println("node fuck!");

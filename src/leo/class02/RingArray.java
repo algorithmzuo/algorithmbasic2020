@@ -100,13 +100,54 @@ public class RingArray {
         }
     }
 
+    public static class MyQueue2{
+        private int push;
+        private int poll;
+        private int size;
+        private final int limit;
+        private int[] arr;
+        public MyQueue2(int limit) {
+            this.push = 0;
+            this.poll = 0;
+            this.size = 0;
+            this.arr = new int[limit];
+            this.limit = limit;
+        }
+
+        public void push(int value) {
+            if (size == limit) {
+                throw new RuntimeException("队列满了!");
+            }
+            this.arr[this.push] = value;
+            this.size++;
+            this.push = nextIndex(this.push);
+        }
+
+        public int poll() {
+            if (size == 0) {
+                throw new RuntimeException("队列空了!");
+            }
+            int value = this.arr[poll];
+            size--;
+            this.poll = nextIndex(poll);
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+        private int nextIndex(int i) {
+            return i < limit-1 ? i+1 : 0;
+        }
+    }
+
     public static void main(String[] args) {
         int testTime = 10000;
         int range = 100;
         int sizeMax = 80;
         for (int i = 0; i < testTime; i++) {
             int length = randomInt(sizeMax);
-            MyQueue1 myQueue = new MyQueue1(length);
+            MyQueue2 myQueue = new MyQueue2(length);
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < length; j++) {
                 int value = randomInt(range);

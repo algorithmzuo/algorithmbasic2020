@@ -1,5 +1,7 @@
 package leo.class02;
 
+import jdk.nashorn.internal.ir.IfNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -91,6 +93,49 @@ public class GetMinStack {
 
     }
 
+    public static class MyStack5{
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack5() {
+            data = new Stack<Integer>();
+            min = new Stack<Integer>();
+        }
+
+        public void push(int value) {
+            try {
+                if (data.isEmpty() || this.getMin() >= value) {
+                    min.push(value);
+                }
+            } catch (Exception e) {
+                min.push(value);
+            }
+            data.push(value);
+        }
+
+        public int pop() throws Exception {
+            if (data.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            int value = data.pop();
+            if (value == this.getMin()) {
+                min.pop();
+            }
+            return value;
+        }
+
+
+        public int getMin() throws Exception {
+            if (min.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            return min.peek();
+        }
+
+
+
+    }
+
     /**
      * 只有最小值入栈,最小值重复入栈
      */
@@ -170,6 +215,46 @@ public class GetMinStack {
             }
             return min.peek();
         }
+    }
+
+    public static class MyStack6 {
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack6() {
+            this.data = new Stack<>();
+            this.min = new Stack<>();
+        }
+
+        public void push(int value) {
+            try {
+                if (this.min.isEmpty() || this.getMin() > value) {
+                    this.min.push(value);
+                } else {
+                    this.min.push(this.getMin());
+                }
+            } catch (Exception e) {
+                this.min.push(value);
+            }
+            data.push(value);
+        }
+
+        public int pop() throws Exception {
+            if (this.data.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            int value = this.data.pop();
+            this.min.pop();
+            return value;
+        }
+
+        public int getMin() throws Exception {
+            if (this.min.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            return this.min.peek();
+        }
+
     }
 
     /**
@@ -262,7 +347,7 @@ public class GetMinStack {
         System.out.println("Start!");
 
         for (int i = 0; i < testTime; i++) {
-            MyStack4 myStack = new MyStack4();
+            MyStack5 myStack = new MyStack5();
             TestMyStack testMyStack = new TestMyStack();
             for (int j = 0; j < forTime; j++) {
                 if (Math.random() < 0.5) {
@@ -275,7 +360,7 @@ public class GetMinStack {
                         int testMyStackValue = testMyStack.pop();
                         if (myStack1Value != testMyStackValue) {
                             System.out.println("myStack1Value: "+myStack1Value);
-                            System.out.println("testMyStackMin: "+testMyStackValue);
+                            System.out.println("testMyStackValue: "+testMyStackValue);
                             return;
                         }
                     } catch (Exception e) {
