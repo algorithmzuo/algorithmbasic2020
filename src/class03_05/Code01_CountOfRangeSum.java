@@ -29,6 +29,7 @@ public class Code01_CountOfRangeSum {
 		int ans = 0;
 		int windowL = L;
 		int windowR = L;
+		// [windowL, windowR)
 		for (int i = M + 1; i <= R; i++) {
 			long min = arr[i] - upper;
 			long max = arr[i] - lower;
@@ -38,7 +39,7 @@ public class Code01_CountOfRangeSum {
 			while (windowL <= M && arr[windowL] < min) {
 				windowL++;
 			}
-			ans += Math.max(0, windowR - windowL);
+			ans += windowR - windowL;
 		}
 		long[] help = new long[R - L + 1];
 		int i = 0;
