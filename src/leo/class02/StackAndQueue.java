@@ -12,26 +12,27 @@ import java.util.Stack;
  */
 public class StackAndQueue {
 
-    /**
-     * @ClassName : DoubleNode
-     * @author Leo
-     * @date 2020/11/20 11:09 上午
-     */
-    public static class DoubleNode<T>{
-        T value;
-        DoubleNode pre;
-        DoubleNode next;
-        public DoubleNode(T value) {
-            this.value = value;
-        }
 
-
-
-
-
-    }
 
     public static class DoubleNodeQueue<T> {
+        /**
+         * @ClassName : DoubleNode
+         * @author Leo
+         * @date 2020/11/20 11:09 上午
+         */
+        public static class DoubleNode<T>{
+            T value;
+            DoubleNode pre;
+            DoubleNode next;
+            public DoubleNode(T value) {
+                this.value = value;
+            }
+
+
+
+
+
+        }
         DoubleNode<T> head;
         DoubleNode<T> tail;
 
@@ -123,6 +124,24 @@ public class StackAndQueue {
     }
 
     public static class DoubleNodeQueue1<T> {
+        /**
+         * @ClassName : DoubleNode
+         * @author Leo
+         * @date 2020/11/20 11:09 上午
+         */
+        public static class DoubleNode<T>{
+            T value;
+            DoubleNode pre;
+            DoubleNode next;
+            public DoubleNode(T value) {
+                this.value = value;
+            }
+
+
+
+
+
+        }
 
         DoubleNode<T> head;
         DoubleNode<T> tail;
@@ -189,6 +208,168 @@ public class StackAndQueue {
             return head == null;
         }
     }
+
+    public static class DoubleNodeQueue2<T> {
+        /**
+         * @ClassName : DoubleNode
+         * @author Leo
+         * @date 2020/11/20 11:09 上午
+         */
+        public static class DoubleNode<T>{
+            T value;
+            DoubleNode pre;
+            DoubleNode next;
+            public DoubleNode(T value) {
+                this.value = value;
+            }
+
+
+
+
+
+        }
+        DoubleNode<T> head;
+        DoubleNode<T> tail;
+
+        public void pushHead(T value) {
+            DoubleNode<T> node = new DoubleNode<>(value);
+            if (head == null) {
+                head = node;
+                tail = node;
+            }else{
+                head.pre = node;
+                node.next = head;
+                head = node;
+            }
+        }
+
+        public void pushTail(T value) {
+            DoubleNode<T> node = new DoubleNode<>(value);
+            if (tail == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.next = node;
+                node.pre = tail;
+                tail = node;
+            }
+        }
+
+        public T popHead() {
+            if (head == null) {
+                return null;
+            }
+            T value = head.value;
+
+            if (head.next == null) {
+                head = null;
+                tail = null;
+            }else{
+                head = head.next;
+                head.pre = null;
+            }
+
+            return value;
+        }
+
+        public T popTail() {
+            if (tail == null) {
+                return null;
+            }
+            T value = tail.value;
+            if (tail.pre == null) {
+                head = null;
+                tail = null;
+            }else{
+                tail = tail.pre;
+                tail.next = null;
+            }
+
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return head == null;
+        }
+
+
+    }
+
+    public static class DoubleNodeStackAndQueue<T>{
+        private static class DoubleNode<T>{
+            T value;
+            DoubleNode pre;
+            DoubleNode next;
+
+            public DoubleNode(T value) {
+                this.value = value;
+            }
+        }
+
+        private DoubleNode<T> head;
+        private DoubleNode<T> tail;
+
+        public void pushHead(T value) {
+            DoubleNode<T> node = new DoubleNode<T>(value);
+            if (this.head == null) {
+                this.head = node;
+                this.tail = node;
+            }else{
+                node.next = this.head;
+                this.head.pre = node;
+                this.head = node ;
+            }
+        }
+
+        public void pushTail(T value) {
+            DoubleNode<T> node = new DoubleNode<T>(value);
+            if (this.tail == null) {
+                tail = node;
+                head = node;
+            }else{
+                tail.next = node;
+                node.pre = tail;
+                tail = node;
+            }
+        }
+
+        public T popHead(){
+            if (this.head == null) {
+                return null;
+            }
+            T value = this.head.value;
+            if (this.head.next != null) {
+                this.head = this.head.next;
+                this.head.pre = null;
+            }else{
+                this.head = null;
+                this.tail = null;
+            }
+            return value;
+        }
+
+        public T popTail() {
+            if (this.tail == null) {
+                return null;
+            }
+            T value = this.tail.value;
+            if (this.tail.pre != null) {
+                this.tail = this.tail.pre;
+                this.tail.next.pre = null;
+                this.tail.next = null;
+            }else{
+                this.tail = null;
+                this.head = null;
+            }
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return this.head == null;
+        }
+
+    }
+
 
 
     /**
@@ -259,6 +440,79 @@ public class StackAndQueue {
 
     }
 
+    public static class MyStack2<T> {
+        DoubleNodeQueue2<T> stack;
+        public MyStack2() {
+            this.stack = new DoubleNodeQueue2<>();
+        }
+
+        public void push(T value) {
+            this.stack.pushHead(value);
+        }
+
+        public T pop() {
+            return stack.popHead();
+        }
+
+        public boolean isEmpty() {
+            return this.stack.isEmpty();
+        }
+
+    }
+
+    public static class MyStack3<T>{
+        private DoubleNodeStackAndQueue<T> myStack;
+
+        public MyStack3() {
+            this.myStack = new DoubleNodeStackAndQueue<>();
+        }
+
+        public void push(T value) {
+            this.myStack.popHead();
+        }
+
+        public T pop() {
+            return this.myStack.popHead();
+        }
+
+        public boolean isEmpty() {
+            return this.myStack.isEmpty();
+        }
+    }
+
+
+
+
+
+
+
+    /**
+     * @author Leo
+     * @ClassName MyQueue
+     * @DATE 2020/11/20 11:05 上午
+     * @Description 队列 先进先出
+     */
+    public static class MyQueue<T>{
+
+        DoubleNodeQueue<T> myQueue;
+
+        public MyQueue() {
+            this.myQueue = new DoubleNodeQueue<>();
+        }
+
+        public void push(T value) {
+            myQueue.addHead(value);
+        }
+
+        public T poll() {
+            return myQueue.popTail();
+        }
+
+        public boolean isEmpty() {
+            return myQueue.isEmpty();
+        }
+
+    }
 
     /**
      * 队列 先进先出
@@ -292,35 +546,48 @@ public class StackAndQueue {
 
     }
 
+    public static class MyQueue2<T> {
+        private DoubleNodeQueue2<T> queue;
 
-
-    /**
-     * @author Leo
-     * @ClassName MyQueue
-     * @DATE 2020/11/20 11:05 上午
-     * @Description 队列 先进先出
-     */
-    public static class MyQueue<T>{
-
-        DoubleNodeQueue<T> myQueue;
-
-        public MyQueue() {
-            this.myQueue = new DoubleNodeQueue<>();
+        public MyQueue2() {
+            this.queue = new DoubleNodeQueue2<T>();
         }
 
         public void push(T value) {
-            myQueue.addHead(value);
+            this.queue.pushHead(value);
         }
 
         public T poll() {
-            return myQueue.popTail();
+            return this.queue.popTail();
         }
 
         public boolean isEmpty() {
-            return myQueue.isEmpty();
+            return this.queue.isEmpty();
         }
 
     }
+
+    public static class MyQueue3<T> {
+        private DoubleNodeStackAndQueue<T> myQueue;
+
+        public MyQueue3() {
+            this.myQueue = new DoubleNodeStackAndQueue<>();
+        }
+
+        public void push(T value) {
+            this.myQueue.popHead();
+        }
+
+        public T poll() {
+            return this.myQueue.popTail();
+        }
+
+        public boolean isEmpty() {
+            return this.myQueue.isEmpty();
+        }
+    }
+
+
 
     public static boolean isEqual(Integer o1, Integer o2) {
         if (o1 == null && o2 != null) {
@@ -336,12 +603,12 @@ public class StackAndQueue {
     }
 
     public static void main(String[] args){
-        int testTime = 10000;
-        int forTime = 100000;
+        int testTime = 1000;
+        int forTime = 1000;
         int range = 8000;
         for (int i = 0; i < forTime; i++) {
-            MyStack1<Integer> myStack = new MyStack1<>();
-            MyQueue1<Integer> myQueue = new MyQueue1<>();
+            MyStack3<Integer> myStack = new MyStack3<>();
+            MyQueue3<Integer> myQueue = new MyQueue3<>();
             Stack<Integer> stack = new Stack<>();
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < testTime; j++) {

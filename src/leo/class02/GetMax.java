@@ -22,7 +22,7 @@ public class GetMax {
             return arr[L];
         }
         int mid = L + ((R - L) >> 1);
-        int leftMax = process(arr, 0, mid);
+        int leftMax = process(arr, L, mid);
         int rightMax = process(arr, mid + 1, R);
         return Math.max(leftMax, rightMax);
     }

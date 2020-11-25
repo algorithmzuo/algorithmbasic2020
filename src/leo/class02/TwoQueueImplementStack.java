@@ -61,10 +61,53 @@ public class TwoQueueImplementStack {
         }
     }
 
+    public static class MyStack1<T>{
+        private Queue<T> queue;
+        private Queue<T> help;
+
+        public MyStack1() {
+            queue = new LinkedList<T>();
+            help = new LinkedList<T>();
+        }
+
+        public void push(T value) {
+            this.queue.offer(value);
+        }
+
+        public T pop() {
+            while (queue.size() > 1) {
+                help.offer(queue.poll());
+            }
+            T value = queue.poll();
+            Queue<T> temp = queue;
+            queue = help;
+            help = temp;
+            return value;
+        }
+
+        public T peek(){
+            while (queue.size() > 1) {
+                help.offer(queue.poll());
+            }
+            T value = queue.poll();
+            this.help.offer(value);
+            Queue<T> temp = queue;
+            queue = help;
+            help = temp;
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return this.queue.size() == 0;
+        }
+
+
+    }
+
     public static void main(String[] args){
-        int testTime = 10000;
+        int testTime = 1000;
         int range = 500;
-        MyStack<Integer> myStack = new MyStack<>();
+        MyStack1<Integer> myStack = new MyStack1<>();
         Stack<Integer> stack = new Stack<>();
         System.out.println("Start!");
         for (int i = 0; i < testTime; i++) {

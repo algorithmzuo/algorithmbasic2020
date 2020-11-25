@@ -9,6 +9,8 @@ import java.util.Stack;
  * @ClassName TwoStacksImplementQueue
  * @DATE 2020/11/21 12:09 下午
  * @Description 使用栈数据结构实现队列
+ * 队列 先进先出
+ * 栈 先进后出
  */
 public class TwoStacksImplementQueue {
 
