@@ -153,6 +153,44 @@ public class KM {
         return ans;
     }
 
+    public static int onlyKTime6(int[] arr,int k,int m){
+        int[] t = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i < t.length; i++) {
+                t[i] += (num >> i) & 1;
+            }
+        }
+        int ans = 0;
+        for (int i = 0; i < t.length; i++) {
+            if (t[i] % m != 0) {
+                if (t[i] % m == k) {
+                    ans |= (1 << i);
+                }else{
+                    return -1;
+                }
+            }
+        }
+
+        if (ans == 0) {
+            int count = 0;
+            for (int num : arr) {
+                if (num == 0) {
+                    count++;
+                }
+            }
+            if (count == k) {
+                return ans;
+            } else {
+                return  -1;
+            }
+        }
+
+
+        return ans;
+
+    }
+
+
     public static void main(String[] args) {
         int maxKinds = 20;
         int range = 50;
@@ -169,7 +207,7 @@ public class KM {
             }
             int[] arr = randomArray(maxKinds, range, k, m);
 
-            int ans = onlyKTime5(arr, k, m);
+            int ans = onlyKTime6(arr, k, m);
             int ans2 = testForOnlyKTimes(arr, k, m);
             if (ans != ans2) {
                 System.out.println(ans);

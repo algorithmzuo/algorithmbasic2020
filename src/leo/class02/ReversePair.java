@@ -8,6 +8,8 @@ import leo.util.ArrayUtil;
  * @DATE 2020/11/23 9:48 下午
  * @Description 在一段数组中 返回有多少逆序对
  * 合并的时候 两侧下标--
+ * 任何一个前面的数a，和任何一个后面的数b，
+ * 如果(a,b)是降序的
  */
 public class ReversePair {
 
@@ -178,6 +180,47 @@ class ReversePair3 {
     }
 }
 
+class ReversePair4{
+    public static int reversePairNumber(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return 0;
+        }
+        return process(arr, 0, arr.length - 1);
+    }
+
+    private static int process(int[] arr, int l, int r) {
+
+        if (l == r) {
+            return 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(arr, l, m) + process(arr, m + 1, r) + merge(arr, l, m, r);
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int p1 = m;
+        int p2 = r;
+        int[] help = new int[r - l + 1];
+        int i = help.length - 1;
+        int res = 0;
+        while (p1 >= l && p2 > m) {
+            res += arr[p1] > arr[p2] ? p2 - m : 0;
+            help[i--] = arr[p1] > arr[p2] ? arr[p1--] : arr[p2--];
+        }
+        while (p1 >= l) {
+            help[i--] = arr[p1--];
+        }
+        while(p2>m){
+            help[i--] = arr[p2--];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+        return res;
+
+    }
+}
+
 class TestReversePair{
     public static int reversePairNumber(int[] arr) {
         int res = 0;
@@ -216,7 +259,7 @@ class TestReversePair{
         for (int i = 0; i < testTime; i++) {
             int[] arr = randomArray(sizeMax, range);
             int[] copyArr = copyArray(arr);
-            int num = ReversePair3.reversePairNumber(arr);
+            int num = ReversePair4.reversePairNumber(arr);
             int copyNum = reversePairNumber(copyArr);
             if (num != copyNum) {
                 System.out.println("num : "+num);

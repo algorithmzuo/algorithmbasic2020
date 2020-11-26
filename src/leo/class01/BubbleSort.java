@@ -168,6 +168,18 @@ public class BubbleSort {
     }
 
 
+    public static void bubbleSort12(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[i]) {
+                    swap(arr, j, i);
+                }
+            }
+        }
+    }
 
 
     /**
@@ -200,7 +212,7 @@ public class BubbleSort {
         for (int i = 0; i < testOfTime; i++) {
             int[] arr = ArrayUtil.randomArray(maxSize, range);
             int[] anotherArr = ArrayUtil.copyArray(arr);
-            bubbleSort11(arr);
+            bubbleSort12(arr);
             Arrays.sort(anotherArr);
             if (!ArrayUtil.isEqual(arr, anotherArr)) {
                 succeed = false;
