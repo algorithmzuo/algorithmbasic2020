@@ -32,8 +32,7 @@ public class Code01_CoverMax {
 			lines[i] = new Line(m[i][0], m[i][1]);
 		}
 		Arrays.sort(lines, new StartComparator());
-		// lines   
-		// 
+		// 小根堆，每一条线段的结尾数值，使用默认的
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
 		int max = 0;
 		for (int i = 0; i < lines.length; i++) {
