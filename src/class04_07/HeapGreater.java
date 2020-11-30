@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+/*
+ * T一定要是非基础类型，有基础类型需求包一层
+ */
 public class HeapGreater<T> {
 
 	private ArrayList<T> heap;
@@ -67,6 +70,7 @@ public class HeapGreater<T> {
 		heapify(indexMap.get(obj));
 	}
 
+	// 请返回堆上的所有元素
 	public List<T> getAllElements() {
 		List<T> ans = new ArrayList<>();
 		for (T c : heap) {

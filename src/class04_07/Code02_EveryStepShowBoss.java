@@ -8,12 +8,12 @@ import java.util.List;
 public class Code02_EveryStepShowBoss {
 
 	public static class Customer {
-		public int value;
+		public int id;
 		public int buy;
 		public int enterTime;
 
 		public Customer(int v, int b, int o) {
-			value = v;
+			id = v;
 			buy = b;
 			enterTime = 0;
 		}
@@ -50,21 +50,22 @@ public class Code02_EveryStepShowBoss {
 			daddyLimit = limit;
 		}
 
-		public void operate(int time, int number, boolean buyOrRefund) {
-			if (!buyOrRefund && !customers.containsKey(number)) {
+		// 当前处理i号事件，arr[i] -> id,  buyOrRefund
+		public void operate(int time, int id, boolean buyOrRefund) {
+			if (!buyOrRefund && !customers.containsKey(id)) {
 				return;
 			}
-			if (!customers.containsKey(number)) {
-				customers.put(number, new Customer(number, 0, 0));
+			if (!customers.containsKey(id)) {
+				customers.put(id, new Customer(id, 0, 0));
 			}
-			Customer c = customers.get(number);
+			Customer c = customers.get(id);
 			if (buyOrRefund) {
 				c.buy++;
 			} else {
 				c.buy--;
 			}
 			if (c.buy == 0) {
-				customers.remove(number);
+				customers.remove(id);
 			}
 			if (!candHeap.contains(c) && !daddyHeap.contains(c)) {
 				if (daddyHeap.size() < daddyLimit) {
@@ -94,7 +95,7 @@ public class Code02_EveryStepShowBoss {
 			List<Customer> customers = daddyHeap.getAllElements();
 			List<Integer> ans = new ArrayList<>();
 			for (Customer c : customers) {
-				ans.add(c.value);
+				ans.add(c.id);
 			}
 			return ans;
 		}
@@ -131,30 +132,38 @@ public class Code02_EveryStepShowBoss {
 		return ans;
 	}
 
+	// 干完所有的事，模拟，不优化
 	public static List<List<Integer>> compare(int[] arr, boolean[] op, int k) {
 		HashMap<Integer, Customer> map = new HashMap<>();
 		ArrayList<Customer> cands = new ArrayList<>();
 		ArrayList<Customer> daddy = new ArrayList<>();
 		List<List<Integer>> ans = new ArrayList<>();
 		for (int i = 0; i < arr.length; i++) {
-			int num = arr[i];
+			int id = arr[i];
 			boolean buyOrRefund = op[i];
-			if (!buyOrRefund && !map.containsKey(num)) {
+			if (!buyOrRefund && !map.containsKey(id)) {
 				ans.add(getCurAns(daddy));
 				continue;
 			}
-			if (!map.containsKey(num)) {
-				map.put(num, new Customer(num, 0, 0));
+			// 没有发生：用户购买数为0并且又退货了
+			// 用户之前购买数是0，此时买货事件
+			// 用户之前购买数>0， 此时买货
+			// 用户之前购买数>0, 此时退货
+			if (!map.containsKey(id)) {
+				map.put(id, new Customer(id, 0, 0));
 			}
-			Customer c = map.get(num);
+			// 买、卖
+			Customer c = map.get(id);
 			if (buyOrRefund) {
 				c.buy++;
 			} else {
 				c.buy--;
 			}
 			if (c.buy == 0) {
-				map.remove(num);
+				map.remove(id);
 			}
+			// c
+			// 下面做
 			if (!cands.contains(c) && !daddy.contains(c)) {
 				if (daddy.size() < k) {
 					c.enterTime = i;
@@ -171,7 +180,6 @@ public class Code02_EveryStepShowBoss {
 			move(cands, daddy, k, i);
 			ans.add(getCurAns(daddy));
 		}
-
 		return ans;
 	}
 
@@ -179,12 +187,13 @@ public class Code02_EveryStepShowBoss {
 		if (cands.isEmpty()) {
 			return;
 		}
+		// 候选区不为空
 		if (daddy.size() < k) {
 			Customer c = cands.get(0);
 			c.enterTime = time;
 			daddy.add(c);
 			cands.remove(0);
-		} else {
+		} else { // 等奖区满了，候选区有东西
 			if (cands.get(0).buy > daddy.get(0).buy) {
 				Customer oldDaddy = daddy.get(0);
 				daddy.remove(0);
@@ -214,7 +223,7 @@ public class Code02_EveryStepShowBoss {
 	public static List<Integer> getCurAns(ArrayList<Customer> daddy) {
 		List<Integer> ans = new ArrayList<>();
 		for (Customer c : daddy) {
-			ans.add(c.value);
+			ans.add(c.id);
 		}
 		return ans;
 	}
