@@ -230,6 +230,74 @@ class MyMaxHeap2{
     }
 }
 
+class MyMaxHeap3 {
+    private int size;
+    private int[] arr;
+    private final int limit;
+
+    public MyMaxHeap3(int limit) {
+        this.limit = limit;
+        this.size = 0;
+        this.arr = new int[limit];
+    }
+
+    public void push(int value) {
+        if (size == limit) {
+            throw new RuntimeException("heap is full");
+        }
+        arr[size] = value;
+        heapInsert(arr, size++);
+
+    }
+
+    public int pop() {
+        if (size == 0) {
+            throw new RuntimeException("heap is empty");
+        }
+        int value = arr[0];
+        swap(arr, 0, --size);
+        heapify(arr, 0, size);
+        return value;
+    }
+
+    private void heapify(int[] arr, int i, int heapSize) {
+        int left = i << 1 | 1;
+        while (left < heapSize) {
+            int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
+            largest = arr[largest] > arr[i] ? largest : i;
+            if (largest == i) {
+                break;
+            }
+            this.swap(arr, largest, i);
+            i = largest;
+            left = i << 1 | 1;
+        }
+    }
+
+    private void heapInsert(int[] arr, int index) {
+        while (arr[index] > arr[(index - 1) / 2]) {
+            swap(arr, index, (index - 1) / 2);
+            index = (index - 1) / 2;
+        }
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+
+
+
+}
+
 
 class Main{
 
@@ -239,7 +307,7 @@ class Main{
         int range = 50;
         System.out.println("start!");
         PriorityQueue<Integer> queue = new PriorityQueue<>((a,b)-> {return b-a;});
-        MyMaxHeap2 heap = new MyMaxHeap2(testTimes);
+        MyMaxHeap3 heap = new MyMaxHeap3(testTimes);
         for (int i = 0; i < testTimes; i++) {
             if (heap.isEmpty()) {
                 int num = (int) ((range * Math.random() + 1) - (range * Math.random() + 1));

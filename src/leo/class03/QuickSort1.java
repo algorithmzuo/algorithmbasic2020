@@ -301,7 +301,6 @@ class QuickSort3_2{
 
     }
 
-
     private static void swap(int[] arr, int i, int j) {
         if (i == j || arr[i] == arr[j]) {
             return;
@@ -313,6 +312,56 @@ class QuickSort3_2{
 
 }
 
+class QuickSort3_3{
+
+    public static void quickSort(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        process(arr, 0, arr.length - 1);
+    }
+
+    private static void process(int[] arr, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int[] equalArea = partition(arr, l, r);
+        process(arr, l, equalArea[0] - 1);
+        process(arr, equalArea[1] + 1, r);
+    }
+
+    public static int[] partition(int[] arr, int l, int r) {
+        if (l > r) {
+            return new int[]{-1, -1};
+        }
+        if (l == r) {
+            return new int[]{l, r};
+        }
+        int leftIndex = l - 1;
+        int rightIndex = r;
+        int index = l;
+        while (index < rightIndex) {
+            if (arr[index] == arr[r]) {
+                index++;
+            } else if (arr[index] > arr[r]) {
+                swap(arr, index, --rightIndex);
+            } else if (arr[index] < arr[r]) {
+                swap(arr, index++, ++leftIndex);
+            }
+        }
+        swap(arr, r, rightIndex);
+        return new int[]{leftIndex + 1, rightIndex};
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+}
 
 class QuickSortUnRecursive{
 
@@ -403,7 +452,7 @@ class TestMain {
         for (int i = 0; i < testTimes; i++) {
             int[] arr = ArrayUtil.randomArray(sizeMax, range);
             int[] copyArray = ArrayUtil.copyArray(arr);
-            QuickSort3_2.quickSort(arr);
+            QuickSort3_3.quickSort(arr);
             Arrays.sort(copyArray);
             if (!ArrayUtil.isEqual(arr, copyArray)) {
                 ArrayUtil.printArr(arr);

@@ -183,13 +183,56 @@ public class RingArray {
         }
     }
 
+    public static class MyQueue4 {
+        private int size;
+        private int[] arr;
+        private int push;
+        private int poll;
+        private final int limit;
+
+        public MyQueue4(int limit) {
+            this.limit = limit;
+            this.push = 0;
+            this.poll = 0;
+            this.arr = new int[limit];
+            this.size = 0;
+        }
+
+        public void push(int value) {
+            if (this.size == this.limit) {
+                throw new RuntimeException("queue is full");
+            }
+            arr[push] = value;
+            size++;
+            this.push = nextIndex(push);
+        }
+
+        public int poll() {
+            if (this.size == 0) {
+                throw new RuntimeException("queue is empty");
+            }
+            int value = arr[poll];
+            size--;
+            poll = nextIndex(poll);
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return this.size == 0;
+        }
+        public int nextIndex(int i) {
+            return i < this.limit - 1 ? i + 1 : 0;
+        }
+
+    }
+
     public static void main(String[] args) {
         int testTime = 10000;
         int range = 100;
         int sizeMax = 80;
         for (int i = 0; i < testTime; i++) {
             int length = randomInt(sizeMax);
-            MyQueue3 myQueue = new MyQueue3(length);
+            MyQueue4 myQueue = new MyQueue4(length);
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < length; j++) {
                 int value = randomInt(range);

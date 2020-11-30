@@ -2,10 +2,7 @@ package leo.class03;
 
 import leo.util.ArrayUtil;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Leo
@@ -22,6 +19,30 @@ public class SortArrayDistanceLessK {
             return;
         }
         //默认是小根堆
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        int index = 0;
+        for (; index < Math.min(arr.length - 1, k - 1); index++) {
+            queue.add(arr[index]);
+        }
+        int i = 0;
+        for (; index < arr.length; i++, index++) {
+            queue.add(arr[index]);
+            arr[i] = queue.poll();
+        }
+        while (!queue.isEmpty()) {
+            arr[i++] = queue.poll();
+        }
+    }
+
+}
+
+class SortArrayDistanceLessK1 {
+
+    public static void sortArrayDistanceLessK(int[] arr, int k) {
+        if (k <= 0 || arr.length < 2) {
+            return;
+        }
+
         PriorityQueue<Integer> queue = new PriorityQueue<>();
         int index = 0;
         for (; index < Math.min(arr.length - 1, k - 1); index++) {
@@ -56,7 +77,7 @@ class MainK {
             UpsetArray(arr, k);
             int[] copyArray = ArrayUtil.copyArray(arr);
             Arrays.sort(copyArray);
-            SortArrayDistanceLessK.sortArrayDistanceLessK(arr,k);
+            SortArrayDistanceLessK1.sortArrayDistanceLessK(arr,k);
             if (!ArrayUtil.isEqual(arr, copyArray)) {
                 ArrayUtil.printArr(arr);
                 ArrayUtil.printArr(copyArray);

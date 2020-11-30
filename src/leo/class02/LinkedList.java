@@ -166,6 +166,21 @@ public class LinkedList {
         return pre;
     }
 
+    public static Node reverseNode10(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Node pre = head;
+        Node next = null;
+        while (head != null) {
+            next  = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
     public static DoubleNode reverseDoubleNode(DoubleNode head) {
         DoubleNode pre = null;
         DoubleNode next;
@@ -243,6 +258,23 @@ public class LinkedList {
             head = next;
         }
         return pre;
+    }
+
+    public static DoubleNode reverseDoubleNode6(DoubleNode head) {
+        if (head == null) {
+            return null;
+        }
+        DoubleNode pre = head;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.pre = next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+
     }
 
     /**
@@ -375,14 +407,14 @@ public class LinkedList {
         for (int i = 0; i < testTime; i++) {
             Node head = randomNode(maxSize, range);
             List<Node> nodeList = nodeToList(head);
-            Node node = reverseNode9(head);
+            Node node = reverseNode10(head);
             if (!verifyReverseListAndNode(nodeList, node)) {
                 System.out.println("nodeFuck!!");
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(maxSize, range);
             List<DoubleNode> doubleNodeList = DoubleNodeToList(doubleNodeHead);
-            DoubleNode doubleNode = reverseDoubleNode5(doubleNodeHead);
+            DoubleNode doubleNode = reverseDoubleNode6(doubleNodeHead);
             if (!verifyReverseListAndDoubleNode(doubleNodeList, doubleNode)) {
                 System.out.println("doubleNodeFuck!!");
                 break;

@@ -57,7 +57,6 @@ public class HeapSort {
         }
     }
 
-
     private static void swap(int[] arr, int i, int j) {
         if (i == j || arr[i] == arr[j]) {
             return;
@@ -67,8 +66,9 @@ public class HeapSort {
         arr[i] = arr[i] ^ arr[j];
     }
 
-
 }
+
+
 
 
 class MainHeapSort {

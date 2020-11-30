@@ -72,7 +72,7 @@ public class GetMinStack {
             data.push(value);
         }
 
-        public Integer pop() {
+        public int pop() {
             if (data.isEmpty()) {
                 throw new RuntimeException("Stack is Empty");
             }
@@ -134,6 +134,49 @@ public class GetMinStack {
 
 
 
+    }
+
+    public static class MyStack7 {
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack7() {
+            data = new Stack<>();
+            min = new Stack<>();
+        }
+
+        public int getMin() throws Exception {
+            if (min.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            return min.peek();
+        }
+
+        public boolean isEmpty() {
+            return data.isEmpty();
+        }
+
+        public void push(int value) {
+            try {
+                if (this.data.isEmpty()||this.getMin() >= value) {
+                    min.push(value);
+                }
+            } catch (Exception e) {
+                min.push(value);
+            }
+            data.push(value);
+        }
+
+        public int pop() throws Exception {
+            if (data.isEmpty()) {
+                throw new RuntimeException("stack is empty");
+            }
+            int value = data.pop();
+            if (this.getMin() == value) {
+                min.pop();
+            }
+            return value;
+        }
     }
 
     /**
@@ -257,6 +300,50 @@ public class GetMinStack {
 
     }
 
+    public static class MyStack8 {
+        private Stack<Integer> data;
+        private Stack<Integer> min;
+
+        public MyStack8() {
+            data = new Stack<>();
+            min = new Stack<>();
+        }
+
+        public int getMin() throws Exception{
+            if (min.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            return min.peek();
+        }
+
+        public boolean isEmpty() {
+            return data.isEmpty();
+        }
+
+        public void push(int value){
+
+        try {
+            if (data.isEmpty() || value < this.getMin()) {
+                min.push(value);
+            }else{
+                min.push(this.getMin());
+            }
+        } catch (Exception e) {
+            min.push(value);
+        }
+
+            data.push(value);
+        }
+
+        public int pop() throws Exception{
+            if (data.isEmpty()) {
+                throw new Exception("stack is empty");
+            }
+            min.pop();
+            return data.pop();
+        }
+    }
+
     /**
      * 用list实现 只存最小值的索引
      */
@@ -347,7 +434,7 @@ public class GetMinStack {
         System.out.println("Start!");
 
         for (int i = 0; i < testTime; i++) {
-            MyStack5 myStack = new MyStack5();
+            MyStack8 myStack = new MyStack8();
             TestMyStack testMyStack = new TestMyStack();
             for (int j = 0; j < forTime; j++) {
                 if (Math.random() < 0.5) {

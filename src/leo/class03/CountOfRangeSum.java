@@ -204,7 +204,7 @@ class CountOfRangeSum3{
         if (nums.length == 0 || nums == null) {
             return 0;
         }
-        int[] sum = new int[nums.length];
+        long[] sum = new long[nums.length];
         sum[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
             sum[i] = sum[i - 1] + nums[i];
@@ -212,7 +212,7 @@ class CountOfRangeSum3{
         return process(sum, 0, sum.length - 1, lower, upper);
     }
 
-    private static int process(int[] sum, int l, int r, int lower, int upper) {
+    private static int process(long[] sum, int l, int r, int lower, int upper) {
         if (l > r) {
             return 0;
         }
@@ -224,13 +224,13 @@ class CountOfRangeSum3{
         return process(sum, l, m, lower, upper) + process(sum, m + 1, r, lower, upper) + merge(sum, l, m, r, lower, upper);
     }
 
-    private static int merge(int[] sum, int l, int m, int r, int lower, int upper) {
+    private static int merge(long[] sum, int l, int m, int r, int lower, int upper) {
         int windowL = l;
         int windowR = l;
         int res = 0;
         for (int i = m + 1; i <= r; i++) {
-            int max = sum[i] - lower;
-            int min = sum[i] - upper;
+            long max = sum[i] - lower;
+            long min = sum[i] - upper;
             while (windowR <= m && sum[windowR] <= max) {
                 windowR++;
             }
@@ -241,7 +241,7 @@ class CountOfRangeSum3{
         }
 
 
-        int[] help = new int[r - l + 1];
+        long[] help = new long[r - l + 1];
         int i = 0;
         int p1 = l;
         int p2 = m + 1;
@@ -262,6 +262,72 @@ class CountOfRangeSum3{
     }
 }
 
+
+class CountOfRangeSum4 {
+
+    public static int countRangeSum(int[] nums, int lower, int upper) {
+        if (nums.length == 0 || nums == null) {
+            return 0;
+        }
+        long[] sum = new long[nums.length];
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            sum[i] = sum[i - 1] + nums[i];
+        }
+        return process(sum, 0, sum.length - 1, lower, upper);
+    }
+
+    private static int process(long[] sum, int l, int r, int lower, int upper) {
+        if (l > r) {
+            return 0;
+        }
+        if (l == r) {
+            return sum[l] >= lower && sum[l] <= upper ? 1 : 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(sum, l, m, lower, upper) + process(sum, m + 1, r, lower, upper) + merge(sum, l, m, r, lower, upper);
+
+    }
+
+    private static int merge(long[] sum, int l, int m, int r, int lower, int upper) {
+        int res = 0;
+        int windowR = l;
+        int windowL = l;
+        for (int i = m + 1; i <= r; i++) {
+            long max = sum[i] - lower;
+            long min = sum[i] - upper;
+            while (windowR <= m && sum[windowR] <= max) {
+                windowR++;
+            }
+            while (windowL <= m && sum[windowL] < min) {
+                windowL++;
+            }
+            res += windowR - windowL;
+        }
+
+        long[] help = new long[r - l + 1];
+        int i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+        while (p1 <= m && p2 <= r) {
+            help[i++] = sum[p1] <= sum[p2] ? sum[p1++] : sum[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = sum[p1++];
+        }
+        while (p2 <= r) {
+            help[i++] = sum[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            sum[l + i] = help[i];
+        }
+        return res;
+
+
+    }
+
+}
+
 class MainTest{
 
     public static int countRangeSum(int[] nums, int lower, int upper) {
@@ -279,7 +345,7 @@ class MainTest{
 
     public static void main(String[] args) {
         int testTime = 1000;
-        int sizeMax = 80;
+        int sizeMax = 5;
         int range = 50;
         System.out.println("start!");
 
@@ -291,7 +357,7 @@ class MainTest{
             do {
                 upper = (int) ((range * Math.random() + 1) - (range * Math.random() + 1));
             } while (upper <= lower);
-            int sumCount = CountOfRangeSum3.countRangeSum(arr, lower, upper);
+            int sumCount = CountOfRangeSum4.countRangeSum(arr, lower, upper);
             int testSumCount = countRangeSum(copyArray, lower, upper);
             if (sumCount != testSumCount) {
                 System.out.println("sumCount :" + sumCount+" testSumCount : "+testSumCount);

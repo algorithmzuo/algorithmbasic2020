@@ -56,6 +56,51 @@ public class TwoStacksImplementQueue {
 
     }
 
+    public static class MyQueue1{
+
+        private Stack<Integer> push;
+        private Stack<Integer> pop;
+
+        public MyQueue1() {
+            this.pop = new Stack<>();
+            this.push = new Stack<>();
+        }
+
+        public boolean isEmpty() {
+            return this.push.isEmpty();
+        }
+
+        public void push(int value) {
+            push.push(value);
+            pushToPop();
+        }
+
+        public int poll() throws Exception {
+            if (pop.isEmpty()) {
+                throw new Exception("queue is empty");
+            }
+            Integer pop = this.pop.pop();
+            pushToPop();
+            return pop;
+        }
+
+        public int peek() throws Exception {
+            if (this.pop.isEmpty()) {
+                throw new Exception("queue is empty");
+            }
+            pushToPop();
+            return this.pop.peek();
+        }
+
+        public void pushToPop() {
+
+            if (this.pop.isEmpty()) {
+                while (!this.push.isEmpty()) {
+                    this.pop.push(this.push.pop());
+                }
+            }
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -63,7 +108,7 @@ public class TwoStacksImplementQueue {
         int testTime = 1000000;
         int range = 30;
         Queue<Integer> queue = new LinkedList<>();
-        MyQueue myQueue = new MyQueue();
+        MyQueue1 myQueue = new MyQueue1();
         for (int i = 0; i < testTime; i++) {
             if (Math.random() < 0.5) {
                 int value = randomInt(range);
