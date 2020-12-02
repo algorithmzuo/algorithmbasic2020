@@ -1,4 +1,4 @@
-package class05;
+package class05_08;
 
 import java.util.Arrays;
 
@@ -25,8 +25,7 @@ public class Code04_RadixSort {
 		return res;
 	}
 
-	// arr[l..r]排序  ,  digit
-	// l..r    3 56 17 100    3
+	// arr[L..R]排序  ,  最大值的十进制位数digit
 	public static void radixSort(int[] arr, int L, int R, int digit) {
 		final int radix = 10;
 		int i = 0, j = 0;
@@ -57,10 +56,6 @@ public class Code04_RadixSort {
 				arr[i] = help[j];
 			}
 		}
-		
-		
-		
-		
 	}
 
 	public static int getDigit(int x, int d) {

@@ -1,10 +1,11 @@
-package class05;
+package class05_08;
 
 import java.util.HashMap;
 
 // 该程序的对数器跑不过，你能发现bug在哪吗？
 public class Code01_TrieTree {
 
+	// 前缀树节点类型
 	public static class Node1 {
 		public int pass;
 		public int end;

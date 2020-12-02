@@ -1,4 +1,4 @@
-package class05;
+package class05_08;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package class05;
+package class05_08;
 
 import java.util.HashMap;
 
@@ -10,6 +10,7 @@ public class Code02_TrieTree {
 		public int end;
 		public Node1[] nexts;
 
+		// char tmp = 'b'  (tmp - 'a')
 		public Node1() {
 			pass = 0;
 			end = 0;
