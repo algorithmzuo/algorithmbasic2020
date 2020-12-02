@@ -3,6 +3,7 @@ package leo.class04_07;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 /**
  * @author Leo
@@ -153,6 +154,49 @@ class CoverMax2 {
 
 }
 
+class CoverMax3{
+
+    static class Line{
+        private int start;
+        private int end;
+
+        public Line(int s, int end) {
+            this.start = s;
+            this.end = end;
+        }
+    }
+
+    static class  StartComparator implements Comparator<Line>{
+
+        @Override
+        public int compare(Line o1, Line o2) {
+            return o1.start - o2.start;
+        }
+    }
+
+    public static int maxCover(int[][] arr) {
+        if (arr.length == 0 || arr == null) {
+
+            return 0;
+        }
+        Line[] lines = new Line[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            lines[i] = new Line(arr[i][0], arr[i][1]);
+        }
+        Arrays.sort(lines, new StartComparator());
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        int max = 0;
+        for (int i = 0; i < lines.length; i++) {
+            if (!queue.isEmpty() && queue.peek() <= lines[i].start) {
+                queue.poll();
+            }
+            queue.add(lines[i].end);
+            max = Math.max(max, queue.size());
+        }
+        return max;
+    }
+}
+
 class CoverMaxForTest{
 
     public static int maxCover(int[][] arr) {
@@ -189,7 +233,7 @@ class CoverMaxMain {
 
         for (int i = 0; i < testTime; i++) {
             int[][] lines = generateLines(sizeMax, L, R);
-            int max = CoverMax2.maxCover(lines);
+            int max = CoverMax3.maxCover(lines);
             int maxForTest = CoverMaxForTest.maxCover(lines);
             if (max != maxForTest) {
                 System.out.println("max : " + max + " maxForTest : " + maxForTest);

@@ -4,65 +4,67 @@ import java.util.HashMap;
 
 /**
  * @author Leo
- * @ClassName TrieTree
- * @DATE 2020/12/1 5:06 下午
- * @Description 前缀树
+ * @ClassName TrieTree_Map
+ * @DATE 2020/12/2 10:33 上午
+ * @Description next 用map实现
  */
-class TrieTree {
+public class TrieTree_Map {
 
-    public class Node{
-        int pass;
-        int end;
-        Node[] next;
+    private class Node {
+        private int pass;
+        private int end;
+        private HashMap<Integer,Node> next;
 
         public Node() {
             this.pass = 0;
             this.end = 0;
-            this.next = new Node[26];
+            this.next = new HashMap<>();
         }
+
     }
 
     private Node root;
 
-    public TrieTree() {
+    public TrieTree_Map() {
         this.root = new Node();
     }
 
     public void insert(String word) {
-        if (word == null) {
+        if (word == null || "".equals(word.trim())) {
             return;
         }
-        char[] str = word.toCharArray();
-        int path;
         Node node = this.root;
-        node.pass++;
-        for (int i = 0; i < str.length; i++) {
-            path = str[i] - 'a';
-            if (node.next[path] == null) {
-                node.next[path] = new Node();
+        root.pass++;
+        int path;
+        char[] chars = word.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            path = chars[i];
+            if (node.next.get(path) == null) {
+                node.next.put(path, new Node());
             }
+            node = node.next.get(path);
             node.pass++;
-            node = node.next[path];
         }
         node.end++;
+
     }
 
     public void delete(String word) {
         if (search(word) == 0) {
             return;
         }
-        char[] chars = word.toCharArray();
         Node node = this.root;
         node.pass--;
         int path;
+        char[] chars = word.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            path = chars[i] - 'a';
-            if (--node.next[path].pass == 0) {
-                node.next[path] = null;
+            path = chars[i];
+            if (--node.next.get(path).pass == 0) {
+                node.next.remove(path);
                 return;
             }
-            node = node.next[path];
-
+            node = node.next.get(path);
         }
         node.end--;
 
@@ -72,21 +74,20 @@ class TrieTree {
         if (word == null || "".equals(word.trim())) {
             return 0;
         }
-        char[] chars = word.toCharArray();
         Node node = this.root;
         int path;
+        char[] chars = word.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            path = chars[i] - 'a';
-            if (node.next[path] == null) {
+            path = chars[i];
+            if (node.next.get(path) == null) {
                 return 0;
             }
-            node = node.next[path];
+            node = node.next.get(path);
         }
         return node.end;
     }
 
     public int prefixNumber(String word) {
-
         if (word == null || "".equals(word.trim())) {
             return 0;
         }
@@ -94,21 +95,19 @@ class TrieTree {
         char[] chars = word.toCharArray();
         int path;
         for (int i = 0; i < chars.length; i++) {
-            path = chars[i] - 'a';
-            if (node.next[path] == null) {
+            path = chars[i];
+            if (node.next.get(path) == null) {
                 return 0;
             }
-            node = node.next[path];
+            node = node.next.get(path);
         }
-
         return node.pass;
     }
 
 }
-
-class TrieTree_Test{
+class TrieTree_Map_Test {
     private HashMap<String,Integer> map;
-    public TrieTree_Test(){
+    public TrieTree_Map_Test(){
         this.map = new HashMap<>();
     }
 
@@ -158,27 +157,28 @@ class TrieTree_Test{
     }
 }
 
-class TrieTree_Main {
+class TrieTree_MapMain{
+
     public static void main(String[] args){
         int strArrayLen = 100;
         int strLen = 50;
         int testTime = 10000;
         System.out.println("start");
         for (int i = 0; i < testTime; i++) {
-            TrieTree trieTree = new TrieTree();
-            TrieTree_Test test = new TrieTree_Test();
+            TrieTree_Map trieTree_map = new TrieTree_Map();
+            TrieTree_Map_Test test = new TrieTree_Map_Test();
             String[] strings = generateRandomString(strArrayLen, strLen);
             for (int j = 0; j < strings.length; j++) {
                 int random = (int) Math.random();
 
                 if (random < 0.25) {
-                    trieTree.insert(strings[j]);
+                    trieTree_map.insert(strings[j]);
                     test.insert(strings[j]);
                 }else if (random<0.5){
-                    trieTree.delete(strings[j]);
+                    trieTree_map.delete(strings[j]);
                     test.delete(strings[j]);
                 }else if(random<0.75){
-                    int mapCount = trieTree.search(strings[j]);
+                    int mapCount = trieTree_map.search(strings[j]);
                     int testCount = test.search(strings[j]);
                     if (mapCount != testCount) {
                         System.out.println("mapCount : " + mapCount + " testCount : " + testCount);
@@ -186,7 +186,7 @@ class TrieTree_Main {
                         break;
                     }
                 }else{
-                    int mapPreCount = trieTree.prefixNumber(strings[j]);
+                    int mapPreCount = trieTree_map.prefixNumber(strings[j]);
                     int testPreCount = test.prefixNumber(strings[j]);
                     if (mapPreCount != testPreCount) {
                         System.out.println("mapPreCount : " + mapPreCount + " testPreCount : " + testPreCount);
@@ -218,4 +218,5 @@ class TrieTree_Main {
         }
         return String.valueOf(chars);
     }
+
 }
