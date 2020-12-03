@@ -15,6 +15,8 @@ public class Code04_CopyListWithRandom {
 	}
 
 	public static Node copyListWithRand1(Node head) {
+		// key 老节点
+		// value 新节点
 		HashMap<Node, Node> map = new HashMap<Node, Node>();
 		Node cur = head;
 		while (cur != null) {
@@ -25,6 +27,7 @@ public class Code04_CopyListWithRandom {
 		while (cur != null) {
 			// cur 老
 			// map.get(cur) 新
+			// 新.next ->  cur.next克隆节点找到
 			map.get(cur).next = map.get(cur.next);
 			map.get(cur).rand = map.get(cur.rand);
 			cur = cur.next;
