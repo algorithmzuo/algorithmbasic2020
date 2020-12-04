@@ -33,18 +33,18 @@ public class Code02_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
-	public static void in(Node head) {
+	public static void in(Node cur) {
 		System.out.print("in-order: ");
-		if (head != null) {
+		if (cur != null) {
 			Stack<Node> stack = new Stack<Node>();
-			while (!stack.isEmpty() || head != null) {
-				if (head != null) {
-					stack.push(head);
-					head = head.left;
+			while (!stack.isEmpty() || cur != null) {
+				if (cur != null) {
+					stack.push(cur);
+					cur = cur.left;
 				} else {
-					head = stack.pop();
-					System.out.print(head.value + " ");
-					head = head.right;
+					cur = stack.pop();
+					System.out.print(cur.value + " ");
+					cur = cur.right;
 				}
 			}
 		}
@@ -58,7 +58,7 @@ public class Code02_UnRecursiveTraversalBT {
 			Stack<Node> s2 = new Stack<Node>();
 			s1.push(head);
 			while (!s1.isEmpty()) {
-				head = s1.pop();
+				head = s1.pop(); // 头 右 左
 				s2.push(head);
 				if (head.left != null) {
 					s1.push(head.left);
@@ -67,6 +67,7 @@ public class Code02_UnRecursiveTraversalBT {
 					s1.push(head.right);
 				}
 			}
+			// 左 右 头
 			while (!s2.isEmpty()) {
 				System.out.print(s2.pop().value + " ");
 			}

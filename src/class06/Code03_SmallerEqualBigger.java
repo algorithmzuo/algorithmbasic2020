@@ -101,8 +101,10 @@ public class Code03_SmallerEqualBigger {
 			sT.next = eH;
 			eT = eT == null ? sT : eT; // 下一步，谁去连大于区域的头，谁就变成eT
 		}
-		// 上面的if，不管跑了没有，et
-		// all reconnect
+		// 下一步，一定是需要用eT 去接 大于区域的头
+		// 有等于区域，eT -> 等于区域的尾结点
+		// 无等于区域，eT -> 小于区域的尾结点
+		// eT 尽量不为空的尾巴节点
 		if (eT != null) { // 如果小于区域和等于区域，不是都没有
 			eT.next = mH;
 		}
