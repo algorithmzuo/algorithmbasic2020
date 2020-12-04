@@ -3,6 +3,7 @@ package leo.class06_09;
 import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 
 import javax.print.attribute.standard.NumberUp;
+import javax.swing.plaf.TreeUI;
 import java.util.Stack;
 
 /**
@@ -313,6 +314,57 @@ public class IsPalindromeList {
         return verify;
     }
 
+
+    public static boolean isPalindromeList6(Node head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        //findMid
+        Node n1 = head;
+        Node n2 = head;
+        while (n2.next != null && n2.next.next != null) {
+            n1 = n1.next;
+            n2 = n2.next.next;
+        }
+        //reverse half node after
+        //n1 is mid
+        n2 = n1.next;
+        n1.next = null;
+        Node n3 = null;
+        while (n2 != null) {
+            n3 = n2.next;
+            n2.next = n1;
+            n1 = n2;
+            n2 = n3;
+        }
+        //n1 is head;
+        n3 = n1;
+        n2 = head;
+        boolean verify = true;
+        //compare
+        while (n1 != null && n2 != null) {
+            if (n1.value != n2.value) {
+                verify = false;
+                break;
+            }
+            n1= n1.next;
+            n2 = n2.next;
+        }
+        //reverse
+        n2 = n3.next;
+        n3.next = null;
+        while (n2 != null) {
+            n1 = n2.next;
+            n2.next = n3;
+            n3 = n2;
+            n2 = n1;
+        }
+        //return
+        return verify;
+    }
+
+
 }
 
 
@@ -320,7 +372,7 @@ class IsPalindromeListMain {
 
     public static void main(String[] args){
         int testTime = 1000;
-        int maxSize = 3;
+        int maxSize = 5;
         int range = 100;
         boolean a;
         boolean b;
@@ -330,7 +382,7 @@ class IsPalindromeListMain {
             Node originNode = generateRandomNode(maxSize, range);
             Node head = copyNode(originNode);
             b = IsPalindromeList.isPalindromeListByStack(head);
-            a = IsPalindromeList.isPalindromeList5(head);
+            a = IsPalindromeList.isPalindromeList6(head);
             if (!isEqualsNode(head, originNode)) {
                 System.out.println("not equals node!");
             }
