@@ -169,10 +169,25 @@ public class LinkedList {
         if (head == null) {
             return null;
         }
-        Node pre = head;
+        Node pre = null;
         Node next = null;
         while (head != null) {
             next  = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
+    public static Node reverseNode11(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node pre = null;
+        Node next = null;
+        while (head != null) {
+            next = head.next;
             head.next = pre;
             pre = head;
             head = next;
@@ -263,7 +278,7 @@ public class LinkedList {
         if (head == null) {
             return null;
         }
-        DoubleNode pre = head;
+        DoubleNode pre = null;
         DoubleNode next = null;
         while (head != null) {
             next = head.next;
@@ -274,6 +289,23 @@ public class LinkedList {
         }
         return pre;
 
+    }
+
+
+    public static DoubleNode reverseDoubleNode7(DoubleNode head){
+        if (head == null || head.next == null) {
+            return head;
+        }
+        DoubleNode pre = null;
+        DoubleNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.pre = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
     }
 
     /**
@@ -406,14 +438,14 @@ public class LinkedList {
         for (int i = 0; i < testTime; i++) {
             Node head = randomNode(maxSize, range);
             List<Node> nodeList = nodeToList(head);
-            Node node = reverseNode10(head);
+            Node node = reverseNode11(head);
             if (!verifyReverseListAndNode(nodeList, node)) {
                 System.out.println("nodeFuck!!");
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(maxSize, range);
             List<DoubleNode> doubleNodeList = DoubleNodeToList(doubleNodeHead);
-            DoubleNode doubleNode = reverseDoubleNode6(doubleNodeHead);
+            DoubleNode doubleNode = reverseDoubleNode7(doubleNodeHead);
             if (!verifyReverseListAndDoubleNode(doubleNodeList, doubleNode)) {
                 System.out.println("doubleNodeFuck!!");
                 break;
