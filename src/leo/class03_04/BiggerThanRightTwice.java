@@ -199,6 +199,102 @@ class BiggerThanRightTwice3 {
     }
 }
 
+class BiggerThanRightTwice4 {
+
+    public static int biggerTwice(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return 0;
+        }
+        return process(arr, 0, arr.length - 1);
+    }
+
+    public static int process(int[] arr, int l, int r) {
+        if (l == r) {
+            return 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(arr, l, m) + process(arr, m + 1, r) + merge(arr, l, m, r);
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int res = 0;
+        int windowR = m + 1;
+        int i;
+        for (i = l; i <= m; i++) {
+            while (windowR <= r && arr[i] > (arr[windowR] << 1)) {
+                windowR++;
+            }
+            res += windowR - m - 1;
+        }
+        int p1= l;
+        int p2 = m + 1;
+        int[] help = new int[r - l + 1];
+        i = 0;
+        while (p1 <= m && p2 <= r) {
+            help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = arr[p1++];
+        }
+        while (p2 <= r) {
+            help[i++] = arr[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+        return res;
+
+
+    }
+
+}
+
+class BiggerThanRightTwice5 {
+    public static int biggerTwice(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return 0;
+        }
+        return process(arr, 0, arr.length - 1);
+    }
+
+    public static int process(int[] arr, int l, int r) {
+        if (l == r) {
+            return 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(arr, l, m) + process(arr, m + 1, r) + merge(arr, l, m, r);
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int windowR = m+1;
+        int res = 0;
+        int i = l;
+        for (; i <= m; i++) {
+            while (windowR <= r && arr[i] > (arr[windowR] << 1)) {
+                windowR++;
+            }
+            res += windowR - m - 1;
+        }
+        int p1 = l;
+        int p2 = m + 1;
+        int[] help = new int[r - l + 1];
+        i = 0;
+        while (p1 <= m && p2 <= r) {
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = arr[p1++];
+        }
+        while(p2<=r){
+            help[i++] = arr[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+
+        return res;
+    }
+}
 
 class TestBiggerThanRightTwice {
     public static int biggerTwice(int[] arr) {
@@ -224,7 +320,7 @@ class Main{
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(sizeMax, range);
             int[] copyArray = copyArray(arr);
-            int res = BiggerThanRightTwice3.biggerTwice(arr);
+            int res = BiggerThanRightTwice5.biggerTwice(arr);
             int res1 = TestBiggerThanRightTwice.biggerTwice(copyArray);
             if (res != res1) {
                 System.out.println("res : " + res + " " + " res1: " + res1);
