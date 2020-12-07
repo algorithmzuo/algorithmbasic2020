@@ -1,6 +1,8 @@
 package leo.class04_06;
 
 import java.util.PriorityQueue;
+import java.util.concurrent.ForkJoinPool;
+import java.util.function.IntPredicate;
 
 /**
  * @author Leo
@@ -298,6 +300,136 @@ class MyMaxHeap3 {
 
 }
 
+class MyMaxHeap4{
+
+    int size;
+    int[] arr;
+    final int limit;
+
+    public MyMaxHeap4(int limit) {
+        this.limit = limit;
+        this.size = 0;
+        arr = new int[limit];
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void push(int v) {
+        if (size==limit){
+            throw new RuntimeException("heap is full");
+        }
+        arr[size] = v;
+        heapInsert(arr, size++);
+    }
+
+    public int pop() {
+        if (size == 0) {
+            throw new RuntimeException("heap is empty");
+        }
+        int value = arr[0];
+        swap(arr, 0, --size);
+        heapify(arr, 0, size);
+        return value;
+    }
+
+    private void heapInsert(int[] arr, int i) {
+        while (arr[i] > arr[(i - 1) / 2]) {
+            swap(arr, i, (i - 1) / 2);
+            i = (i - 1) / 2;
+        }
+
+    }
+
+    private void heapify(int[] arr, int index, int heapSize) {
+        int left = index << 1 | 1;
+        while (left < heapSize) {
+            int largest = left+1<heapSize&&arr[left+1]>arr[left]?left+1:left;
+            largest = arr[largest] > arr[index] ? largest : index;
+            if (largest == index) {
+                return;
+            }
+            swap(arr, largest, index);
+            index = largest;
+            left = index << 1 | 1;
+        }
+    }
+    public static void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+
+}
+
+
+class MyMaxHeap5{
+    private int size;
+    private int[] arr;
+    private final int limit;
+
+    public MyMaxHeap5(int limit) {
+        this.limit = limit;
+        this.arr = new int[limit];
+        this.size = 0;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void push(int value) {
+        if (this.size == this.limit) {
+            throw new RuntimeException("heap is full");
+        }
+        arr[size] = value;
+        heapInsert(arr, size++);
+    }
+
+    public int pop() {
+        if (size == 0) {
+            throw new RuntimeException("heap is empty");
+        }
+        int value = arr[0];
+        swap(arr, 0, --size);
+        heapify(arr, 0, size);
+        return value;
+    }
+
+    public void heapify(int[] arr, int i, int heapSize) {
+        int left = i << 1 | 1;
+        while (left < heapSize) {
+            int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
+            largest = arr[largest] > arr[i] ? largest : i;
+            if (i == largest) {
+                return;
+            }
+            swap(arr, largest, i);
+            i = largest;
+            left = i << 1 | 1;
+        }
+    }
+    public void heapInsert(int[] arr, int index) {
+        while (arr[index] > arr[(index - 1) / 2]) {
+            swap(arr, index, (index - 1) / 2);
+            index = (index - 1) / 2;
+        }
+    }
+
+    public void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+}
+
 
 class Main{
 
@@ -307,7 +439,7 @@ class Main{
         int range = 50;
         System.out.println("start!");
         PriorityQueue<Integer> queue = new PriorityQueue<>((a,b)-> {return b-a;});
-        MyMaxHeap3 heap = new MyMaxHeap3(testTimes);
+        MyMaxHeap5 heap = new MyMaxHeap5(testTimes);
         for (int i = 0; i < testTimes; i++) {
             if (heap.isEmpty()) {
                 int num = (int) ((range * Math.random() + 1) - (range * Math.random() + 1));

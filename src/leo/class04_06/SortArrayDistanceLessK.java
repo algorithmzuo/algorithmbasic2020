@@ -84,7 +84,32 @@ class SortArrayDistanceLessK2{
 
 }
 
+class SortArrayDistanceLessK3 {
 
+    public static void sortArrayDistanceLessK(int[] arr, int k) {
+        if (k == 0) {
+            return;
+        }
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        int i;
+        for (i = 0; i < Math.min(arr.length - 1, k - 1); i++) {
+            queue.add(arr[i]);
+        }
+        int j = 0;
+        for (; i < arr.length; i++, j++) {
+            queue.add(arr[i]);
+            arr[j] = queue.poll();
+        }
+        while (!queue.isEmpty()) {
+            arr[j++] = queue.poll();
+        }
+
+    }
+
+}
 class MainK {
 
 
@@ -101,7 +126,7 @@ class MainK {
             UpsetArray(arr, k);
             int[] copyArray = ArrayUtil.copyArray(arr);
             Arrays.sort(copyArray);
-            SortArrayDistanceLessK2.sortArrayDistanceLessK(arr,k);
+            SortArrayDistanceLessK3.sortArrayDistanceLessK(arr,k);
             if (!ArrayUtil.isEqual(arr, copyArray)) {
                 ArrayUtil.printArr(arr);
                 ArrayUtil.printArr(copyArray);

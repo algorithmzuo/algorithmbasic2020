@@ -1,6 +1,7 @@
 package leo.class03_05;
 
 import leo.util.ArrayUtil;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -375,7 +376,7 @@ class QuickSort3_4{
         }
         int[] equalArea = partition(arr, l, r);
         process(arr, l, equalArea[0] - 1);
-        process(arr, equalArea[0] + 1, r);
+        process(arr, equalArea[1] + 1, r);
     }
 
     private static int[] partition(int[] arr, int l, int r) {
@@ -407,6 +408,56 @@ class QuickSort3_4{
         arr[i] = arr[i] ^ arr[j];
     }
 
+}
+
+class QuickSort3_5 {
+
+    public static void quickSort(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        process(arr, 0, arr.length - 1);
+    }
+
+    public static void process(int[] arr, int l, int r) {
+
+        if (l >= r) {
+            return;
+        }
+        int[] equalsArea = partition(arr, l, r);
+        process(arr, l, equalsArea[0] - 1);
+        process(arr, equalsArea[1] + 1, r);
+
+    }
+
+
+    private static int[] partition(int[] arr, int l, int r) {
+        int leftIndex = l - 1;
+        int rightIndex = r;
+        int i = l;
+        while (i < rightIndex) {
+            if (arr[i] == arr[r]) {
+                i++;
+            } else if (arr[i] > arr[r]) {
+                swap(arr, i, --rightIndex);
+
+            } else if (arr[i] < arr[r]) {
+                swap(arr, i++, ++leftIndex);
+            }
+        }
+        swap(arr, r, rightIndex);
+        return new int[]{leftIndex + 1, rightIndex};
+    }
+
+
+    public static void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i]= arr[i]^arr[j];
+        arr[j]= arr[i]^arr[j];
+        arr[i]= arr[i]^arr[j];
+    }
 }
 
 class QuickSortUnRecursive{

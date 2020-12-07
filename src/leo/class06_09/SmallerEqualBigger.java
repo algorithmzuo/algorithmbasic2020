@@ -109,6 +109,55 @@ public class SmallerEqualBigger {
             return sH;
         }
     }
+
+
+    public static Node listPartition1(Node head, int target) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node sH = null;
+        Node sT = null;
+        Node bH = null;
+        Node bT = null;
+        Node cur = head;
+        while (cur != null) {
+            Node next = cur.next;
+            cur.next = null;
+            if (cur.value < target) {
+                if (sH == null) {
+                    sH = cur;
+                    sT = cur;
+                }else{
+                    sT.next = cur;
+                    sT = cur;
+                }
+            } else if (cur.value == target) {
+                if (bH == null) {
+                    bH = cur;
+                    bT = cur;
+                }else{
+                    cur.next = bH;
+                    bH = cur;
+                }
+            } else if (cur.value > target) {
+                if (bT == null) {
+                    bH = cur;
+                    bT = cur;
+                }else {
+                    bT.next = cur;
+                    bT = cur;
+                }
+            }
+            cur = next;
+        }
+
+        if (sT == null) {
+            return bH;
+        }else {
+            sT.next = bH;
+            return sH;
+        }
+    }
 }
 
 class SmallerEqualBigger_Main{
@@ -126,12 +175,14 @@ class SmallerEqualBigger_Main{
         int maxSize = 5;
         int range = 100;
         Node originNode = generateRandomNode(maxSize, range);
+        Node copyNode = copyNode(originNode);
         printLinkedList(originNode);
-        // head1 = listPartition1(head1, 4);
         int i = randomInt(range);
         System.out.println(i);
-        originNode = SmallerEqualBigger.listPartition(originNode, i);
+        copyNode = SmallerEqualBigger.NodePartitionByArray.nodePartitionByArray(copyNode, i);
+        originNode = SmallerEqualBigger.listPartition1(originNode, i);
         printLinkedList(originNode);
+        printLinkedList(copyNode);
 
     }
 

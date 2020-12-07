@@ -362,10 +362,10 @@ class CountOfRangeSum5 {
         while (index <= r) {
             long max = sum[index] - lower;
             long min = sum[index] - upper;
-            while (windowR <= r && sum[windowR] <= max) {
+            while (windowR <= m && sum[windowR] <= max) {
                 windowR++;
             }
-            while (windowL < r && sum[windowL] < min) {
+            while (windowL <=m && sum[windowL] < min) {
                 windowL++;
             }
             index++;
@@ -391,6 +391,69 @@ class CountOfRangeSum5 {
         return res;
     }
 
+}
+
+
+class CountOfRangeSum6{
+    public static int countRangeSum(int[] arr, int lower, int upper) {
+        if (arr.length == 0 || arr == null) {
+            return 0;
+        }
+        long[] sum = new long[arr.length];
+        sum[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            sum[i] = sum[i - 1] + arr[i];
+        }
+        return process(sum, 0, arr.length - 1, lower, upper);
+    }
+
+    public static int process(long[] arr, int l, int r, int lower, int upper) {
+        if (l > r) {
+            return 0;
+        }
+        if (l == r) {
+            return arr[l] >= lower && arr[l] <= upper ? 1 : 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(arr, l, m, lower, upper) + process(arr, m + 1, r, lower, upper) + merge(arr, l, m, r, lower, upper);
+    }
+
+    public static int merge(long[] arr,int l,int m,int r,int lower,int upper){
+        int windowL = l;
+        int windowR = l;
+        int index = m + 1;
+        int res = 0;
+        while (index <= r) {
+            long max = arr[index] - lower;
+            long min = arr[index] - upper;
+            while (windowR<=m&&arr[windowR] <= max) {
+                windowR++;
+            }
+            while (windowL<=m&&arr[windowL] < min) {
+                windowL++;
+            }
+            index++;
+            res += windowR - windowL;
+        }
+        long[] help = new long[r - l + 1];
+        int i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+        while (p1 <= m && p2 <= r) {
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        while(p1<=m){
+            help[i++] = arr[p1++];
+        }
+        while(p2<=r){
+            help[i++] = arr[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+        return res;
+
+    }
 }
 
 class MainTest{
@@ -422,7 +485,7 @@ class MainTest{
             do {
                 upper = (int) ((range * Math.random() + 1) - (range * Math.random() + 1));
             } while (upper <= lower);
-            int sumCount = CountOfRangeSum4.countRangeSum(arr, lower, upper);
+            int sumCount = CountOfRangeSum5.countRangeSum(arr, lower, upper);
             int testSumCount = countRangeSum(copyArray, lower, upper);
             if (sumCount != testSumCount) {
                 System.out.println("sumCount :" + sumCount+" testSumCount : "+testSumCount);

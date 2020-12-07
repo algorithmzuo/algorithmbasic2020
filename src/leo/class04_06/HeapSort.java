@@ -1,6 +1,7 @@
 package leo.class04_06;
 
 import leo.util.ArrayUtil;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.util.Arrays;
 
@@ -66,6 +67,46 @@ public class HeapSort {
     }
 
 }
+class HeapSort1{
+
+    public static void heapSort(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return;
+        }
+        for (int i = arr.length - 1; i >= 0; i--) {
+            heapify(arr, i, arr.length);
+        }
+        int length = arr.length;
+        while (length > 0) {
+            swap(arr, 0, --length);
+            heapify(arr, 0, length);
+        }
+        heapify(arr, 0, length);
+    }
+
+    public static void heapify(int[] arr, int i, int heapSize) {
+        int left = i << 1 | 1;
+        while (left < heapSize) {
+            int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
+            largest = arr[largest] > arr[i] ? largest : i;
+            if (largest == i) {
+                return;
+            }
+            swap(arr, largest, i);
+            i = largest;
+            left = i << 1 | 1;
+        }
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        if (i == j || arr[i] == arr[j]) {
+            return;
+        }
+        arr[i] = arr[i] ^ arr[j];
+        arr[j] = arr[i] ^ arr[j];
+        arr[i] = arr[i] ^ arr[j];
+    }
+}
 
 
 
@@ -83,7 +124,7 @@ class MainHeapSort {
             int[] arr = ArrayUtil.randomArray(sizeMax, range);
             int[] copyArray = ArrayUtil.copyArray(arr);
             Arrays.sort(copyArray);
-            HeapSort.heapSort(arr);
+            HeapSort1.heapSort(arr);
             if (!ArrayUtil.isEqual(arr, copyArray)) {
                 ArrayUtil.printArr(arr);
                 ArrayUtil.printArr(copyArray);

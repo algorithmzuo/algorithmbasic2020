@@ -38,7 +38,7 @@ import java.util.List;
  * @DATE 2020/12/4 6:11 下午
  * @Description
  */
-class Solution {
+class lc315_countSmaller {
     public static  List<Integer> countSmaller(int[] nums) {
         if (nums.length < 1 || nums == null) {
             return null;
@@ -89,7 +89,7 @@ class Main_315{
 
     public static void main(String[] args){
         int[] nums = new int[]{3,7,5,2,6,1};
-        List<Integer> list = Solution.countSmaller(nums);
+        List<Integer> list = lc315_countSmaller.countSmaller(nums);
         System.out.println(list);
 
     }
