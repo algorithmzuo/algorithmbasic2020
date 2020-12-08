@@ -1,8 +1,8 @@
-package class08;
+package class08_12;
 
 import java.util.ArrayList;
 
-public class Code04_MaxSubBSTSize {
+public class Code05_MaxSubBSTSize {
 
 	public static class Node {
 		public int value;

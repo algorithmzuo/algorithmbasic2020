@@ -129,7 +129,7 @@ public class Code02_SerializeAndReconstructTree {
 			Queue<Node> queue = new LinkedList<Node>();
 			queue.add(head);
 			while (!queue.isEmpty()) {
-				head = queue.poll();
+				head = queue.poll(); // head 父   子
 				if (head.left != null) {
 					ans.add(String.valueOf(head.left.value));
 					queue.add(head.left);
