@@ -1,6 +1,6 @@
 package class07_11;
 
-public class Code05_SuccessorNode {
+public class Code06_SuccessorNode {
 
 	public static class Node {
 		public int value;

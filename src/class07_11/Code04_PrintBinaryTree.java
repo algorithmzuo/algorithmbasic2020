@@ -1,6 +1,6 @@
 package class07_11;
 
-public class Code03_PrintBinaryTree {
+public class Code04_PrintBinaryTree {
 
 	public static class Node {
 		public int value;

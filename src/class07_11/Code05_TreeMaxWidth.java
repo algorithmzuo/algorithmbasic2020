@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Code04_TreeMaxWidth {
+public class Code05_TreeMaxWidth {
 
 	public static class Node {
 		public int value;
