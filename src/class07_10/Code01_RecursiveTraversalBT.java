@@ -1,6 +1,6 @@
 package class07_10;
 
-public class Code02_RecursiveTraversalBT {
+public class Code01_RecursiveTraversalBT {
 
 	public static class Node {
 		public int value;
