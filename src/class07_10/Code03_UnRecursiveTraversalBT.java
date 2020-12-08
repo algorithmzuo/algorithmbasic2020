@@ -1,8 +1,8 @@
-package class07;
+package class07_10;
 
 import java.util.Stack;
 
-public class Code02_UnRecursiveTraversalBT {
+public class Code03_UnRecursiveTraversalBT {
 
 	public static class Node {
 		public int value;

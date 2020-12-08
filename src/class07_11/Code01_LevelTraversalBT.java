@@ -1,9 +1,9 @@
-package class07;
+package class07_11;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Code03_LevelTraversalBT {
+public class Code01_LevelTraversalBT {
 
 	public static class Node {
 		public int value;
