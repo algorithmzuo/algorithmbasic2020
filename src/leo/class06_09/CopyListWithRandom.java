@@ -112,6 +112,37 @@ public class CopyListWithRandom {
 
     }
 
+    public static Node copyRandomNode2(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Node cur = head;
+        Node next;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = new Node(cur.value);
+            cur.next.next = next;
+            cur = next;
+        }
+        cur = head;
+        while (cur != null) {
+            next = cur.next.next;
+            cur.next.rand = cur.rand == null ? null : cur.rand.next;
+            cur = next;
+        }
+        cur = head;
+        Node copyHead = head.next;
+        Node copy;
+        while (cur != null) {
+            next = cur.next.next;
+            copy = cur.next;
+            cur.next = next;
+            copy.next = next == null ? null : next.next;
+            cur = next;
+        }
+        return copyHead;
+    }
+
 
     public static void main(String[] args){
         int testTime = 1000;
@@ -122,7 +153,7 @@ public class CopyListWithRandom {
         for (int i = 0; i < testTime; i++) {
             Node node = randomNode(maxSize, range);
             Node headMap = copyRandomNodeByMap(node);
-            Node head = copyRandomNode1(node);
+            Node head = copyRandomNode2(node);
             Node curNode = node;
             Node curHeadMap = headMap;
             Node curHead = head;

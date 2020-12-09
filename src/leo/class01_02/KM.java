@@ -190,6 +190,40 @@ public class KM {
 
     }
 
+    public static int onlyKTime7(int[] arr, int k, int m) {
+        int[]  t = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i < t.length; i++) {
+                t[i] += (num >> i) & 1;
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < t.length; i++) {
+            if (t[i]%m!=0){
+                if (t[i] % m == k) {
+                    res |= (1 << i);
+                } else{
+                    return -1;
+                }
+            }
+        }
+
+        if (res == 0) {
+            int count = 0;
+            for (int num : arr) {
+                if (num == 0) {
+                    count++;
+                }
+            }
+            if (count == k) {
+                return res;
+            }else{
+                return -1;
+            }
+        }
+        return res;
+
+    }
 
     public static void main(String[] args) {
         int maxKinds = 20;
@@ -207,7 +241,7 @@ public class KM {
             }
             int[] arr = randomArray(maxKinds, range, k, m);
 
-            int ans = onlyKTime6(arr, k, m);
+            int ans = onlyKTime7(arr, k, m);
             int ans2 = testForOnlyKTimes(arr, k, m);
             if (ans != ans2) {
                 System.out.println(ans);

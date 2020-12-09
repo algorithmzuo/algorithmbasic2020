@@ -1,4 +1,4 @@
-package leo.class07;
+package leo.class07_10;
 
 /**
  * @author Leo
