@@ -1,4 +1,4 @@
-package class06;
+package class06_09;
 
 public class Code03_SmallerEqualBigger {
 

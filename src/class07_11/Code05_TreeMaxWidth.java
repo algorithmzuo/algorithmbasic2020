@@ -1,10 +1,10 @@
-package class07;
+package class07_11;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Code06_TreeMaxWidth {
+public class Code05_TreeMaxWidth {
 
 	public static class Node {
 		public int value;

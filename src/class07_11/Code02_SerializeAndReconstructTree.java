@@ -1,10 +1,10 @@
-package class07;
+package class07_11;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class Code04_SerializeAndReconstructTree {
+public class Code02_SerializeAndReconstructTree {
     /*
      * 二叉树可以通过先序、后序或者按层遍历的方式序列化和反序列化，
      * 以下代码全部实现了。
@@ -129,7 +129,7 @@ public class Code04_SerializeAndReconstructTree {
 			Queue<Node> queue = new LinkedList<Node>();
 			queue.add(head);
 			while (!queue.isEmpty()) {
-				head = queue.poll();
+				head = queue.poll(); // head 父   子
 				if (head.left != null) {
 					ans.add(String.valueOf(head.left.value));
 					queue.add(head.left);

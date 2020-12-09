@@ -1,6 +1,6 @@
-package class08;
+package class08_12;
 
-public class Code02_IsFull {
+public class Code04_IsFull {
 
 	public static class Node {
 		public int value;

@@ -1,8 +1,8 @@
-package class08;
+package class08_12;
 
 import java.util.ArrayList;
 
-public class Code03_IsBST {
+public class Code02_IsBST {
 
 	public static class Node {
 		public int value;
