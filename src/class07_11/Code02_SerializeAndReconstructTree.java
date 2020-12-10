@@ -19,7 +19,7 @@ public class Code02_SerializeAndReconstructTree {
      *          \
      *           2
      * 补足空位置的中序遍历结果都是{ null, 1, null, 2, null}
-     *       
+     *
      * */
 	public static class Node {
 		public int value;
@@ -259,6 +259,6 @@ public class Code02_SerializeAndReconstructTree {
 			}
 		}
 		System.out.println("test finish!");
-		
+
 	}
 }
