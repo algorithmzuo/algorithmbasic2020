@@ -1,5 +1,7 @@
 package leo.class07_11;
 
+import com.sun.tools.javac.util.ListBuffer;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -42,6 +44,27 @@ public class SerializeAndReconstructTree {
         }
     }
 
+
+    public static Queue<String> preSerial1(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Queue<String> queue = new LinkedList<>();
+        preSerial1(head, queue);
+        return queue;
+    }
+
+    public static void preSerial1(Node node, Queue<String> queue) {
+        if (node == null) {
+            queue.offer(null);
+        }else{
+            queue.offer(String.valueOf(node.value));
+            preSerial(node.left, queue);
+            preSerial(node.right, queue);
+        }
+    }
+
+
     /**
      * 先序方式反序列化
      */
@@ -63,6 +86,27 @@ public class SerializeAndReconstructTree {
         return head;
     }
 
+
+    public static Node preDeSerial1(Queue<String> queue) {
+        if (queue == null) {
+            return null;
+        }
+        Node head = preDeSerialProcess1(queue);
+        return head;
+    }
+
+    public static Node preDeSerialProcess1(Queue<String> queue) {
+        String nodeValue = queue.poll();
+        if (nodeValue == null) {
+            return null;
+        }
+        Node head = new Node(Integer.valueOf(nodeValue));
+        head.left = preDeSerialProcess(queue);
+        head.right = preDeSerialProcess(queue);
+        return head;
+    }
+
+
     /**
      * 后续方式序列化队列
      */
@@ -80,6 +124,26 @@ public class SerializeAndReconstructTree {
             posSerial(node.right, queue);
             queue.offer(String.valueOf(node.value));
         }
+    }
+
+    public static Queue<String> posSerial1(Node node) {
+        if (node == null) {
+            return null;
+        }
+        Queue<String> queue = new LinkedList<>();
+        posSerial1(node, queue);
+        return queue;
+    }
+
+    public static void posSerial1(Node node, Queue<String> queue) {
+        if (node == null) {
+            queue.offer(null);
+        }else{
+            posSerial1(node.left, queue);
+            posSerial1(node.right, queue);
+            queue.offer(String.valueOf(node.value));
+        }
+
     }
 
     /**
@@ -106,6 +170,30 @@ public class SerializeAndReconstructTree {
         head.right = posDeSerialProcess(stack);
         head.left = posDeSerialProcess(stack);
         return head;
+    }
+
+    public static Node posDeSerial1(Queue<String> queue) {
+        if (queue == null) {
+            return null;
+        }
+        Stack<String> stack = new Stack<>();
+        while (!queue.isEmpty()) {
+            stack.push(queue.poll());
+        }
+        return posDeSerialProcess1(stack);
+
+    }
+
+    public static Node posDeSerialProcess1(Stack<String> stack) {
+        String v = stack.pop();
+        if (v == null) {
+            return null;
+        }
+        Node head = new Node(Integer.valueOf(v));
+        head.right = posDeSerialProcess1(stack);
+        head.left = posDeSerialProcess1(stack);
+        return head;
+
     }
 
     /**
@@ -164,6 +252,63 @@ public class SerializeAndReconstructTree {
         return head;
     }
 
+    public static Queue<String> levelSerial1(Node node) {
+        Queue<String> ans = new LinkedList<>();
+        if (node == null) {
+            ans.offer(null);
+
+        }else{
+            Node cur = node;
+            ans.offer(String.valueOf(cur.value));
+            Queue<Node> queue = new LinkedList<>();
+            queue.offer(cur);
+            while (!queue.isEmpty()) {
+                cur = queue.poll();
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                    ans.offer(String.valueOf(cur.left.value));
+                }else{
+                    ans.offer(null);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                    ans.offer(String.valueOf(cur.right.value));
+
+                }else{
+                    ans.offer(null);
+                }
+            }
+
+        }
+
+        return ans;
+    }
+
+    public static Node levelDeSerial1(Queue<String> list) {
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        Node head = generateNode1(list.poll());
+        Queue<Node> queue = new LinkedList<>();
+        if (head != null) {
+            queue.offer(head);
+        }
+        Node cur = null;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            cur.left = generateNode1(list.poll());
+            cur.right = generateNode1(list.poll());
+            if (cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+            }
+        }
+        return head;
+    }
+
+
     public static Node generateNode(String v) {
         if (v == null) {
             return null;
@@ -171,6 +316,15 @@ public class SerializeAndReconstructTree {
         Node node = new Node(Integer.valueOf(v));
         return node;
     }
+
+    public static Node generateNode1(String v) {
+        if (v == null) {
+            return null;
+        }
+        Node node = new Node(Integer.valueOf(v));
+        return node;
+    }
+
 
     /**
      * 功能描述 : 测试
@@ -186,13 +340,13 @@ public class SerializeAndReconstructTree {
         System.out.println("start");
         for (int i = 0; i < testTime; i++) {
             Node head = generateRandomNode(maxLevel, range);
-            Queue<String> preSerial = preSerial(head);
-            Queue<String> posSerial = posSerial(head);
-            Node posDeSerial = posDeSerial(posSerial);
-            Queue<String> levelSerial = levelSerial(head);
-            Node levelDeSerial = levelDeSerial(levelSerial);
+            Queue<String> preSerial = preSerial1(head);
+            Queue<String> posSerial = posSerial1(head);
+            Node posDeSerial = posDeSerial1(posSerial);
+            Queue<String> levelSerial = levelSerial1(head);
+            Node levelDeSerial = levelDeSerial1(levelSerial);
 
-            Node preDeSerial = preDeSerial(preSerial);
+            Node preDeSerial = preDeSerial1(preSerial);
             if (!isEqualsNode(preDeSerial, head)) {
                 System.out.println("preDeSerial ==> fuck");
                 break;

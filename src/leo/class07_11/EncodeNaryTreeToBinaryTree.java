@@ -171,10 +171,8 @@ public class EncodeNaryTreeToBinaryTree {
             head.children = de(root.left);
             return head;
         }
+
         public static List<Node> de(TreeNode root){
-            if (root == null) {
-                return null;
-            }
             List<Node> children = new ArrayList<>();
 
             while (root != null) {
@@ -187,6 +185,52 @@ public class EncodeNaryTreeToBinaryTree {
         }
     }
 
+    static class Codec3{
+        public static TreeNode encode(Node root) {
+            if (root == null) {
+                return null;
+            }
+            TreeNode head = new TreeNode(root.val);
+            head.left = en(root.children);
+            return head;
+        }
+        public static TreeNode en(List<Node> children){
+            TreeNode head = null;
+            TreeNode cur = null;
+            for (Node child : children) {
+                TreeNode node = new TreeNode(child.val);
+                if (head == null) {
+                    head = node;
+                }else{
+                    cur.right = node;
+                }
+                cur = node;
+                cur.left = en(child.children);
+            }
+            return head;
+        }
+
+        public static Node decode(TreeNode root) {
+            if (root == null) {
+                return null;
+            }
+            Node head = new Node(root.val);
+            head.children = de(root.left);
+            return head;
+        }
+
+        public static List<Node> de(TreeNode node) {
+            List<Node> list = new ArrayList<>();
+            while (node != null) {
+                Node cur = new Node(node.val, de(node.left));
+                list.add(cur);
+                node = node.right;
+            }
+            return list;
+        }
+
+    }
+
     static class EncodeNaryTreeToBinaryTree_Main {
 
         public static void main(String[] args){
@@ -196,10 +240,10 @@ public class EncodeNaryTreeToBinaryTree {
             System.out.println("start");
             for (int i = 0; i < test; i++) {
                 TreeNode node = generateRandomNode(maxLevel, range);
-                Node decodeOrigin = Codec1.decode(node);
-                TreeNode encodeOrigin = Codec1.encode(decodeOrigin);
-                Node decode = Codec1.decode(encodeOrigin);
-                TreeNode treeNode = Codec1.encode(decode);
+                Node decodeOrigin = Codec3.decode(node);
+                TreeNode encodeOrigin = Codec3.encode(decodeOrigin);
+                Node decode = Codec3.decode(encodeOrigin);
+                TreeNode treeNode = Codec3.encode(decode);
                 if (!isEqualsNode(treeNode, encodeOrigin)) {
                     System.out.println("fuck!");
                 }

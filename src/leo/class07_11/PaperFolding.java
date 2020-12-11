@@ -27,9 +27,27 @@ public class PaperFolding {
         processPrint(i + 1, n, false);
     }
 
+    public static void printAllFolds1(int n) {
+        if (n < 0) {
+            return;
+        }
+        processPrint1(1, n, true);
+        System.out.println();
+    }
+
+    public static void processPrint1(int i, int n, boolean du) {
+        if (i > n) {
+            return;
+        }
+        processPrint1(i + 1, n, true);
+        System.out.print(du ? "凹 " : "凸 ");
+        processPrint1(i + 1, n, false);
+    }
+
     public static void main(String[] args){
         //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
         //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
-        printAllFolds(4);
+        //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
+        printAllFolds1(4);
     }
 }

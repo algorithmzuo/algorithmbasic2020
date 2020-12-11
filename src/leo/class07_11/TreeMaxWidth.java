@@ -1,5 +1,6 @@
 package leo.class07_11;
 
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -58,6 +59,42 @@ public class TreeMaxWidth {
         return max;
     }
 
+    public static int maxWidthUseMap1(Node head) {
+        if (head == null) {
+            return 0;
+        }
+        int max = 0;
+        int curLevel = 1;
+        int maxCurCount = 0;
+        Node cur;
+        Queue<Node> queue = new LinkedList<>();
+        Map<Node, Integer> map = new HashMap<>();
+        queue.offer(head);
+        map.put(head, curLevel);
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            int curNodeLevel = map.get(cur);
+            if (cur.left != null) {
+                queue.offer(cur.left);
+                map.put(cur.left, curNodeLevel + 1);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+                map.put(cur.right, curNodeLevel + 1);
+            }
+            if (curNodeLevel == curLevel) {
+                maxCurCount++;
+            }else{
+                max = Math.max(max, maxCurCount);
+                curLevel++;
+                maxCurCount = 1;
+            }
+        }
+        max = Math.max(max, maxCurCount);
+        return max;
+    }
+
+
     public static int maxWidthNoMap(Node head) {
         if (head == null) {
             return 0;
@@ -89,18 +126,49 @@ public class TreeMaxWidth {
         return max;
     }
 
+    public static int maxWidthNoMap1(Node head){
+        if (head == null) {
+            return 0;
+        }
+        Node curEnd = head;
+        Node nextEnd = null;
+        int max = 0;
+        int maxLevel = 0;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(head);
+        Node cur;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            if (cur.left != null) {
+                queue.offer(cur.left);
+                nextEnd = cur.left;
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+                nextEnd = cur.right;
+            }
+            maxLevel++;
+            if (cur == curEnd) {
+                curEnd = nextEnd;
+                max = Math.max(max, maxLevel);
+                maxLevel = 0;
+            }
+        }
+        return max;
+    }
+
 
     public static void main(String[] args){
 
         int maxSize = 10;
         int range = 100;
-        int test = 1000;
+        int test = 100000;
         System.out.println("start!");
 
         for (int i = 0; i < test; i++) {
             Node head = generateRandomNode(maxSize, range);
-            int i1 = maxWidthUseMap(head);
-            int i2 = maxWidthNoMap(head);
+            int i1 = maxWidthUseMap1(head);
+            int i2 = maxWidthNoMap1(head);
             if (i1 != i2) {
                 System.out.println("i1: " + i1 + " i2: " + i2);
                 break;

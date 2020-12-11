@@ -26,17 +26,17 @@ public class TraversalBT {
 
         Recursive.pre1(head);
         System.out.println();
-        UnRecursive.pre1(head);
+        UnRecursive.pre2(head);
         System.out.println("--------");
 
         Recursive.in1(head);
         System.out.println();
-        UnRecursive.in1(head);
+        UnRecursive.in3(head);
         System.out.println("---------");
 
         Recursive.pos1(head);
         System.out.println();
-        UnRecursive.pos1(head);
+        UnRecursive.pos2(head);
         System.out.println("---------");
 
     }
@@ -151,6 +151,27 @@ class UnRecursive{
         System.out.println();
     }
 
+    public static void pre2(TreeNode head){
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = head;
+        stack.push(cur);
+        while (!stack.isEmpty()) {
+            cur = stack.pop();
+            System.out.print(cur.value + " ");
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+        }
+        System.out.println();
+
+    }
+
     /**
      * 中序:左头右
      */
@@ -215,6 +236,28 @@ class UnRecursive{
         System.out.println();
     }
 
+    public static void in3(TreeNode head){
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = head;
+        while (!stack.isEmpty() || cur != null) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }else{
+                cur = stack.pop();
+                System.out.print(cur.value + " ");
+                cur = cur.right;
+            }
+        }
+        System.out.println();
+    }
+
+
+
+
     /**
      * 左右头
      */
@@ -266,6 +309,31 @@ class UnRecursive{
             System.out.print(s2.pop().value + " ");
         }
         System.out.println();
+    }
+
+    public static void pos2(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        TreeNode cur = head;
+        s1.push(cur);
+        while (!s1.isEmpty()) {
+            cur = s1.pop();
+            s2.push(cur);
+            if (cur.left != null) {
+                s1.push(cur.left);
+            }
+            if (cur.right != null) {
+                s1.push(cur.right);
+            }
+        }
+        while (!s2.isEmpty()) {
+            System.out.print(s2.pop().value + " ");
+        }
+        System.out.println();
+
     }
 }
 

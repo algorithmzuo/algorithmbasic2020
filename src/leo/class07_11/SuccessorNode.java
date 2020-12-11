@@ -63,6 +63,26 @@ public class SuccessorNode {
         }
     }
 
+    public static Node getSuccessorNode2(Node node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.right != null) {
+            Node cur = node.right;
+            while (cur.left != null) {
+                cur = cur.left;
+            }
+            return cur;
+        }else{
+            Node parent = node.parent;
+            while (parent != null && parent.right == node) {
+                node = parent;
+                parent = node.parent;
+            }
+            return parent;
+        }
+    }
+
     public static void main(String[] args) {
         Node head = new Node(6);
         head.parent = null;
@@ -86,25 +106,25 @@ public class SuccessorNode {
         head.right.right.parent = head.right;
 
         Node test = head.left.left;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.left.left.right;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.left;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.left.right;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.left.right.right;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.right.left.left;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.right.left;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.right;
-        System.out.println(test.value + " next: " + getSuccessorNode1(test).value);
+        System.out.println(test.value + " next: " + getSuccessorNode2(test).value);
         test = head.right.right; // 10's next is null
-        System.out.println(test.value + " next: " + getSuccessorNode1(test));
+        System.out.println(test.value + " next: " + getSuccessorNode2(test));
     }
 
 
