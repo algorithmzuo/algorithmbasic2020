@@ -49,49 +49,41 @@ public class Code03_lowestAncestor {
 		}
 	}
 
-	public static Node lowestAncestor2(Node head, Node o1, Node o2) {
-		return process(head, o1, o2).ans;
+	public static Node lowestAncestor2(Node head, Node a, Node b) {
+		return process(head, a, b).ans;
 	}
 
-	// 任何子树，
 	public static class Info {
+		public boolean findA;
+		public boolean findB;
 		public Node ans;
-		public boolean findO1;
-		public boolean findO2;
 
-		public Info(Node a, boolean f1, boolean f2) {
-			ans = a;
-			findO1 = f1;
-			findO2 = f2;
+		public Info(boolean fA, boolean fB, Node an) {
+			findA = fA;
+			findB = fB;
+			ans = an;
 		}
 	}
 
-	public static Info process(Node X, Node o1, Node o2) {
-		if (X == null) {
-			return new Info(null, false, false);
+	public static Info process(Node x, Node a, Node b) {
+		if (x == null) {
+			return new Info(false, false, null);
 		}
-		Info leftInfo = process(X.left, o1, o2);
-		Info rightInfo = process(X.right, o1, o2);
-		boolean findO1 = X == o1 || leftInfo.findO1 || rightInfo.findO1;
-		boolean findO2 = X == o2 || leftInfo.findO2 || rightInfo.findO2;
-		// 	O1和O2最初的交汇点在哪？
-		// 1) 在左树上已经提前交汇了
-		// 2) 在右树上已经提前交汇了
-		// 3) 没有在左树或者右树上提前交汇，O1  O2 全了
-		// 4) 
+		Info leftInfo = process(x.left, a, b);
+		Info rightInfo = process(x.right, a, b);
+		boolean findA = (x == a) || leftInfo.findA || rightInfo.findA;
+		boolean findB = (x == b) || leftInfo.findB || rightInfo.findB;
 		Node ans = null;
 		if (leftInfo.ans != null) {
 			ans = leftInfo.ans;
-		}
-		if (rightInfo.ans != null) {
+		} else if (rightInfo.ans != null) {
 			ans = rightInfo.ans;
-		}
-		if (ans == null) {
-			if (findO1 && findO2) {
-				ans = X;
+		} else {
+			if (findA && findB) {
+				ans = x;
 			}
 		}
-		return new Info(ans, findO1, findO2);
+		return new Info(findA, findB, ans);
 	}
 
 	// for test

@@ -46,36 +46,34 @@ public class Code04_MaxHappy {
 		}
 	}
 
-	public static int maxHappy2(Employee boss) {
-		if (boss == null) {
-			return 0;
-		}
-		Info all = process2(boss);
-		return Math.max(all.yes, all.no);
+	public static int maxHappy2(Employee head) {
+		Info allInfo = process(head);
+		return Math.max(allInfo.no, allInfo.yes);
 	}
 
 	public static class Info {
-		public int yes;
 		public int no;
+		public int yes;
 
-		public Info(int y, int n) {
-			yes = y;
+		public Info(int n, int y) {
 			no = n;
+			yes = y;
 		}
 	}
 
-	public static Info process2(Employee x) {
-		if (x.nexts.isEmpty()) {
-			return new Info(x.happy, 0);
+	public static Info process(Employee x) {
+		if (x == null) {
+			return new Info(0, 0);
 		}
-		int yes = x.happy;
 		int no = 0;
+		int yes = x.happy;
 		for (Employee next : x.nexts) {
-			Info nextInfo = process2(next);
+			Info nextInfo = process(next);
+			no += Math.max(nextInfo.no, nextInfo.yes);
 			yes += nextInfo.no;
-			no += Math.max(nextInfo.yes, nextInfo.no);
+
 		}
-		return new Info(yes, no);
+		return new Info(no, yes);
 	}
 
 	// for test
