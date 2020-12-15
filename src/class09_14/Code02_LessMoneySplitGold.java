@@ -1,8 +1,8 @@
-package class09;
+package class09_14;
 
 import java.util.PriorityQueue;
 
-public class Code03_LessMoneySplitGold {
+public class Code02_LessMoneySplitGold {
 
 	public static int lessMoney1(int[] arr) {
 		if (arr == null || arr.length == 0) {

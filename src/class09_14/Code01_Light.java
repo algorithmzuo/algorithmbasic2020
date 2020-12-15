@@ -1,8 +1,8 @@
-package class09;
+package class09_14;
 
 import java.util.HashSet;
 
-public class Code02_Light {
+public class Code01_Light {
 
 	public static int minLight1(String road) {
 		if (road == null || road.length() == 0) {

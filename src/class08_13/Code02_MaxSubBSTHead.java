@@ -1,8 +1,8 @@
-package class08_12;
+package class08_13;
 
 import java.util.ArrayList;
 
-public class Code06_MaxSubBSTHead {
+public class Code02_MaxSubBSTHead {
 
 	public static class Node {
 		public int value;
