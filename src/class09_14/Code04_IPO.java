@@ -1,9 +1,9 @@
-package class09;
+package class09_14;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class Code05_IPO {
+public class Code04_IPO {
 
 	public static int findMaximizedCapital(int K, int W, int[] Profits, int[] Capital) {
 		PriorityQueue<Program> minCostQ = new PriorityQueue<>(new MinCostComparator());

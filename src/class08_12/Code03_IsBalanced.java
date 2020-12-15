@@ -32,33 +32,43 @@ public class Code03_IsBalanced {
 	}
 
 	public static boolean isBalanced2(Node head) {
-		return process2(head).isBalaced;
+		return process(head).isBalanced;
 	}
-
-	// 左、右要求一样，Info 信息返回的结构体
-	public static class Info {
-		public boolean isBalaced;
+	
+	public static class Info{
+		public boolean isBalanced;
 		public int height;
-
-		public Info(boolean b, int h) {
-			isBalaced = b;
+		
+		public Info(boolean i, int h) {
+			isBalanced = i;
 			height = h;
 		}
 	}
-
-	public static Info process2(Node X) {
-		if (X == null) {
+	
+	public static Info process(Node x) {
+		if(x == null) {
 			return new Info(true, 0);
 		}
-		Info leftInfo = process2(X.left);
-		Info rightInfo = process2(X.right);
-		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+		Info leftInfo = process(x.left);
+		Info rightInfo = process(x.right);
+		int height = Math.max(leftInfo.height, rightInfo.height)  + 1;
 		boolean isBalanced = true;
-		if (!leftInfo.isBalaced || !rightInfo.isBalaced || Math.abs(leftInfo.height - rightInfo.height) > 1) {
+		if(!leftInfo.isBalanced) {
+			isBalanced = false;
+		}
+		if(!rightInfo.isBalanced) {
+			isBalanced = false;
+		}
+		if(Math.abs(leftInfo.height - rightInfo.height) > 1) {
 			isBalanced = false;
 		}
 		return new Info(isBalanced, height);
 	}
+	
+	
+	
+	
+	
 
 	// for test
 	public static Node generateRandomBST(int maxLevel, int maxValue) {

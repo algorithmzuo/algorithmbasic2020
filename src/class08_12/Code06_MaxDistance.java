@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Code08_MaxDistance {
+public class Code06_MaxDistance {
 
 	public static class Node {
 		public int value;
@@ -92,6 +92,33 @@ public class Code08_MaxDistance {
 		return distance1 + distance2 - 1;
 	}
 
+//	public static int maxDistance2(Node head) {
+//		return process(head).maxDistance;
+//	}
+//
+//	public static class Info {
+//		public int maxDistance;
+//		public int height;
+//
+//		public Info(int dis, int h) {
+//			maxDistance = dis;
+//			height = h;
+//		}
+//	}
+//
+//	public static Info process(Node X) {
+//		if (X == null) {
+//			return new Info(0, 0);
+//		}
+//		Info leftInfo = process(X.left);
+//		Info rightInfo = process(X.right);
+//		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+//		int maxDistance = Math.max(
+//				Math.max(leftInfo.maxDistance, rightInfo.maxDistance),
+//				leftInfo.height + rightInfo.height + 1);
+//		return new Info(maxDistance, height);
+//	}
+
 	public static int maxDistance2(Node head) {
 		return process(head).maxDistance;
 	}
@@ -100,22 +127,24 @@ public class Code08_MaxDistance {
 		public int maxDistance;
 		public int height;
 
-		public Info(int dis, int h) {
-			maxDistance = dis;
+		public Info(int m, int h) {
+			maxDistance = m;
 			height = h;
 		}
+
 	}
 
-	public static Info process(Node X) {
-		if (X == null) {
+	public static Info process(Node x) {
+		if (x == null) {
 			return new Info(0, 0);
 		}
-		Info leftInfo = process(X.left);
-		Info rightInfo = process(X.right);
+		Info leftInfo = process(x.left);
+		Info rightInfo = process(x.right);
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-		int maxDistance = Math.max(
-				Math.max(leftInfo.maxDistance, rightInfo.maxDistance),
-				leftInfo.height + rightInfo.height + 1);
+		int p1 = leftInfo.maxDistance;
+		int p2 = rightInfo.maxDistance;
+		int p3 = leftInfo.height + rightInfo.height + 1;
+		int maxDistance = Math.max(Math.max(p1, p2), p3);
 		return new Info(maxDistance, height);
 	}
 
