@@ -4,6 +4,7 @@ import java.util.PriorityQueue;
 
 public class Code02_LessMoneySplitGold {
 
+	// 纯暴力！
 	public static int lessMoney1(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return 0;
@@ -11,6 +12,8 @@ public class Code02_LessMoneySplitGold {
 		return process(arr, 0);
 	}
 
+	// 等待合并的数都在arr里，pre之前的合并行为产生了多少总代价
+	// arr中只剩一个数字的时候，停止合并，返回最小的总代价
 	public static int process(int[] arr, int pre) {
 		if (arr.length == 1) {
 			return pre;

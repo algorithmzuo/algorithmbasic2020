@@ -15,6 +15,7 @@ public class Code03_BestArrange {
 		}
 	}
 
+	// 暴力！所有情况都尝试！
 	public static int bestArrange1(Program[] programs) {
 		if (programs == null || programs.length == 0) {
 			return 0;
@@ -22,8 +23,8 @@ public class Code03_BestArrange {
 		return process(programs, 0, 0);
 	}
 
-	// 还剩什么会议都放在programs里
-	// done 之前已经安排了多少会议，数量
+	// 还剩下的会议都放在programs里
+	// done之前已经安排了多少会议的数量
 	// timeLine目前来到的时间点是什么
 	
 	// 目前来到timeLine的时间点，已经安排了done多的会议，剩下的会议programs可以自由安排
@@ -32,7 +33,7 @@ public class Code03_BestArrange {
 		if (programs.length == 0) {
 			return done;
 		}
-		// 还有会议可以选择
+		// 还剩下会议
 		int max = done;
 		// 当前安排的会议是什么会，每一个都枚举
 		for (int i = 0; i < programs.length; i++) {
@@ -55,10 +56,12 @@ public class Code03_BestArrange {
 		return ans;
 	}
 
+	// 会议的开始时间和结束时间，都是数值，不会 < 0
 	public static int bestArrange2(Program[] programs) {
 		Arrays.sort(programs, new ProgramComparator());
 		int timeLine = 0;
 		int result = 0;
+		// 依次遍历每一个会议，结束时间早的会议先遍历
 		for (int i = 0; i < programs.length; i++) {
 			if (timeLine <= programs[i].start) {
 				result++;

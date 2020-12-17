@@ -31,12 +31,14 @@ public class Code05_UnionFind {
 			}
 		}
 
+		// 给你一个节点，请你往上到不能再往上，把代表返回
 		public Node<V> findFather(Node<V> cur) {
 			Stack<Node<V>> path = new Stack<>();
 			while (cur != parents.get(cur)) {
 				path.push(cur);
 				cur = parents.get(cur);
 			}
+			// cur == parents.get(cur)
 			while (!path.isEmpty()) {
 				parents.put(path.pop(), cur);
 			}
