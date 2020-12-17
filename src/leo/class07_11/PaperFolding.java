@@ -44,10 +44,26 @@ public class PaperFolding {
         processPrint1(i + 1, n, false);
     }
 
+    public static void printAllFolds2(int n) {
+        processPrint2(1, n, true);
+        System.out.println();
+
+    }
+    static void processPrint2(int i,int n,boolean v) {
+        if (i > n) {
+            return;
+        }
+        processPrint(i + 1, n, true);
+        System.out.print(v ? "凹 " : "凸 ");
+        processPrint(i + 1, n, false);
+
+    }
+
     public static void main(String[] args){
         //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
         //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
         //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
-        printAllFolds1(4);
+        //凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
+        printAllFolds2(4);
     }
 }

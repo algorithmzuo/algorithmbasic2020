@@ -64,6 +64,25 @@ public class SerializeAndReconstructTree {
         }
     }
 
+    public static Queue<String> preSerial2(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Queue<String> queue = new LinkedList<>();
+        preSerial2(head, queue);
+        return queue;
+    }
+
+    static void preSerial2(Node node, Queue<String> queue) {
+        if (node == null) {
+            queue.offer(null);
+            return;
+        }
+        queue.offer(String.valueOf(node.value));
+        preSerial2(node.left, queue);
+        preSerial2(node.right, queue);
+    }
+
 
     /**
      * 先序方式反序列化
@@ -106,6 +125,25 @@ public class SerializeAndReconstructTree {
         return head;
     }
 
+    static Node preDeSerial2(Queue<String> queue) {
+        if (queue == null) {
+            return null;
+        }
+        return preDeSerialProcess2(queue);
+    }
+
+    static Node preDeSerialProcess2(Queue<String> queue) {
+        String cur = queue.poll();
+
+        if (cur == null) {
+            return null;
+        }
+        Node head = new Node(Integer.valueOf(cur));
+        head.left = preDeSerialProcess2(queue);
+        head.right = preDeSerialProcess2(queue);
+        return head;
+
+    }
 
     /**
      * 后续方式序列化队列
@@ -146,8 +184,28 @@ public class SerializeAndReconstructTree {
 
     }
 
+    static Queue<String> posSerial2(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Queue<String> queue = new LinkedList<>();
+        posSerial2(head, queue);
+        return queue;
+    }
+
+    static void posSerial2(Node node, Queue<String> queue) {
+        if (node == null) {
+            queue.offer(null);
+        }else {
+            posSerial2(node.left, queue);
+            posSerial2(node.right, queue);
+            queue.offer(String.valueOf(node.value));
+        }
+
+    }
     /**
      * 后续方式反序列化
+     * 左右头
      */
     public static Node posDeSerial(Queue<String> queue) {
         if (queue.isEmpty() || queue == null) {
@@ -194,6 +252,29 @@ public class SerializeAndReconstructTree {
         head.left = posDeSerialProcess1(stack);
         return head;
 
+    }
+
+    static Node posDeSerial2(Queue<String> queue) {
+
+        if (queue == null) {
+            return null;
+        }
+        Stack<String> stack = new Stack<>();
+        while (!queue.isEmpty()) {
+            stack.push(queue.poll());
+        }
+        return posDeSerialProcess2(stack);
+    }
+
+    static Node posDeSerialProcess2(Stack<String> stack) {
+        String cur = stack.pop();
+        if (cur == null) {
+            return null;
+        }
+        Node head = new Node(Integer.valueOf(cur));
+        head.right = posDeSerialProcess2(stack);
+        head.left = posDeSerialProcess2(stack);
+        return head;
     }
 
     /**
@@ -340,13 +421,13 @@ public class SerializeAndReconstructTree {
         System.out.println("start");
         for (int i = 0; i < testTime; i++) {
             Node head = generateRandomNode(maxLevel, range);
-            Queue<String> preSerial = preSerial1(head);
-            Queue<String> posSerial = posSerial1(head);
-            Node posDeSerial = posDeSerial1(posSerial);
+            Queue<String> preSerial = preSerial2(head);
+            Queue<String> posSerial = posSerial2(head);
+            Node posDeSerial = posDeSerial2(posSerial);
             Queue<String> levelSerial = levelSerial1(head);
             Node levelDeSerial = levelDeSerial1(levelSerial);
 
-            Node preDeSerial = preDeSerial1(preSerial);
+            Node preDeSerial = preDeSerial2(preSerial);
             if (!isEqualsNode(preDeSerial, head)) {
                 System.out.println("preDeSerial ==> fuck");
                 break;

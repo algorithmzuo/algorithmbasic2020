@@ -157,6 +157,36 @@ public class TreeMaxWidth {
         return max;
     }
 
+    public static int maxWidthNoMap2(Node head) {
+        if (head == null) {
+            return 0;
+        }
+        Node curEnd = head;
+        Node nextEnd = null;
+        int curLevel = 0;
+        int maxLevel = 0;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(head);
+        Node cur = null;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            if (cur.left != null) {
+                queue.offer(cur.left);
+                nextEnd = cur.left;
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+                nextEnd = cur.right;
+            }
+            curLevel++;
+            if (cur == curEnd) {
+                curEnd = nextEnd;
+                maxLevel = Math.max(maxLevel, curLevel);
+                curLevel = 0;
+            }
+        }
+        return maxLevel;
+    }
 
     public static void main(String[] args){
 
@@ -168,7 +198,7 @@ public class TreeMaxWidth {
         for (int i = 0; i < test; i++) {
             Node head = generateRandomNode(maxSize, range);
             int i1 = maxWidthUseMap1(head);
-            int i2 = maxWidthNoMap1(head);
+            int i2 = maxWidthNoMap2(head);
             if (i1 != i2) {
                 System.out.println("i1: " + i1 + " i2: " + i2);
                 break;

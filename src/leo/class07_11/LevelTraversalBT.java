@@ -127,9 +127,33 @@ public class LevelTraversalBT {
         System.out.println();
     }
 
+    public static void level5(Node head) {
+        if (head == null) {
+            return;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(head);
+        Node cur = null;
+        Node l = null;
+        Node r = null;
+        while (!queue.isEmpty()) {
+            cur = queue.poll();
+            l = cur.left;
+            r = cur.right;
+            if (l != null) {
+                queue.offer(l);
+            }
+            if (r != null) {
+                queue.offer(r);
+            }
+            System.out.print(cur.value+" ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args){
         Node node = randomTreeNode(10);
-        level4(node);
+        level5(node);
     }
 
 

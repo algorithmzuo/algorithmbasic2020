@@ -1,7 +1,5 @@
 package leo.class08_12;
 
-import class08_12.Code08_MaxDistance;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
