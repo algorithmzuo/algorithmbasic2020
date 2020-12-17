@@ -38,8 +38,10 @@ public class Code06_IslandProblem {
 		List<Dot> dotList = new ArrayList<>();
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				dots[i][j] = new Dot();
-				dotList.add(dots[i][j]);
+				if (board[i][j] == 1) {
+					dots[i][j] = new Dot();
+					dotList.add(dots[i][j]);
+				}
 			}
 		}
 		UnionSet<Dot> us = new UnionSet<>(dotList);
@@ -196,42 +198,43 @@ public class Code06_IslandProblem {
 		int[][] board2 = copy(board1);
 		int[][] board3 = copy(board1);
 
+		System.out.println("感染方法、并查集(map实现)、并查集(数组实现)的运行结果和运行时间");
+		System.out.println("数据规模 : " + row + " * " + col);
 		long start = 0;
 		long end = 0;
 		start = System.currentTimeMillis();
-		System.out.println(solve1(board1));
+		System.out.println("感染方法的运行结果: " + solve1(board1));
 		end = System.currentTimeMillis();
-		System.out.println((end - start) + " ms");
-		System.out.println("===================");
+		System.out.println("感染方法的运行时间: " + (end - start) + " ms");
 
 		start = System.currentTimeMillis();
-		System.out.println(solve2(board2));
+		System.out.println("并查集(map实现)的运行结果: " + solve2(board2));
 		end = System.currentTimeMillis();
-		System.out.println((end - start) + " ms");
-		System.out.println("===================");
+		System.out.println("并查集(map实现)的运行时间：" + (end - start) + " ms");
 
 		start = System.currentTimeMillis();
-		System.out.println(solve3(board3));
+		System.out.println("并查集(数组实现)的运行结果: " + solve3(board3));
 		end = System.currentTimeMillis();
-		System.out.println((end - start) + " ms");
-		System.out.println("===================");
+		System.out.println("并查集(数组实现)的运行时间：" + (end - start) + " ms");
+
+		System.out.println("==============================================");
 
 		row = 10000;
 		col = 10000;
+		System.out.println("感染方法、并查集(数组实现)的运行结果和运行时间");
+		System.out.println("数据规模 : " + row + " * " + col);
 		board1 = generateRandomMatrix(row, col);
 		board3 = copy(board1);
 
 		start = System.currentTimeMillis();
-		System.out.println(solve1(board1));
+		System.out.println("感染方法的运行结果: " + solve1(board1));
 		end = System.currentTimeMillis();
-		System.out.println((end - start) + " ms");
-		System.out.println("===================");
+		System.out.println("感染方法的运行时间：" + (end - start) + " ms");
 
 		start = System.currentTimeMillis();
-		System.out.println(solve3(board3));
+		System.out.println("并查集(数组实现)的运行结果: " + solve3(board3));
 		end = System.currentTimeMillis();
-		System.out.println((end - start) + " ms");
-		System.out.println("===================");
+		System.out.println("并查集(数组实现)的运行时间：" + (end - start) + " ms");
 
 	}
 
