@@ -1,10 +1,10 @@
-package class10;
+package class09_14;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-public class Code01_UnionFind {
+public class Code05_UnionFind {
 
 	public static class Node<V> {
 		V value;
@@ -31,14 +31,14 @@ public class Code01_UnionFind {
 			}
 		}
 
-		// 从点cur开始，一直往上找，找到不能再往上的代表点，返回
+		// 给你一个节点，请你往上到不能再往上，把代表返回
 		public Node<V> findFather(Node<V> cur) {
 			Stack<Node<V>> path = new Stack<>();
 			while (cur != parents.get(cur)) {
 				path.push(cur);
 				cur = parents.get(cur);
 			}
-			// cur头节点
+			// cur == parents.get(cur)
 			while (!path.isEmpty()) {
 				parents.put(path.pop(), cur);
 			}
@@ -46,16 +46,10 @@ public class Code01_UnionFind {
 		}
 
 		public boolean isSameSet(V a, V b) {
-			if (!nodes.containsKey(a) || !nodes.containsKey(b)) {
-				return false;
-			}
 			return findFather(nodes.get(a)) == findFather(nodes.get(b));
 		}
 
 		public void union(V a, V b) {
-			if (!nodes.containsKey(a) || !nodes.containsKey(b)) {
-				return;
-			}
 			Node<V> aHead = findFather(nodes.get(a));
 			Node<V> bHead = findFather(nodes.get(b));
 			if (aHead != bHead) {
@@ -68,6 +62,10 @@ public class Code01_UnionFind {
 				sizeMap.remove(small);
 			}
 		}
-	}
 
+		public int sets() {
+			return sizeMap.size();
+		}
+
+	}
 }

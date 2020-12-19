@@ -1,9 +1,8 @@
 package class09_13;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 public class Code01_LowestLexicography {
 
@@ -11,34 +10,41 @@ public class Code01_LowestLexicography {
 		if (strs == null || strs.length == 0) {
 			return "";
 		}
-		ArrayList<String> all = new ArrayList<>();
-		HashSet<Integer> use = new HashSet<>();
-		process(strs, use, "", all);
-		String lowest = all.get(0);
-		for (int i = 1; i < all.size(); i++) {
-			if (all.get(i).compareTo(lowest) < 0) {
-				lowest = all.get(i);
-			}
-		}
-		return lowest;
+		TreeSet<String> ans = process(strs);
+		return ans.size() == 0 ? "" : ans.first();
 	}
 
-	// strs里放着所有的字符串
-	// 已经使用过的字符串的下标，在use里登记了，不要再使用了
-	// 之前使用过的字符串，拼接成了-> path
-	// 用all收集所有可能的拼接结果
-	public static void process(String[] strs, HashSet<Integer> use, String path, ArrayList<String> all) {
-		if (use.size() == strs.length) {
-			all.add(path);
-		} else {
-			for (int i = 0; i < strs.length; i++) {
-				if (!use.contains(i)) {
-					use.add(i);
-					process(strs, use, path + strs[i], all);
-					use.remove(i);
-				}
+	// strs中所有字符串全排列，返回所有可能的结果
+	public static TreeSet<String> process(String[] strs) {
+		TreeSet<String> ans = new TreeSet<>();
+		if (strs.length == 0) {
+			ans.add("");
+			return ans;
+		}
+		for (int i = 0; i < strs.length; i++) {
+			String first = strs[i];
+			String[] nexts = removeIndexString(strs, i);
+			TreeSet<String> next = process(nexts);
+			for (String cur : next) {
+				ans.add(first + cur);
 			}
 		}
+		return ans;
+	}
+
+	// {"abc", "cks", "bct"}
+	// 0 1 2
+	// removeIndexString(arr , 1) -> {"abc", "bct"}
+	public static String[] removeIndexString(String[] arr, int index) {
+		int N = arr.length;
+		String[] ans = new String[N - 1];
+		int ansIndex = 0;
+		for (int i = 0; i < N; i++) {
+			if (i != index) {
+				ans[ansIndex++] = arr[i];
+			}
+		}
+		return ans;
 	}
 
 	public static class MyComparator implements Comparator<String> {
@@ -91,13 +97,7 @@ public class Code01_LowestLexicography {
 	public static void main(String[] args) {
 		int arrLen = 6;
 		int strLen = 5;
-		int testTimes = 100000;
-		String[] arr = generateRandomStringArray(arrLen, strLen);
-		System.out.println("先打印一个生成的字符串");
-		for (String str : arr) {
-			System.out.print(str + ",");
-		}
-		System.out.println();
+		int testTimes = 10000;
 		System.out.println("test begin");
 		for (int i = 0; i < testTimes; i++) {
 			String[] arr1 = generateRandomStringArray(arrLen, strLen);

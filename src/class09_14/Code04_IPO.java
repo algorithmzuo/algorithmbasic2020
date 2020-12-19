@@ -5,6 +5,10 @@ import java.util.PriorityQueue;
 
 public class Code04_IPO {
 
+	// 最多K个项目
+	// W是初始资金
+	// Profits[] Capital[] 一定等长
+	// 返回最终最大的资金
 	public static int findMaximizedCapital(int K, int W, int[] Profits, int[] Capital) {
 		PriorityQueue<Program> minCostQ = new PriorityQueue<>(new MinCostComparator());
 		PriorityQueue<Program> maxProfitQ = new PriorityQueue<>(new MaxProfitComparator());
