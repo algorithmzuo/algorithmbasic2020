@@ -9,11 +9,10 @@ import java.util.List;
 public class Code03_NumberOfIslandsII {
 
 	public static List<Integer> numIslands2(int m, int n, int[][] positions) {
-		UnionFind unionFind = new UnionFind(m, n);
+		UnionFind uf = new UnionFind(m, n);
 		List<Integer> ans = new ArrayList<>();
 		for (int[] position : positions) {
-			unionFind.connect(position[0], position[1]);
-			ans.add(unionFind.sets());
+			ans.add(uf.connect(position[0], position[1]));
 		}
 		return ans;
 	}
@@ -22,8 +21,8 @@ public class Code03_NumberOfIslandsII {
 		private int[] parent;
 		private int[] size;
 		private int[] help;
-		private final int col;
 		private final int row;
+		private final int col;
 		private int sets;
 
 		public UnionFind(int m, int n) {
@@ -75,7 +74,7 @@ public class Code03_NumberOfIslandsII {
 			}
 		}
 
-		public void connect(int i, int j) {
+		public int connect(int i, int j) {
 			int index = index(i, j);
 			if (size[index] == 0) {
 				parent[index] = index;
@@ -86,9 +85,6 @@ public class Code03_NumberOfIslandsII {
 				union(i, j - 1, i, j);
 				union(i, j + 1, i, j);
 			}
-		}
-
-		public int sets() {
 			return sets;
 		}
 
