@@ -14,12 +14,12 @@ public class Code05_UnionFind {
 		}
 	}
 
-	public static class UnionSet<V> {
+	public static class UnionFind<V> {
 		public HashMap<V, Node<V>> nodes;
 		public HashMap<Node<V>, Node<V>> parents;
 		public HashMap<Node<V>, Integer> sizeMap;
 
-		public UnionSet(List<V> values) {
+		public UnionFind(List<V> values) {
 			nodes = new HashMap<>();
 			parents = new HashMap<>();
 			sizeMap = new HashMap<>();
@@ -38,7 +38,6 @@ public class Code05_UnionFind {
 				path.push(cur);
 				cur = parents.get(cur);
 			}
-			// cur == parents.get(cur)
 			while (!path.isEmpty()) {
 				parents.put(path.pop(), cur);
 			}
