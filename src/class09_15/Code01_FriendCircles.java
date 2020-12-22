@@ -5,6 +5,19 @@ package class09_15;
 // 可以直接通过
 public class Code01_FriendCircles {
 
+	public static int findCircleNum(int[][] M) {
+		int N = M.length;
+		UnionFind unionFind = new UnionFind(N);
+		for (int i = 0; i < N; i++) {
+			for (int j = i + 1; j < N; j++) {
+				if (M[i][j] == 1) {
+					unionFind.union(i, j);
+				}
+			}
+		}
+		return unionFind.sets();
+	}
+
 	public static class UnionFind {
 		private int[] parent;
 		private int[] size;
@@ -54,16 +67,4 @@ public class Code01_FriendCircles {
 		}
 	}
 
-	public static int findCircleNum(int[][] M) {
-		int N = M.length;
-		UnionFind unionFind = new UnionFind(N);
-		for (int i = 0; i < N; i++) {
-			for (int j = i + 1; j < N; j++) {
-				if (M[i][j] == 1) {
-					unionFind.union(i, j);
-				}
-			}
-		}
-		return unionFind.sets();
-	}
 }
