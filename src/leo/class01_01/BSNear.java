@@ -1,5 +1,6 @@
 package leo.class01_01;
 
+import jdk.nashorn.internal.ir.IfNode;
 import leo.util.ArrayUtil;
 
 import java.util.Arrays;
@@ -250,6 +251,24 @@ public class BSNear {
         return index;
     }
 
+    public static int BsNearLeft12(int[] arr, int value) {
+        if (arr.length == 0 || arr == null) {
+            return -1;
+        }
+        int l = 0;
+        int r = arr.length - 1;
+        int index = -1;
+        while (l <= r) {
+            int m = l + ((r - l) >> 1);
+            if (arr[m] >= value) {
+                index = m;
+                r = m - 1;
+            }else{
+                l = m + 1;
+            }
+        }
+        return index;
+    }
 
 
     /**
@@ -473,6 +492,25 @@ public class BSNear {
         return index;
     }
 
+    public static int BSNearRight10(int[] arr, int value) {
+        if (arr == null || arr.length == 0) {
+            return -1;
+        }
+        int index = -1;
+        int l = 0;
+        int r = arr.length - 1;
+        while (l <= r) {
+            int m = l + ((r - l) >> 1);
+            if (arr[m] <= value) {
+                index = m;
+                l = m + 1;
+            }else{
+                r = m - 1;
+            }
+        }
+        return index;
+    }
+
 
     public static int forTestBSNearRight(int[] arr, int value) {
         int index = -1;
@@ -496,7 +534,7 @@ public class BSNear {
         for (int i = 0; i < testTime; i++) {
             int[] sortArr = randomArray(maxSize, range);
             int value = (int) ((range + 1) * Math.random() - (range + 1) * Math.random());
-            int res1 = BSNearLeft10(sortArr, value);
+            int res1 = BsNearLeft12(sortArr, value);
             int res2 = forTestBSNearLeft(sortArr, value);
             if (res1 != res2) {
                 success = false;
@@ -506,7 +544,7 @@ public class BSNear {
                 break;
             }
 
-            /*int res3 = BSNearRight9(sortArr, value);
+            int res3 = BSNearRight10(sortArr, value);
             int res4 = forTestBSNearRight(sortArr, value);
             if (res3 != res4) {
                 success = false;
@@ -514,7 +552,7 @@ public class BSNear {
                 System.out.println("BSNearRight=" + res3);
                 System.out.println("forTestBSNearRight=" + res4);
                 break;
-            }*/
+            }
         }
         System.out.println(success ? "Nice!!" : "Fucking Fucked!");
     }

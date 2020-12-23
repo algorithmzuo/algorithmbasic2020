@@ -42,6 +42,22 @@ public class GetMax {
         return Math.max(leftMax, rightMax);
     }
 
+    private static int getMax2(int[] arr) {
+        if (arr.length == 0 || arr == null) {
+            return 0;
+        }
+        return process2(arr, 0, arr.length-1);
+    }
+
+    private static int process2(int[] arr, int l, int r) {
+        if (l == r) {
+            return arr[l];
+        }
+        int m = l + ((r - l) >> 1);
+        int left = process2(arr, l, m);
+        int right = process2(arr, m + 1, r);
+        return Math.max(left, right);
+    }
     private static int testGetMax(int[] arr) {
         Arrays.sort(arr);
         return arr[arr.length - 1];
@@ -55,7 +71,7 @@ public class GetMax {
 
         for (int i = 0; i < testTime; i++) {
             int[] arr = ArrayUtil.randomAdjacentNotEqualArray(maxSize, range);
-            int max = getMax1(arr);
+            int max = getMax2(arr);
             int testMax = testGetMax(arr);
             if (max != testMax) {
                 System.out.println("fuck");

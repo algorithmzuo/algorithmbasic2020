@@ -370,7 +370,81 @@ public class StackAndQueue {
 
     }
 
+    public static class DoubleNodeStackAndQueue1<T> {
+        class DoubleNode<T>{
+            T value;
+            DoubleNode pre;
+            DoubleNode next;
+            public DoubleNode(T v){
+                this.value = v;
+            }
+        }
 
+        private DoubleNode<T> tail;
+        private DoubleNode<T> head;
+
+        public void pushHead(T v) {
+            DoubleNode node = new DoubleNode(v);
+            if (head == null) {
+                tail = node;
+                head = node;
+            }else {
+                node.next = head;
+                head.pre = node;
+                head = node;
+            }
+        }
+        public void pushTail(T v) {
+            DoubleNode node = new DoubleNode(v);
+            if (tail == null) {
+                tail = node;
+                head = node;
+            }else {
+                tail.next = node;
+                node.pre = tail;
+                tail = node;
+            }
+        }
+
+        public T popHead() {
+            if (head == null) {
+                return null;
+            }
+            T v = head.value;
+            if (head.next != null) {
+                head = head.next;
+                head.pre.next = null;
+                head.pre = null;
+            } else {
+                head = null;
+                tail = null;
+            }
+            return v;
+        }
+
+        public T popTail() {
+            if (tail == null) {
+                return null;
+            }
+            T value = tail.value;
+            if (tail.pre == null) {
+                tail = null;
+                head = null;
+            } else {
+                tail = tail.pre;
+                tail.next.pre = null;
+                tail.next = null;
+            }
+            return value;
+        }
+
+        public boolean isEmpty() {
+            return head == null;
+        }
+
+
+
+    }
 
     /**
      * @author Leo
@@ -481,6 +555,27 @@ public class StackAndQueue {
     }
 
 
+    public static class MyStack4<T>{
+
+        private DoubleNodeStackAndQueue1<T> myStack;
+
+        public MyStack4() {
+            myStack = new DoubleNodeStackAndQueue1<T>();
+        }
+
+        public void push(T value) {
+            myStack.pushHead(value);
+        }
+
+        public T pop() {
+            return myStack.popHead();
+        }
+
+        public boolean isEmpty() {
+            return myStack.isEmpty();
+        }
+    }
+
 
 
 
@@ -587,6 +682,25 @@ public class StackAndQueue {
         }
     }
 
+    public static class MyQueue4<T> {
+        DoubleNodeStackAndQueue1<T> myQueue;
+
+        public MyQueue4() {
+            myQueue = new DoubleNodeStackAndQueue1<>();
+        }
+
+        public void push(T v) {
+            myQueue.pushHead(v);
+        }
+
+        public T poll() {
+            return myQueue.popTail();
+        }
+
+        public boolean isEmpty() {
+            return myQueue.isEmpty();
+        }
+    }
 
 
     public static boolean isEqual(Integer o1, Integer o2) {
@@ -607,8 +721,8 @@ public class StackAndQueue {
         int forTime = 1000;
         int range = 8000;
         for (int i = 0; i < forTime; i++) {
-            MyStack3<Integer> myStack = new MyStack3<>();
-            MyQueue3<Integer> myQueue = new MyQueue3<>();
+            MyStack4<Integer> myStack = new MyStack4<>();
+            MyQueue4<Integer> myQueue = new MyQueue4<>();
             Stack<Integer> stack = new Stack<>();
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < testTime; j++) {

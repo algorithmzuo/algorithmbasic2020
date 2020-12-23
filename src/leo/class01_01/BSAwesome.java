@@ -2,6 +2,8 @@ package leo.class01_01;
 
 import leo.util.ArrayUtil;
 
+import java.util.function.IntPredicate;
+
 /**
  * @author Leo
  * @ClassName BSAwesome
@@ -266,6 +268,31 @@ public class BSAwesome {
         return -1;
     }
 
+    public static int BSAwesome8(int[] arr) {
+        if (arr.length == 0 || arr == null) {
+            return -1;
+        }
+        if (arr.length == 1 || arr[0] < arr[1]) {
+            return 0;
+        }
+        if (arr[arr.length - 1] < arr[arr.length - 2]) {
+            return arr.length - 1;
+        }
+        int l = 0;
+        int r = arr.length - 1;
+        while (l <= r) {
+            int m = l + ((r - l) >> 1);
+            if (arr[m] > arr[m + 1]) {
+                l = m + 1;
+            } else if (arr[m] > arr[m - 1]) {
+                r = m - 1;
+            } else {
+                return m;
+            }
+        }
+        return -1;
+    }
+
     public static int verifyBSAwesome(int[] arr, int index) {
         if (arr.length == 0 || index == -1) {
             return -1;
@@ -303,7 +330,7 @@ public class BSAwesome {
         boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] arr = ArrayUtil.randomAdjacentNotEqualArray(maxSize, range);
-            final int index = BSAwesome7(arr);
+            final int index = BSAwesome8(arr);
             final int verifyIndex = verifyBSAwesome(arr,index);
             if (index != verifyIndex) {
                 succeed = false;

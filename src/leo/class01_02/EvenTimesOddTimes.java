@@ -83,6 +83,17 @@ public class EvenTimesOddTimes {
         System.out.println(eor);
     }
 
+    public static void printOdd8(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }
+        int eor = 0;
+        for (int i = 0; i < arr.length; i++) {
+            eor ^= arr[i];
+        }
+        System.out.println(eor);
+
+    }
 
     /**
      * 功能描述 : 有两种数出现了奇数次,找出他
@@ -225,12 +236,27 @@ public class EvenTimesOddTimes {
         System.out.println(anotherEor + "  " + (eor ^ anotherEor));
     }
 
+    public static void printOddTwo9(int[] arr) {
+        int eor = 0;
+        for (int i = 0; i < arr.length; i++) {
+            eor ^= arr[i];
+        }
+        int right = eor & (-eor);
+        int antherEor = 0;
+        for (int num : arr) {
+            if ((num & right) != 0) {
+                antherEor ^= num;
+            }
+        }
+        System.out.println(antherEor + "  " + (eor ^ antherEor));
+    }
+
     public static void main(String[] args){
         int[] arrOne = {1, 1, 5, 5, 8, 1, 8, 5, 5};
 
-        printOdd7(arrOne);
+        printOdd8(arrOne);
         int[] arrTwo = {1, 1, 9, 5, 5, 8, 1, 8, 9, 5, 5, 5};
-        printOddTwo8(arrTwo);
+        printOddTwo9(arrTwo);
 
     }
 

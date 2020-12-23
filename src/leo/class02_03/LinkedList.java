@@ -195,6 +195,21 @@ public class LinkedList {
         return pre;
     }
 
+    public static Node reverseNode12(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Node pre = null;
+        Node next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
     public static DoubleNode reverseDoubleNode(DoubleNode head) {
         DoubleNode pre = null;
         DoubleNode next;
@@ -438,7 +453,7 @@ public class LinkedList {
         for (int i = 0; i < testTime; i++) {
             Node head = randomNode(maxSize, range);
             List<Node> nodeList = nodeToList(head);
-            Node node = reverseNode11(head);
+            Node node = reverseNode12(head);
             if (!verifyReverseListAndNode(nodeList, node)) {
                 System.out.println("nodeFuck!!");
                 break;

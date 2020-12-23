@@ -147,6 +147,54 @@ public class DeleteGivenValue {
 
     }
 
+    public static Node removeNodeOfValue5(Node head, int value) {
+        if (head == null) {
+            return null;
+        }
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        Node cur = head;
+        Node pre = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else{
+                pre = cur;
+            }
+            cur = cur.next;
+
+        }
+        return head;
+    }
+
+
+    public static Node removeNodeOfValue6(Node head, int value) {
+        if (head == null) {
+            return null;
+        }
+        while (head != null) {
+            if (head.value != value) {
+                break;
+            }
+            head = head.next;
+        }
+        Node pre = head;
+        Node cur = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+            }else {
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
     /**
      * 功能描述 : 双链表删除某个给定值
      * @author Leo
@@ -339,6 +387,35 @@ public class DeleteGivenValue {
         return head;
     }
 
+
+    public static DoubleNode removeDoubleNodeOfValue7(DoubleNode head,int value) {
+        if (head == null) {
+            return null;
+        }
+        while (head != null) {
+            if (head.value != value) {
+                head.pre = null;
+                break;
+            }
+            head = head.next;
+        }
+
+        DoubleNode pre = head;
+        DoubleNode cur = head;
+        while (cur != null) {
+            if (cur.value == value) {
+                pre.next = cur.next;
+                cur.pre = null;
+                if (cur.next != null) {
+                    pre.next.pre = pre;
+                }
+            } else {
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
     /**
      * 功能描述 : 验证单链表删除结果
      * @author Leo
@@ -445,14 +522,14 @@ public class DeleteGivenValue {
         for (int i = 0; i < testTime; i++) {
             int value = randomInt(range);
             Node nodeHead = randomNode(sizeMax, range);
-            Node node = removeNodeOfValue4(nodeHead, value);
+            Node node = removeNodeOfValue6(nodeHead, value);
 
             if (!verifyRemoveNodeOfValue(node,value)) {
                 System.out.println("node fuck!");
                 break;
             }
             DoubleNode doubleNodeHead = randomDoubleNode(sizeMax, range);
-            DoubleNode doubleNode = removeDoubleNodeOfValue6(doubleNodeHead, value);
+            DoubleNode doubleNode = removeDoubleNodeOfValue7(doubleNodeHead, value);
             if (!verifyRemoveDoubleNodeOfValue(doubleNode, value)) {
                 System.out.println("doubleNode fuck");
                 break;

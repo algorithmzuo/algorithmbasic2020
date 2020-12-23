@@ -1,5 +1,7 @@
 package leo.class02_03;
 
+import sun.jvm.hotspot.jdi.IntegerTypeImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -177,6 +179,43 @@ public class GetMinStack {
         }
     }
 
+    public static class MyStack9 {
+        Stack<Integer> data;
+        Stack<Integer> min;
+
+        public MyStack9() {
+            this.data = new Stack<>();
+            this.min = new Stack<>();
+        }
+
+        public void push(int v) {
+            if (min.size() == 0) {
+                min.push(v);
+            } else if (getMin() >= v) {
+                min.push(v);
+            }
+            this.data.push(v);
+        }
+
+        public int pop() {
+            Integer v = this.data.pop();
+            if (v == getMin()) {
+                this.min.pop();
+            }
+            return v;
+        }
+        public int getMin() {
+            if (this.min.isEmpty()) {
+                throw new RuntimeException("Stack is Empty");
+            }
+            return this.min.peek();
+        }
+
+        public boolean isEmpty() {
+            return data.size() == 0;
+        }
+    }
+
     /**
      * 只有最小值入栈,最小值重复入栈
      */
@@ -342,6 +381,47 @@ public class GetMinStack {
         }
     }
 
+    public static class MyStack10 {
+        Stack<Integer> data;
+        Stack<Integer> min;
+
+        public MyStack10() {
+            this.data = new Stack<>();
+            this.min = new Stack<>();
+        }
+
+        public boolean isEmpty() {
+            return data.size() == 0;
+        }
+
+        public void push(int v) {
+            if (min.isEmpty()) {
+                min.push(v);
+            } else if (getMin() > v) {
+                this.min.push(v);
+            }else {
+                min.push(this.min.peek());
+            }
+            this.data.push(v);
+        }
+
+        public int pop() {
+            if (data.isEmpty()) {
+                throw new RuntimeException("Stack is Empty");
+            }
+            Integer v = data.pop();
+            this.min.pop();
+            return v;
+        }
+
+        public int getMin() {
+            if (this.min.isEmpty()) {
+                throw new RuntimeException("Stack is Empty");
+            }
+            return this.min.peek();
+        }
+    }
+
     /**
      * 用list实现 只存最小值的索引
      */
@@ -432,7 +512,7 @@ public class GetMinStack {
         System.out.println("Start!");
 
         for (int i = 0; i < testTime; i++) {
-            MyStack8 myStack = new MyStack8();
+            MyStack10 myStack = new MyStack10();
             TestMyStack testMyStack = new TestMyStack();
             for (int j = 0; j < forTime; j++) {
                 if (Math.random() < 0.5) {

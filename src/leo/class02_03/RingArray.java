@@ -226,13 +226,52 @@ public class RingArray {
 
     }
 
+    public static class MyQueue5 {
+        int[] arr ;
+        int size;
+        int offer;
+        int poll;
+        final int limit;
+
+        public MyQueue5(int limit) {
+            this.arr = new int[limit];
+            this.size = 0;
+            this.offer = 0;
+            this.poll = 0;
+            this.limit = limit;
+        }
+
+        public boolean isEmpty() {
+            return this.size == 0;
+        }
+        public void push(int v){
+            if (size == limit) {
+                throw new RuntimeException("queue is full");
+            }
+            arr[offer] = v;
+            size++;
+            offer = offer < limit - 1 ? offer + 1 : 0;
+        }
+
+        public int poll() {
+            if (size == 0) {
+                throw new RuntimeException("queue is empty");
+            }
+            int v = arr[poll];
+            size--;
+            poll = poll < limit - 1 ? poll + 1 : 0;
+            return v;
+        }
+
+    }
+
     public static void main(String[] args) {
         int testTime = 10000;
         int range = 100;
         int sizeMax = 80;
         for (int i = 0; i < testTime; i++) {
             int length = randomInt(sizeMax);
-            MyQueue4 myQueue = new MyQueue4(length);
+            MyQueue5 myQueue = new MyQueue5(length);
             Queue<Integer> queue = new LinkedList<>();
             for (int j = 0; j < length; j++) {
                 int value = randomInt(range);
