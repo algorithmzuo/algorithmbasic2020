@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 // OJ链接：https://www.lintcode.com/problem/topological-sorting
-public class Code03_TopologicalOrderDFS {
+public class Code03_TopologicalOrderDFS2 {
 
 	// 不要提交这个类
 	public static class DirectedGraphNode {
@@ -21,11 +21,11 @@ public class Code03_TopologicalOrderDFS {
 	// 提交下面的
 	public static class Record {
 		public DirectedGraphNode node;
-		public int deep;
+		public long nodes;
 
-		public Record(DirectedGraphNode n, int o) {
+		public Record(DirectedGraphNode n, long o) {
 			node = n;
-			deep = o;
+			nodes = o;
 		}
 	}
 
@@ -33,7 +33,7 @@ public class Code03_TopologicalOrderDFS {
 
 		@Override
 		public int compare(Record o1, Record o2) {
-			return o2.deep - o1.deep;
+			return o1.nodes == o2.nodes ? 0 : (o1.nodes > o2.nodes ? -1 : 1);
 		}
 	}
 
@@ -58,11 +58,11 @@ public class Code03_TopologicalOrderDFS {
 		if (order.containsKey(cur)) {
 			return order.get(cur);
 		}
-		int follow = 0;
+		long nodes = 0;
 		for (DirectedGraphNode next : cur.neighbors) {
-			follow = Math.max(follow, f(next, order).deep);
+			nodes += f(next, order).nodes;
 		}
-		Record ans = new Record(cur, follow + 1);
+		Record ans = new Record(cur, nodes + 1);
 		order.put(cur, ans);
 		return ans;
 	}
