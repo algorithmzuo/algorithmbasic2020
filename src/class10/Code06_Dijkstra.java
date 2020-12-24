@@ -8,15 +8,9 @@ import java.util.Map.Entry;
 public class Code06_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
-		// 从head出发到所有点的最小距离
-		// key : 从head出发到达key
-		// value : 从head出发到达key的最小距离
-		// 如果在表中，没有T的记录，含义是从head出发到T这个点的距离为正无穷
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
 		distanceMap.put(from, 0);
-		// 已经求过距离的节点，存在selectedNodes中，以后再也不碰
 		HashSet<Node> selectedNodes = new HashSet<>();
-		// from 0
 		Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		while (minNode != null) {
 			int distance = distanceMap.get(minNode);
@@ -25,8 +19,7 @@ public class Code06_Dijkstra {
 				if (!distanceMap.containsKey(toNode)) {
 					distanceMap.put(toNode, distance + edge.weight);
 				} else {
-					distanceMap.put(edge.to, 
-							Math.min(distanceMap.get(toNode), distance + edge.weight));
+					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}
 			selectedNodes.add(minNode);
@@ -35,9 +28,7 @@ public class Code06_Dijkstra {
 		return distanceMap;
 	}
 
-	public static Node getMinDistanceAndUnselectedNode(
-			HashMap<Node, Integer> distanceMap, 
-			HashSet<Node> touchedNodes) {
+	public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> touchedNodes) {
 		Node minNode = null;
 		int minDistance = Integer.MAX_VALUE;
 		for (Entry<Node, Integer> entry : distanceMap.entrySet()) {
@@ -107,8 +98,7 @@ public class Code06_Dijkstra {
 		}
 
 		private void insertHeapify(Node node, int index) {
-			while (distanceMap.get(nodes[index]) 
-					< distanceMap.get(nodes[(index - 1) / 2])) {
+			while (distanceMap.get(nodes[index]) < distanceMap.get(nodes[(index - 1) / 2])) {
 				swap(index, (index - 1) / 2);
 				index = (index - 1) / 2;
 			}
@@ -120,8 +110,7 @@ public class Code06_Dijkstra {
 				int smallest = left + 1 < size && distanceMap.get(nodes[left + 1]) < distanceMap.get(nodes[left])
 						? left + 1
 						: left;
-				smallest = distanceMap.get(nodes[smallest]) 
-						< distanceMap.get(nodes[index]) ? smallest : index;
+				smallest = distanceMap.get(nodes[smallest]) < distanceMap.get(nodes[index]) ? smallest : index;
 				if (smallest == index) {
 					break;
 				}
