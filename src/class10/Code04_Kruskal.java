@@ -83,6 +83,7 @@ public class Code04_Kruskal {
 	public static Set<Edge> kruskalMST(Graph graph) {
 		UnionFind unionFind = new UnionFind();
 		unionFind.makeSets(graph.nodes.values());
+		// 从小的边到大的边，依次弹出，小根堆！
 		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
 		for (Edge edge : graph.edges) { // M 条边
 			priorityQueue.add(edge);  // O(logM)

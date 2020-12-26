@@ -54,10 +54,16 @@ public class Code03_TopologicalOrderDFS2 {
 		return ans;
 	}
 
+	// 当前来到cur点，请返回cur点所到之处，所有的点次！
+	// 返回（cur，点次）
+	// 缓存！！！！！order   
+	//  key : 某一个点的点次，之前算过了！
+	//  value : 点次是多少
 	public static Record f(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> order) {
 		if (order.containsKey(cur)) {
 			return order.get(cur);
 		}
+		// cur的点次之前没算过！
 		long nodes = 0;
 		for (DirectedGraphNode next : cur.neighbors) {
 			nodes += f(next, order).nodes;
