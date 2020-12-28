@@ -1,11 +1,11 @@
-package class10;
+package class10_17;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
 // no negative weight
-public class Code06_Dijkstra {
+public class Code01_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
 		HashMap<Node, Integer> distanceMap = new HashMap<>();

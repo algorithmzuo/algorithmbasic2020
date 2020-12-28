@@ -1,4 +1,4 @@
-package class10;
+package class10_16;
 
 public class Edge {
 	public int weight;

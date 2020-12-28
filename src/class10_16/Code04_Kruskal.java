@@ -1,4 +1,4 @@
-package class10;
+package class10_16;
 
 import java.util.Collection;
 import java.util.Comparator;
