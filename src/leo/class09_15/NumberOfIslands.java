@@ -1,9 +1,6 @@
 package leo.class09_15;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author Leo
@@ -39,6 +36,31 @@ public class NumberOfIslands {
                 infect(grid, r+1, c);
                 infect(grid, r, c-1);
                 infect(grid, r, c+1);
+            }
+        }
+        static class C1 {
+            public static int numIslands (char[][] grid) {
+                int count = 0;
+                for (int i = 0; i < grid.length; i++) {
+                    for (int j = 0; j < grid[0].length; j++) {
+                        if (grid[i][j] == '1') {
+                            count++;
+                            infect(grid, i, j);
+                        }
+                    }
+                }
+                return count;
+            }
+
+            private static void infect(char[][] grid, int i, int j) {
+                if (i < 0 || j == grid[0].length || j < 0 || i == grid.length || grid[i][j] != '1') {
+                    return;
+                }
+                grid[i][j] = '2';
+                infect(grid, i + 1, j);
+                infect(grid, i - 1, j);
+                infect(grid, i, j + 1);
+                infect(grid, i, j - 1);
             }
         }
 
@@ -147,6 +169,114 @@ public class NumberOfIslands {
             }
         }
 
+        static class C1 {
+            public int numIslands(char[][] grid) {
+                List<Dot> list = new ArrayList<>();
+                int r = grid.length;
+                int c = grid[0].length;
+                Dot[][] dot = new Dot[r][c];
+                for (int i = 0; i < r; i++) {
+                    for (int j = 0; j < c; j++) {
+                        if (grid[i][j] == '1') {
+                            dot[i][j] = new Dot();
+                            list.add(dot[i][j]);
+                        }
+                    }
+                }
+                UnionFind u = new UnionFind(list);
+                //上左依次合并
+                //第一行每一列与第二行每一列合并
+                for (int i = 1; i < grid.length; i++) {
+                    if (grid[i - 1][0] == '1' && grid[i][0] == '1') {
+                        u.union(dot[i - 1][0], dot[i][0]);
+                    }
+                }
+                //每行的第一列与第二列合并
+                for (int i = 1; i < grid[0].length; i++) {
+                    if (grid[0][i - 1] == '1' && grid[0][i] == '1') {
+                        u.union(dot[0][i - 1], dot[0][i]);
+                    }
+                }
+
+                for (int i = 1; i < r; i++) {
+                    for (int j = 1; j < c; j++) {
+                        if (grid[i][j] == '1') {
+                            if (grid[i - 1][j] == '1') {
+                                u.union(dot[i][j], dot[i - 1][j]);
+                            }
+                            if (grid[i][j - 1] == '1') {
+                                u.union(dot[i][j], dot[i][j - 1]);
+                            }
+                        }
+                    }
+
+                }
+                return u.sets();
+            }
+
+            class UnionFind<V>{
+                HashMap<V,Node<V>> nodes;
+                HashMap<Node<V>,Node<V>> parent;
+                HashMap<Node<V>,Integer> size;
+
+                public UnionFind(List<V> list) {
+                    nodes = new HashMap<>();
+                    parent = new HashMap<>();
+                    size = new HashMap<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        Node node = new Node(list.get(i));
+                        nodes.put(list.get(i), node);
+                        parent.put(node, node);
+                        size.put(node, 1);
+                    }
+                }
+
+                public Node find(V v) {
+                    Stack<Node> stack = new Stack<>();
+                    Node cur = nodes.get(v);
+                    while (cur != parent.get(cur)) {
+                        stack.push(cur);
+                        cur = parent.get(cur);
+                    }
+                    while (!stack.isEmpty()) {
+                        parent.put(stack.pop(), cur);
+                    }
+                    return cur;
+                }
+
+                public void union(V a, V b) {
+                    Node aF = find(a);
+                    Node bF = find(b);
+                    if (aF == bF) {
+                        return;
+                    }
+                    int aSize = size.get(aF);
+                    int bSize = size.get(bF);
+                    Node big = aSize >= bSize ? aF : bF;
+                    Node small = big == aF ? bF : aF;
+                    parent.put(small, big);
+                    size.put(big, aSize + bSize);
+                    size.remove(small);
+                }
+
+                public int sets() {
+                    return size.size();
+                }
+            }
+
+            class Dot {
+
+            }
+
+            class Node<V> {
+                V value ;
+                public Node(V v) {
+                    this.value = v;
+                }
+            }
+
+        }
+
 
     }
 
@@ -248,9 +378,101 @@ public class NumberOfIslands {
                     return r * col + c;
                 }
             }
+        }
 
+        class C1 {
+            public int numIslands(char[][] grid) {
+                UnionFind u = new UnionFind(grid);
+                int row = grid.length;
+                int col = grid[0].length;
+                for (int i = 1; i < row; i++) {
+                    if (grid[i - 1][0] == '1' && grid[i][0] == '1') {
+                        u.union(i - 1, 0, i, 0);
+                    }
+                }
+                for (int i = 1; i < col; i++) {
+                    if (grid[0][i - 1] == '1' && grid[0][i] == '1') {
+                        u.union(0, i - 1, 0, i);
+                    }
+                }
+                for (int i = 1; i < row; i++) {
+                    for (int j = 1; j < col; j++) {
+                        if (grid[i][j] == '1') {
+                            if (grid[i - 1][j] == '1') {
+                                u.union(i, j, i - 1, j);
+                            }
+                            if (grid[i][j - 1] == '1') {
+                                u.union(i, j, i, j - 1);
+                            }
+                        }
 
+                    }
+                }
+                return u.sets();
+            }
+            class UnionFind {
+                int[] parent;
+                int[] size;
+                int[] help;
+                int col;
+                int set;
 
+                public UnionFind(char[][] grid) {
+                    int row = grid.length;
+                    col = grid[0].length;
+                    int n = row * col;
+                    parent = new int[n];
+                    size = new int[n];
+                    help = new int[n];
+                    set = 0;
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < col; j++) {
+                            if (grid[i][j] == '1') {
+                                int x = getIndex(i, j);
+                                parent[x] = x;
+                                size[x] = 1;
+                                set++;
+                            }
+                        }
+                    }
+
+                }
+
+                public int find(int i) {
+                    int hi = 0;
+                    while (i != parent[i]) {
+                        help[hi++] = i;
+                        i = parent[i];
+                    }
+                    for (hi--; hi >= 0; hi--) {
+                        parent[help[hi]] = i;
+                    }
+                    return i;
+                }
+                public void union(int i1, int j1, int i2, int j2) {
+                    int a = getIndex(i1, j1);
+                    int b = getIndex(i2, j2);
+                    int aF = find(a);
+                    int bF = find(b);
+                    if (aF == bF) {
+                        return;
+                    }
+                    int aSize = size[aF];
+                    int bSize = size[bF];
+                    int big = aSize >= bSize ? aF : bF;
+                    int small = big == aF ? bF : aF;
+                    parent[small] = big;
+                    size[big] = aSize + bSize;
+                    set--;
+                }
+
+                public int sets() {
+                    return set;
+                }
+                public int getIndex(int i, int j) {
+                    return i * col + j;
+                }
+            }
         }
     }
 
