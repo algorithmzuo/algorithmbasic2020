@@ -1,4 +1,4 @@
-package class20;
+package class21;
 
 import java.util.TreeSet;
 
@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * 为了方便起见，假设arr中没有负数，其实也可以有
  * 但是处理起来会比较麻烦，而且有没有负数都不影响算法流程的理解
  * */
-public class Code02_SplitSumClosed {
+public class Code03_SplitSumClosed {
 
 	public static int right(int[] arr) {
 		if (arr == null || arr.length < 2) {

@@ -1,6 +1,6 @@
-package class20;
+package class21;
 
-public class Code04_NQueens {
+public class Code05_NQueens {
 
 	public static int num1(int n) {
 		if (n < 1) {
