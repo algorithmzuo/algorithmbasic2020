@@ -110,7 +110,8 @@ public class Code04_MinCoinsOnePaper {
 	}
 
 	// 这种解法课上不讲
-	// 因为理解了窗口内最大值和最小值的更新结构才能理解这种解法
+	// 因为需要窗口内最大值和最小值的更新结构
+	// 后面的课会讲
 	public static int dp3(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
@@ -241,29 +242,52 @@ public class Code04_MinCoinsOnePaper {
 			}
 		}
 		System.out.println("功能测试结束");
+
 		System.out.println("==========");
 
-		System.out.println("性能测试开始");
-		// 当货币很少出现重复，dp2很快
-		// 当货币大量出现重复，dp3优势明显
-		// dp3的讲解放在窗口内最大值和最小值的更新结构里
-		maxLen = 30000;
-		maxValue = 20;
-		int aim = 60000;
-		int[] arr = randomArray(maxLen, maxValue);
+		int aim = 0;
+		int[] arr = null;
 		long start;
 		long end;
+		int ans2;
+		int ans3;
+
+		System.out.println("性能测试开始");
+		maxLen = 30000;
+		maxValue = 20;
+		aim = 60000;
+		arr = randomArray(maxLen, maxValue);
 
 		start = System.currentTimeMillis();
-		int ans2 = dp2(arr, aim);
+		ans2 = dp2(arr, aim);
 		end = System.currentTimeMillis();
 		System.out.println("dp2答案 : " + ans2 + ", dp2运行时间 : " + (end - start) + " ms");
 
 		start = System.currentTimeMillis();
-		int ans3 = dp3(arr, aim);
+		ans3 = dp3(arr, aim);
 		end = System.currentTimeMillis();
 		System.out.println("dp3答案 : " + ans3 + ", dp3运行时间 : " + (end - start) + " ms");
 		System.out.println("性能测试结束");
+
+		System.out.println("===========");
+
+		System.out.println("货币大量重复出现情况下，");
+		System.out.println("超大数据量压力测试dp3开始");
+		maxLen = 20000000;
+		aim = 88888;
+		maxValue = 30;
+		arr = randomArray(maxLen, maxValue);
+		start = System.currentTimeMillis();
+		ans3 = dp3(arr, aim);
+		end = System.currentTimeMillis();
+		System.out.println("dp3答案 : " + ans3 + ", dp3运行时间 : " + (end - start) + " ms");
+		System.out.println("超大数据量压力测试dp3结束");
+
+		System.out.println("===========");
+
+		System.out.println("当货币很少出现重复，dp2比dp3有常数时间优势");
+		System.out.println("当货币大量出现重复，dp3时间复杂度明显优于dp2");
+		System.out.println("dp3的讲解放在窗口内最大值和最小值的更新结构里");
 	}
 
 }
