@@ -272,16 +272,16 @@ public class Code04_MinCoinsOnePaper {
 		System.out.println("===========");
 
 		System.out.println("货币大量重复出现情况下，");
-		System.out.println("超大数据量压力测试dp3开始");
+		System.out.println("大数据量测试dp3开始");
 		maxLen = 20000000;
-		aim = 88888;
-		maxValue = 30;
+		aim = 10000;
+		maxValue = 10000;
 		arr = randomArray(maxLen, maxValue);
 		start = System.currentTimeMillis();
 		ans3 = dp3(arr, aim);
 		end = System.currentTimeMillis();
-		System.out.println("dp3答案 : " + ans3 + ", dp3运行时间 : " + (end - start) + " ms");
-		System.out.println("超大数据量压力测试dp3结束");
+		System.out.println("dp3运行时间 : " + (end - start) + " ms");
+		System.out.println("大数据量测试dp3结束");
 
 		System.out.println("===========");
 
