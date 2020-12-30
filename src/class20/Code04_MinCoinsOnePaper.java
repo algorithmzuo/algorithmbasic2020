@@ -1,9 +1,8 @@
 package class20;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.LinkedList;
 
 // arr中的每个值都代表一张钱
 // arr中都是正数，aim>=0，返回组成aim的最小张数
@@ -29,6 +28,7 @@ public class Code04_MinCoinsOnePaper {
 		}
 	}
 
+	// dp1时间复杂度为：O(arr长度 * aim)
 	public static int dp1(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
@@ -82,10 +82,12 @@ public class Code04_MinCoinsOnePaper {
 		return new Info(coins, zhangs);
 	}
 
+	// dp2时间复杂度为：O(arr长度) + O(货币种数 * aim * 每种货币的平均张数)
 	public static int dp2(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
 		}
+		// 得到info时间复杂度O(arr长度)
 		Info info = getInfo(arr);
 		int[] coins = info.coins;
 		int[] zhangs = info.zhangs;
@@ -95,6 +97,7 @@ public class Code04_MinCoinsOnePaper {
 		for (int j = 1; j <= aim; j++) {
 			dp[N][j] = Integer.MAX_VALUE;
 		}
+		// 这三层for循环，时间复杂度为O(货币种数 * aim * 每种货币的平均张数)
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				dp[index][rest] = dp[index + 1][rest];
@@ -110,93 +113,49 @@ public class Code04_MinCoinsOnePaper {
 	}
 
 	// 这种解法课上不讲
-	// 因为需要窗口内最大值和最小值的更新结构
+	// 因为需要理解窗口内最小值的更新结构
 	// 后面的课会讲
+	// dp3时间复杂度为：O(arr长度) + O(货币种数 * aim)
 	public static int dp3(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
 		}
+		// 得到info时间复杂度O(arr长度)
 		Info info = getInfo(arr);
-		int[] coins = info.coins;
-		int[] zhangs = info.zhangs;
-		int N = coins.length;
+		int[] c = info.coins;
+		int[] z = info.zhangs;
+		int N = c.length;
 		int[][] dp = new int[N + 1][aim + 1];
 		dp[N][0] = 0;
 		for (int j = 1; j <= aim; j++) {
 			dp[N][j] = Integer.MAX_VALUE;
 		}
-		int max = Integer.MIN_VALUE;
-		for (int i = 0; i < N; i++) {
-			max = Math.max(max, coins[i]);
-		}
-		WindowBoss windows = new WindowBoss(max);
-		for (int index = N - 1; index >= 0; index--) {
-			windows.setDpCoinZhang(dp[index + 1], coins[index], zhangs[index]);
-			int rest = 0;
-			for (; rest < Math.min(aim + 1, coins[index]); rest++) {
-				windows.clearAdd(rest);
-				dp[index][rest] = dp[index + 1][rest];
-			}
-			for (; rest <= aim; rest++) {
-				windows.add(rest);
-				dp[index][rest] = windows.min(rest);
+		// 虽然是嵌套了很多循环，但是时间复杂度为O(货币种数 * aim)
+		// 因为用了窗口内最小值的更新结构
+		for (int i = N - 1; i >= 0; i--) {
+			for (int mod = 0; mod < Math.min(aim + 1, c[i]); mod++) {
+				LinkedList<Integer> w = new LinkedList<>();
+				w.add(mod);
+				dp[i][mod] = dp[i + 1][mod];
+				for (int r = mod + c[i]; r <= aim; r += c[i]) {
+					while (!w.isEmpty() && (dp[i + 1][w.peekLast()] == Integer.MAX_VALUE
+							|| dp[i + 1][w.peekLast()] + compensate(w.peekLast(), r, c[i]) >= dp[i + 1][r])) {
+						w.pollLast();
+					}
+					w.addLast(r);
+					int overdue = r - c[i] * (z[i] + 1);
+					if (w.peekFirst() == overdue) {
+						w.pollFirst();
+					}
+					dp[i][r] = dp[i + 1][w.peekFirst()] + compensate(w.peekFirst(), r, c[i]);
+				}
 			}
 		}
 		return dp[0][aim];
 	}
 
-	// 改进的窗口内最大值和最小值的更新结构
-	public static class WindowBoss {
-		public ArrayList<LinkedList<Integer>> windows;
-		private int[] dp;
-		private int coin;
-		private int zhang;
-
-		public WindowBoss(int maxValue) {
-			windows = new ArrayList<>();
-			for (int i = 0; i < maxValue; i++) {
-				windows.add(new LinkedList<>());
-			}
-			dp = null;
-			coin = 0;
-			zhang = 0;
-		}
-
-		private int offset(int pre, int cur) {
-			return (cur - pre) / coin;
-		}
-
-		public void setDpCoinZhang(int[] d, int c, int z) {
-			dp = d;
-			coin = c;
-			zhang = z;
-		}
-
-		public void clearAdd(int rest) {
-			int windowi = rest % coin;
-			windows.get(windowi).clear();
-			windows.get(windowi).addLast(rest);
-		}
-
-		public void add(int rest) {
-			LinkedList<Integer> window = windows.get(rest % coin);
-			while (!window.isEmpty() && (dp[window.peekLast()] == Integer.MAX_VALUE
-					|| dp[window.peekLast()] + offset(window.peekLast(), rest) >= dp[rest])) {
-				window.pollLast();
-			}
-			window.addLast(rest);
-			int overdue = rest - coin * (zhang + 1);
-			if (window.peekFirst() == overdue) {
-				window.pollFirst();
-			}
-		}
-
-		public int min(int rest) {
-			LinkedList<Integer> window = windows.get(rest % coin);
-			int minIndex = window.peekFirst();
-			return dp[minIndex] + offset(minIndex, rest);
-		}
-
+	public static int compensate(int pre, int cur, int coin) {
+		return (cur - pre) / coin;
 	}
 
 	// 为了测试
@@ -287,7 +246,7 @@ public class Code04_MinCoinsOnePaper {
 
 		System.out.println("当货币很少出现重复，dp2比dp3有常数时间优势");
 		System.out.println("当货币大量出现重复，dp3时间复杂度明显优于dp2");
-		System.out.println("dp3的讲解放在窗口内最大值和最小值的更新结构里");
+		System.out.println("dp3的讲解放在窗口内最大值或最小值的更新结构里");
 	}
 
 }
