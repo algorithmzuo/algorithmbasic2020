@@ -1,4 +1,4 @@
-package class10;
+package class10_17;
 
 import java.util.HashMap;
 import java.util.HashSet;

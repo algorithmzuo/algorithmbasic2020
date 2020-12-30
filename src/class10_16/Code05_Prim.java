@@ -1,4 +1,4 @@
-package class10;
+package class10_16;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -23,7 +23,11 @@ public class Code05_Prim {
 
 		// 哪些点被解锁出来了
 		HashSet<Node> nodeSet = new HashSet<>();
+		
+		
+		
 		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
+
 		for (Node node : graph.nodes.values()) { // 随便挑了一个点
 			// node 是开始点
 			if (!nodeSet.contains(node)) {

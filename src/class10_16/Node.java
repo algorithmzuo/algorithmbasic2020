@@ -1,8 +1,8 @@
-package class10;
+package class10_16;
 
 import java.util.ArrayList;
 
-// 点结构的描述  A  0
+// 点结构的描述
 public class Node {
 	public int value;
 	public int in;

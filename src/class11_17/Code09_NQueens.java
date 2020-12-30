@@ -1,4 +1,4 @@
-package class11;
+package class11_17;
 
 public class Code09_NQueens {
 

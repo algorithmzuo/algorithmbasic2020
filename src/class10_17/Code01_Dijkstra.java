@@ -1,24 +1,26 @@
-package class10;
+package class10_17;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
 // no negative weight
-public class Code06_Dijkstra {
+public class Code01_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
 		distanceMap.put(from, 0);
+		// 打过对号的点
 		HashSet<Node> selectedNodes = new HashSet<>();
 		Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		while (minNode != null) {
+			//  原始点  ->  minNode(跳转点)   最小距离distance
 			int distance = distanceMap.get(minNode);
 			for (Edge edge : minNode.edges) {
 				Node toNode = edge.to;
 				if (!distanceMap.containsKey(toNode)) {
 					distanceMap.put(toNode, distance + edge.weight);
-				} else {
+				} else { // toNode 
 					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}

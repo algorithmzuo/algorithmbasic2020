@@ -1,17 +1,21 @@
-package class10;
+package class10_16;
 
 public class GraphGenerator {
 
 	// matrix 所有的边
 	// N*3 的矩阵
 	// [weight, from节点上面的值，to节点上面的值]
-	public static Graph createGraph(Integer[][] matrix) {
+	// 
+	// [ 5 , 0 , 7]
+	// [ 3 , 0,  1]
+	// 
+	public static Graph createGraph(int[][] matrix) {
 		Graph graph = new Graph();
-		for (int i = 0; i < matrix.length; i++) { 
-			// matrix[0][0], matrix[0][1]  matrix[0][2]
-			Integer weight = matrix[i][0];
-			Integer from = matrix[i][1];
-			Integer to = matrix[i][2];
+		for (int i = 0; i < matrix.length; i++) {
+			 // 拿到每一条边， matrix[i] 
+			int weight = matrix[i][0];
+			int from = matrix[i][1];
+			int to = matrix[i][2];
 			if (!graph.nodes.containsKey(from)) {
 				graph.nodes.put(from, new Node(from));
 			}
