@@ -109,6 +109,8 @@ public class Code04_MinCoinsOnePaper {
 		return dp[0][aim];
 	}
 
+	// 这种解法课上不讲
+	// 因为理解了窗口内最大值和最小值的更新结构才能理解这种解法
 	public static int dp3(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
@@ -142,6 +144,7 @@ public class Code04_MinCoinsOnePaper {
 		return dp[0][aim];
 	}
 
+	// 改进的窗口内最大值和最小值的更新结构
 	public static class WindowBoss {
 		public ArrayList<LinkedList<Integer>> windows;
 		private int[] dp;
@@ -158,14 +161,14 @@ public class Code04_MinCoinsOnePaper {
 			zhang = 0;
 		}
 
+		private int offset(int pre, int cur) {
+			return (cur - pre) / coin;
+		}
+
 		public void setDpCoinZhang(int[] d, int c, int z) {
 			dp = d;
 			coin = c;
 			zhang = z;
-		}
-
-		private int offset(int pre, int cur) {
-			return (cur - pre) / coin;
 		}
 
 		public void clearAdd(int rest) {
@@ -241,10 +244,11 @@ public class Code04_MinCoinsOnePaper {
 		System.out.println("==========");
 
 		System.out.println("性能测试开始");
-		// 当货币很少出现重复，dp2较快
-		// 当货币大量出现重复，dp3的优势明显
+		// 当货币很少出现重复，dp2很快
+		// 当货币大量出现重复，dp3优势明显
+		// dp3的讲解放在窗口内最大值和最小值的更新结构里
 		maxLen = 30000;
-		maxValue = 10;
+		maxValue = 20;
 		int aim = 60000;
 		int[] arr = randomArray(maxLen, maxValue);
 		long start;
