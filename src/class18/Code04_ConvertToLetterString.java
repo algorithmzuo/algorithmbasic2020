@@ -9,9 +9,6 @@ public class Code04_ConvertToLetterString {
 		return process(str.toCharArray(), 0);
 	}
 
-	// str[0...i-1]已经转化完了，固定了
-	// i之前的位置，如何转化已经做过决定了, 不用再关心
-	// i... 有多少种转化的结果
 	public static int process(char[] str, int i) {
 		if (i == str.length) {
 			return 1;

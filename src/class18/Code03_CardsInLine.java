@@ -33,12 +33,7 @@ public class Code03_CardsInLine {
 		for (int i = 0; i < N; i++) {
 			f[i][i] = arr[i];
 		}
-		// 0,0 右下方移动
-		// 0,1
-		// 0,2
-		// 0,N-1
 		for (int col = 1; col < N; col++) {
-			// 对角线出发位置(0,col)
 			int L = 0;
 			int R = col;
 			while (L < N && R < N) {
