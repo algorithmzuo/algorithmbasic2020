@@ -72,7 +72,7 @@ public class Code05_StickersToSpellWord {
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < N; i++) {
 			int[] sticker = stickers[i];
-			// 关键优化(重要的剪枝!这一步也是贪心!)
+			// 最关键的优化(重要的剪枝!这一步也是贪心!)
 			if (sticker[target[0] - 'a'] > 0) {
 				StringBuilder builder = new StringBuilder();
 				for (int j = 0; j < 26; j++) {

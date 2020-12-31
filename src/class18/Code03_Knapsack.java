@@ -1,6 +1,6 @@
 package class18;
 
-public class Code02_Knapsack {
+public class Code03_Knapsack {
 
 	public static int getMaxValue(int[] w, int[] v, int bag) {
 		return process(w, v, 0, 0, bag);
