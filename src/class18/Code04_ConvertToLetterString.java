@@ -1,6 +1,6 @@
 package class18;
 
-public class Code05_ConvertToLetterString {
+public class Code04_ConvertToLetterString {
 
 	public static int number(String str) {
 		if (str == null || str.length() == 0) {

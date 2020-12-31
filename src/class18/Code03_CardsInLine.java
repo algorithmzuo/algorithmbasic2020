@@ -1,6 +1,6 @@
 package class18;
 
-public class Code04_CardsInLine {
+public class Code03_CardsInLine {
 
 	public static int win1(int[] arr) {
 		if (arr == null || arr.length == 0) {

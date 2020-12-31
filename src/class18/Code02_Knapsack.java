@@ -1,6 +1,6 @@
 package class18;
 
-public class Code03_Knapsack {
+public class Code02_Knapsack {
 
 	public static int getMaxValue(int[] w, int[] v, int bag) {
 		return process(w, v, 0, 0, bag);
@@ -44,7 +44,7 @@ public class Code03_Knapsack {
 		int p1 = process(w, v, index + 1, rest);
 		int p2 = -1;
 		int p2Next = process(w, v, index + 1, rest - w[index]);
-		if(p2Next!=-1) {
+		if (p2Next != -1) {
 			p2 = v[index] + p2Next;
 		}
 		return Math.max(p1, p2);
@@ -56,9 +56,9 @@ public class Code03_Knapsack {
 		// dp[N][...] = 0
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= bag; rest++) { // rest < 0
-				int p1 = dp[index+1][rest];
+				int p1 = dp[index + 1][rest];
 				int p2 = -1;
-				if(rest - w[index] >= 0) {
+				if (rest - w[index] >= 0) {
 					p2 = v[index] + dp[index + 1][rest - w[index]];
 				}
 				dp[index][rest] = Math.max(p1, p2);
