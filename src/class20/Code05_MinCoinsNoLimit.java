@@ -1,7 +1,5 @@
 package class20;
 
-// arr是面值数组，其中的值都是正数且无重复值，
-// 每张面值可以用无限张，返回组成aim的最少货币数
 public class Code05_MinCoinsNoLimit {
 
 	public static int minCoins(int[] arr, int aim) {

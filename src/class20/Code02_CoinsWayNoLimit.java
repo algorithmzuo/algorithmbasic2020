@@ -1,7 +1,5 @@
 package class20;
 
-// arr是面值数组，其中的值都是正数且无重复值，
-// 每张面值可以用无限张，返回组成aim的方法数
 public class Code02_CoinsWayNoLimit {
 
 	public static int coinsWay(int[] arr, int aim) {

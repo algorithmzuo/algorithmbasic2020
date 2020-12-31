@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.LinkedList;
 
-// arr中的每个值都代表一张钱
-// arr中都是正数，aim>=0，返回组成aim的最小张数
 public class Code04_MinCoinsOnePaper {
 
 	public static int minCoins(int[] arr, int aim) {

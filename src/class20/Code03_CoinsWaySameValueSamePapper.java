@@ -3,9 +3,6 @@ package class20;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-// arr是货币数组，其中的值都是正数，每个值都认为是一张货币，
-// 值相同的货币认为每一张都没有不同！
-// 返回组成aim的方法数
 public class Code03_CoinsWaySameValueSamePapper {
 
 	public static class Info {

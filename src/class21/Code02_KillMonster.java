@@ -1,6 +1,5 @@
 package class21;
 
-// 题目描述看包里KillMonster.jpeg
 public class Code02_KillMonster {
 
 	public static double right1(int N, int M, int K) {

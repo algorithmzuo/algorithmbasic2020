@@ -2,15 +2,10 @@ package class19;
 
 public class Code03_HorseJump {
 
-	// 10*9
-	// 0~9 y
-	// 0~8 x
 	public static int ways(int a, int b, int step) {
 		return f(0, 0, step, a, b);
 	}
 
-	// 马在(i,j)位置，还有step步要去跳
-	// 返回最终来到(a,b)的方法数
 	public static int f(int i, int j, int step, int a, int b) {
 		if (i < 0 || i > 9 || j < 0 || j > 8) {
 			return 0;
@@ -31,7 +26,6 @@ public class Code03_HorseJump {
 	
 	
 	public static int waysdp(int a, int b, int s) {
-		// (i,j,0~ step)
 		int[][][] dp = new int[10][9][s+1];
 		dp[a][b][0] = 1;
 		for(int step = 1 ; step <= s;step++ ) { // 按层来

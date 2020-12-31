@@ -1,8 +1,5 @@
 package class20;
 
-// arr是货币数组，其中的值都是正数，每个值都认为是一张货币，
-// 即便是值相同的货币认为每一张都是独立且不同的，
-// 返回组成aim的方法数
 public class Code01_CoinsWayEveryPaperDifferent {
 
 	public static int coinWays(int[] arr, int aim) {
@@ -64,7 +61,7 @@ public class Code01_CoinsWayEveryPaperDifferent {
 			int aim = (int) (Math.random() * maxValue);
 			int ans1 = coinWays(arr, aim);
 			int ans2 = dp(arr, aim);
-			if (ans1 == ans2) {
+			if (ans1 != ans2) {
 				System.out.println("Oops!");
 				printArray(arr);
 				System.out.println(aim);

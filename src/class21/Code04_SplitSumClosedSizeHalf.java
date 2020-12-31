@@ -2,15 +2,6 @@ package class21;
 
 import java.util.TreeSet;
 
-/*
- * 给定一个整型数组arr，请把arr中所有的数分成两个集合
- * 如果arr长度为偶数，两个集合包含数的个数要一样多
- * 如果arr长度为奇数，两个集合包含数的个数必须只差一个
- * 请尽量让两个集合的累加和接近
- * 返回最接近的情况下，较小集合的累加和（较大集合的累加和一定是所有数累加和减去较小集合的累加和）
- * 为了方便起见，假设arr中没有负数，其实也可以有
- * 但是处理起来会比较麻烦，而且有没有负数都不影响算法流程的理解
- * */
 public class Code04_SplitSumClosedSizeHalf {
 
 	public static int right(int[] arr) {
