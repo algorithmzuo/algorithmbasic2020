@@ -37,6 +37,52 @@ public class PrintStr {
 
     }
 
+    static class Subs1 {
+        public static List<String> subs(String string) {
+            List<String> list = new ArrayList<>();
+            if (string.length() == 0 || string == null) {
+                return list;
+            }
+            char[] chars = string.toCharArray();
+            String path = "";
+
+            p(chars,0,list,path);
+            return list;
+        }
+
+        private static void p(char[] chars, int i, List<String> list, String path) {
+            if (i == chars.length) {
+                list.add(path);
+                return;
+            }
+            p(chars, i + 1, list, path);
+            p(chars, i + 1, list, path+String.valueOf(chars[i]));
+        }
+    }
+
+    static class Subs2 {
+
+        public static List<String> subs(String string) {
+            List<String> list = new ArrayList<>();
+            if (string.length() == 0 || string == null) {
+                return list;
+            }
+            char[] chars = string.toCharArray();
+            String path = "";
+            p(chars, 0, list, path);
+            return list;
+        }
+
+        private static void p(char[] chars, int i, List<String> list, String path) {
+            if (i == chars.length) {
+                list.add(path);
+                return;
+            }
+            p(chars, i + 1, list, path);
+            p(chars, i + 1, list, path + String.valueOf(chars[i]));
+        }
+    }
+
     /**
      * 打印一个字符串的全部子序列，要求不要出现重复字面值的子序列
      */
@@ -119,7 +165,7 @@ public class PrintStr {
     }
     public static void main(String[] args){
         String str = "abcc";
-        List<String> subs = Subs.subs(str);
+        List<String> subs = Subs2.subs(str);
         System.out.println(subs.toString());
         List<String> subNoRepeat = SubNoRepeat.subNoRepeat(str);
         System.out.println(subNoRepeat.toString());
