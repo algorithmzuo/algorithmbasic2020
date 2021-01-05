@@ -1,6 +1,6 @@
 package leo.class17;
 
-import class11_17.Code01_Hanoi;
+import class17.Code02_Hanoi;
 
 /**
  * @author Leo
@@ -31,7 +31,7 @@ public class Hanoi {
         int n = 3;
         hanoi(n);
         System.out.println("-------");
-        Code01_Hanoi.hanoi2(n);
+        Code02_Hanoi.hanoi2(n);
     }
 
 

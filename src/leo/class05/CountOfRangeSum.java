@@ -1,6 +1,7 @@
 package leo.class05;
 
 import leo.util.ArrayUtil;
+import sun.rmi.runtime.Log;
 
 /**
  * @author Leo
@@ -456,6 +457,68 @@ class CountOfRangeSum6{
     }
 }
 
+class CountOfRangeSum7 {
+    public static int countRangeSum(int[] arr, int lower, int upper) {
+        if (arr.length == 0 || arr == null) {
+            return 0;
+        }
+        long[] sum = new long[arr.length];
+        sum[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            sum[i] = sum[i - 1] + arr[i];
+        }
+        return process(sum, 0, arr.length - 1,lower,upper);
+    }
+
+    private static int process(long[] sum, int l, int r,int lower,int upper) {
+        if (l > r) {
+            return 0;
+        }
+        if (l == r) {
+            return sum[l] >= lower && sum[l] <= upper ? 1 : 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(sum, l, m, lower, upper) + process(sum, m + 1, r, lower, upper) + merge(sum, l, m, r, lower, upper);
+    }
+
+    private static int merge(long[] sum, int l, int m, int r, int lower, int upper) {
+        int windowL = l;
+        int windowR = l;
+        int i = m + 1;
+        int ans = 0;
+        while (i <= r) {
+            long max = sum[i] - lower;
+            long min = sum[i] - upper;
+            while (windowR <= m && sum[windowR] <= max) {
+                windowR++;
+            }
+            while (windowL <= m && sum[windowL] < min) {
+                windowL++;
+            }
+            i++;
+            ans += windowR - windowL;
+        }
+        i = 0;
+        int p1 = l;
+        int p2 = m + 1;
+        long[] help = new long[r - l + 1];
+        while (p1 <= m && p2 <= r) {
+            help[i++] = sum[p1] <= sum[p2] ? sum[p1++] : sum[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = sum[p1++];
+        }
+
+        while (p2 <= r) {
+            help[i++] = sum[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            sum[l + i] = help[i];
+        }
+        return ans;
+    }
+}
+
 class MainTest{
 
     public static int countRangeSum(int[] nums, int lower, int upper) {
@@ -485,7 +548,7 @@ class MainTest{
             do {
                 upper = (int) ((range * Math.random() + 1) - (range * Math.random() + 1));
             } while (upper <= lower);
-            int sumCount = CountOfRangeSum5.countRangeSum(arr, lower, upper);
+            int sumCount = CountOfRangeSum7.countRangeSum(arr, lower, upper);
             int testSumCount = countRangeSum(copyArray, lower, upper);
             if (sumCount != testSumCount) {
                 System.out.println("sumCount :" + sumCount+" testSumCount : "+testSumCount);

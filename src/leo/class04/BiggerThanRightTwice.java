@@ -250,7 +250,7 @@ class BiggerThanRightTwice4 {
 }
 
 class BiggerThanRightTwice5 {
-    public static int biggerTwice(int[] arr) {
+    public static int reversePairs(int[] arr) {
         if (arr.length < 2 || arr == null) {
             return 0;
         }
@@ -296,13 +296,63 @@ class BiggerThanRightTwice5 {
     }
 }
 
+class BiggerThanRightTwice6 {
+    public static int biggerTwice(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        return process(arr, 0, arr.length - 1);
+
+    }
+
+    private static int process(int[] arr, int l, int r) {
+        if (l == r) {
+            return 0;
+        }
+
+        int m = l + ((r - l) >> 1);
+
+        return process(arr, l, m) + process(arr, m + 1, r) + merge(arr, l, m, r);
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int[] help = new int[r - l + 1];
+        int res = 0;
+        int windowR = m + 1;
+        int i = l;
+        for (; i <= m; i++) {
+            while (windowR <= r && arr[i] > arr[windowR] * 2L) {
+                windowR++;
+            }
+            res += windowR - m - 1;
+        }
+        int p1 = l;
+        int p2 = m + 1;
+        i = 0;
+        while (p1 <= m && p2 <= r) {
+            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+        }
+        while (p1 <= m) {
+            help[i++] = arr[p1++];
+        }
+        while (p2 <= r) {
+            help[i++] = arr[p2++];
+        }
+        for (i = 0; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+        return res;
+    }
+}
+
+
 class TestBiggerThanRightTwice {
     public static int biggerTwice(int[] arr) {
         int res = 0;
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > arr[j] << 1) {
+                if (arr[i] > arr[j] * 2L) {
                     res++;
                 }
             }
@@ -314,13 +364,14 @@ class TestBiggerThanRightTwice {
 class Main{
     public static void main(String[] args){
         int testTime = 1000;
-        int sizeMax = 10;
+        int sizeMax = 1000;
         int range = 60;
         System.out.println("start");
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(sizeMax, range);
+//            arr = new int[]{2147483647, 2147483647, 2147483647, 2147483647, 2147483647, 2147483647};
             int[] copyArray = copyArray(arr);
-            int res = BiggerThanRightTwice5.biggerTwice(arr);
+            int res = BiggerThanRightTwice6.biggerTwice(arr);
             int res1 = TestBiggerThanRightTwice.biggerTwice(copyArray);
             if (res != res1) {
                 System.out.println("res : " + res + " " + " res1: " + res1);

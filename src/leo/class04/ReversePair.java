@@ -263,6 +263,45 @@ class ReversePair5{
     }
 }
 
+class ReversePair6 {
+    public static int reversePairNumber(int[] arr) {
+        if (arr.length < 2 || arr == null) {
+            return 0;
+        }
+        return process(arr, 0, arr.length - 1);
+    }
+
+    private static int process(int[] arr, int l, int r) {
+        if (l == r) {
+            return 0;
+        }
+        int m = l + ((r - l) >> 1);
+        return process(arr, l, m) + process(arr, m + 1, r) + merge(arr, l, m, r);
+    }
+
+    private static int merge(int[] arr, int l, int m, int r) {
+        int[] help = new int[r - l + 1];
+        int i = help.length - 1;
+        int ans = 0;
+        int p1 = m;
+        int p2 = r;
+        while (p1 >= l && p2 > m) {
+            ans += arr[p1] > arr[p2] ? p2 - m : 0;
+            help[i--] = arr[p1] > arr[p2] ? arr[p1--] : arr[p2--];
+        }
+        while (p1 >= l) {
+            help[i--] = arr[p1--];
+        }
+        while (p2 > m) {
+            help[i--] = arr[p2--];
+        }
+        i = 0;
+        for (; i < help.length; i++) {
+            arr[l + i] = help[i];
+        }
+        return ans;
+    }
+}
 
 
 class TestReversePair{
@@ -303,7 +342,7 @@ class TestReversePair{
         for (int i = 0; i < testTime; i++) {
             int[] arr = randomArray(sizeMax, range);
             int[] copyArr = copyArray(arr);
-            int num = ReversePair5.reversePairNumber(arr);
+            int num = ReversePair6.reversePairNumber(arr);
             int copyNum = reversePairNumber(copyArr);
             if (num != copyNum) {
                 System.out.println("num : "+num);
