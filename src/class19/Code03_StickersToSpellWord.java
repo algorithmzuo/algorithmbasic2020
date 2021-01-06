@@ -1,15 +1,18 @@
-package class18;
+package class19;
 
 import java.util.HashMap;
 
 // 本题测试链接：https://leetcode.com/problems/stickers-to-spell-word
-public class Code05_StickersToSpellWord {
+public class Code03_StickersToSpellWord {
 
 	public static int minStickers1(String[] stickers, String target) {
 		int ans = process1(stickers, target);
 		return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
 
+	// 所有贴纸stickers，每一种贴纸都有无穷张
+	// target
+	// 最少张数
 	public static int process1(String[] stickers, String target) {
 		if (target.length() == 0) {
 			return 0;
@@ -59,10 +62,17 @@ public class Code05_StickersToSpellWord {
 		return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
 
+	// stickers[i] 数组，当初i号贴纸的字符统计 int[][] stickers -> 所有的贴纸
+	// 每一种贴纸都有无穷张
+	// 返回搞定target的最少张数
+	// 最少张数
 	public static int process2(int[][] stickers, String t) {
 		if (t.length() == 0) {
 			return 0;
 		}
+		// target做出词频统计
+		// target  aabbc  2 2 1..
+		//                0 1 2..
 		char[] target = t.toCharArray();
 		int[] tcounts = new int[26];
 		for (char cha : target) {
@@ -71,6 +81,7 @@ public class Code05_StickersToSpellWord {
 		int N = stickers.length;
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < N; i++) {
+			// 尝试第一张贴纸是谁
 			int[] sticker = stickers[i];
 			// 最关键的优化(重要的剪枝!这一步也是贪心!)
 			if (sticker[target[0] - 'a'] > 0) {
