@@ -1,4 +1,4 @@
-package class19;
+package class20;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
 // 洗杯子的机器洗完一个杯子时间为a，任何一个杯子自然挥发干净的时间为b。
 // 四个参数：arr, n, a, b
 // 假设时间点从0开始，返回所有人喝完咖啡并洗完咖啡杯的全部过程结束后，至少来到什么时间点。
-public class Code04_Coffee {
+public class Code03_Coffee {
 
 	// 方法一：暴力尝试方法
 	public static int minTime1(int[] arr, int n, int a, int b) {

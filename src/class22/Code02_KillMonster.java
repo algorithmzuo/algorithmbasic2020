@@ -1,4 +1,4 @@
-package class21;
+package class22;
 
 public class Code02_KillMonster {
 

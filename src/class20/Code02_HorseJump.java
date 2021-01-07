@@ -1,6 +1,6 @@
-package class19;
+package class20;
 
-public class Code03_HorseJump {
+public class Code02_HorseJump {
 
 	public static int ways(int a, int b, int step) {
 		return f(0, 0, step, a, b);

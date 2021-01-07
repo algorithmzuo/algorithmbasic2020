@@ -1,7 +1,7 @@
-package class19;
+package class20;
 
 // 测试链接：https://leetcode.com/problems/longest-palindromic-subsequence/
-public class Code02_PalindromeSubsequence {
+public class Code01_PalindromeSubsequence {
 
 	public static int longestPalindromeSubseq1(String s) {
 		if (s == null || s.length() == 0) {
