@@ -8,6 +8,7 @@ import org.w3c.dom.ranges.Range;
  * @ClassName CardsInLine
  * @DATE 2021/1/5 11:48 下午
  * @Description
+ * 范围模型 L...R
  * 给定一个整型数组arr，代表数值不同的纸牌排成一条线，
  * 玩家A和玩家B依次拿走每张纸牌，
  * 规定玩家A先拿，玩家B后拿，

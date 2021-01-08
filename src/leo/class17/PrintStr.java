@@ -118,6 +118,35 @@ public class PrintStr {
      * 打印一个字符串的全部排列
      */
     static class Permutations{
+        public static String[] permutation(String s) {
+
+            if (s == null || s.length() == 0) {
+                return new String[]{};
+            }
+            List<String> ans = new ArrayList<>();
+            char[] str = s.toCharArray();
+            process(str, 0, ans);
+            return ans.toArray(new String[ans.size()]);
+
+        }
+
+        private static void process(char[] str, int i, List<String> ans) {
+            if (i == str.length) {
+                ans.add(String.valueOf(str));
+            }else{
+                for (int j = i; j < str.length; j++) {
+                    swap(str, i, j);
+                    process(str, i + 1, ans);
+                    swap(str, i, j);
+                }
+            }
+        }
+
+        private static void swap(char[] str, int i, int j) {
+            char temp = str[i];
+            str[i] = str[j];
+            str[j] = temp;
+        }
 
     }
 
@@ -169,8 +198,10 @@ public class PrintStr {
         List<String> subNoRepeat = SubNoRepeat.subNoRepeat(str);
         System.out.println(subNoRepeat.toString());
 
-        String[] permutation = PermutationsNoRepeat.permutation(str);
+        String[] permutation = Permutations.permutation(str);
+        String[] permutationNoRepeat = PermutationsNoRepeat.permutation(str);
         System.out.println(new ArrayList<String>(Arrays.asList(permutation)).toString());
+        System.out.println(new ArrayList<String>(Arrays.asList(permutationNoRepeat)).toString());
 
     }
 }

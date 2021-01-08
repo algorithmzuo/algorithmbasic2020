@@ -78,7 +78,27 @@ public class ReverseStackUsingRecursive {
         }
     }
 
+    static class Code3 {
+        public static void reverse(Stack<Integer> stack) {
 
+            if (stack.isEmpty()) {
+                return;
+            }
+            Integer last = f(stack);
+            reverse(stack);
+            stack.push(last);
+        }
+
+        private static Integer f(Stack<Integer> stack) {
+            Integer value = stack.pop();
+            if (stack.isEmpty()) {
+                return value;
+            }
+            int last = f(stack);
+            stack.push(value);
+            return last;
+        }
+    }
 
     public static void main(String[] args){
         Stack<Integer> stack = new Stack<>();
@@ -86,7 +106,7 @@ public class ReverseStackUsingRecursive {
         stack.push(2);
         stack.push(3);
         stack.push(4);
-        Code2.reverse(stack);
+        Code3.reverse(stack);
         System.out.println(stack);
 
     }

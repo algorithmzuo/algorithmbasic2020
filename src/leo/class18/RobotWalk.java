@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
  * @ClassName RobotWalk
  * @DATE 2021/1/5 4:27 下午
  * @Description
+ *
+ * 范围模型
  * 一个机器人, 从start出发,
  * 走到aim,在走k步的情况下,
  * 一共有多少种走法?
