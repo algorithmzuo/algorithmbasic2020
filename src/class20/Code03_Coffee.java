@@ -14,7 +14,9 @@ import java.util.PriorityQueue;
 // 假设时间点从0开始，返回所有人喝完咖啡并洗完咖啡杯的全部过程结束后，至少来到什么时间点。
 public class Code03_Coffee {
 
-	// 验证的方法，彻底的暴力，不要脸的暴力
+	// 验证的方法
+	// 彻底的暴力
+	// 很慢但是绝对正确
 	public static int right(int[] arr, int n, int a, int b) {
 		int[] times = new int[arr.length];
 		int[] drink = new int[n];
@@ -173,14 +175,14 @@ public class Code03_Coffee {
 	}
 
 	public static void main(String[] args) {
-		int len = 5;
-		int max = 9;
-		int testTime = 50000;
+		int len = 10;
+		int max = 10;
+		int testTime = 10;
 		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int[] arr = randomArray(len, max);
-			int n = (int) (Math.random() * 5) + 1;
-			int a = (int) (Math.random() * 5) + 1;
+			int n = (int) (Math.random() * 7) + 1;
+			int a = (int) (Math.random() * 7) + 1;
 			int b = (int) (Math.random() * 10) + 1;
 			int ans1 = right(arr, n, a, b);
 			int ans2 = minTime1(arr, n, a, b);
