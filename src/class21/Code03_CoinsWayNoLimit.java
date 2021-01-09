@@ -1,6 +1,6 @@
 package class21;
 
-public class Code02_CoinsWayNoLimit {
+public class Code03_CoinsWayNoLimit {
 
 	public static int coinsWay(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {

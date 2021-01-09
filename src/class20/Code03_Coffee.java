@@ -112,7 +112,7 @@ public class Code03_Coffee {
 		return Math.min(p1, p2);
 	}
 
-	// 方法二，贪心+优良尝试改成动态规划
+	// 贪心+优良尝试改成动态规划
 	public static int minTime2(int[] arr, int n, int a, int b) {
 		PriorityQueue<Machine> heap = new PriorityQueue<Machine>(new MachineComparator());
 		for (int i = 0; i < arr.length; i++) {
@@ -139,8 +139,9 @@ public class Code03_Coffee {
 			for (int free = 0; free <= maxFree; free++) {
 				int selfClean1 = Math.max(drinks[index], free) + wash;
 				if (selfClean1 > maxFree) {
-					break; // 因为free后面的也都不用填了
+					break; // 因为后面的也都不用填了
 				}
+				// index号杯子 决定洗
 				int restClean1 = dp[index + 1][selfClean1];
 				int p1 = Math.max(selfClean1, restClean1);
 				// index号杯子 决定挥发
@@ -175,6 +176,7 @@ public class Code03_Coffee {
 		int len = 5;
 		int max = 9;
 		int testTime = 50000;
+		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int[] arr = randomArray(len, max);
 			int n = (int) (Math.random() * 5) + 1;
@@ -193,6 +195,7 @@ public class Code03_Coffee {
 				break;
 			}
 		}
+		System.out.println("测试结束");
 
 	}
 

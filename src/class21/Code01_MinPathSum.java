@@ -1,6 +1,6 @@
-package class20;
+package class21;
 
-public class Code04_MinPathSum {
+public class Code01_MinPathSum {
 
 	public static int minPathSum1(int[][] m) {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
