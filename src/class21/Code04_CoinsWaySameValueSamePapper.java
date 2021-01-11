@@ -3,7 +3,7 @@ package class21;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class Code03_CoinsWaySameValueSamePapper {
+public class Code04_CoinsWaySameValueSamePapper {
 
 	public static class Info {
 		public int[] coins;
