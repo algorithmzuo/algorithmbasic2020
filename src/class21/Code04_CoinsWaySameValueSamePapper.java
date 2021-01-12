@@ -43,6 +43,8 @@ public class Code04_CoinsWaySameValueSamePapper {
 		return process(info.coins, info.zhangs, 0, aim);
 	}
 
+	// coins 面值数组，正数且去重
+	// zhangs 每种面值对应的张数
 	public static int process(int[] coins, int[] zhangs, int index, int rest) {
 		if (index == coins.length) {
 			return rest == 0 ? 1 : 0;

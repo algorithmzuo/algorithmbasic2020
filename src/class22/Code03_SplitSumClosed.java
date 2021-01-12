@@ -1,8 +1,8 @@
-package class23;
+package class22;
 
 import java.util.TreeSet;
 
-public class Code01_SplitSumClosed {
+public class Code03_SplitSumClosed {
 
 	public static int right(int[] arr) {
 		if (arr == null || arr.length < 2) {

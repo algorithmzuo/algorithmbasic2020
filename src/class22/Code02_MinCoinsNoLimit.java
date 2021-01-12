@@ -1,6 +1,6 @@
 package class22;
 
-public class Code03_MinCoinsNoLimit {
+public class Code02_MinCoinsNoLimit {
 
 	public static int minCoins(int[] arr, int aim) {
 		return process(arr, 0, aim);
