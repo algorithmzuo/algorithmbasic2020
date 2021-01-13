@@ -28,22 +28,20 @@ public class Code01_MinPathSum {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
 			return 0;
 		}
-		int more = Math.max(m.length, m[0].length); // �����������ϴ���Ǹ�Ϊmore
-		int less = Math.min(m.length, m[0].length); // ������������С���Ǹ�Ϊless
-		boolean rowmore = more == m.length; // �����ǲ��Ǵ��ڵ�������
-		int[] arr = new int[less]; // ��������ĳ��Ƚ�Ϊ�����������е���Сֵ
-		arr[0] = m[0][0];
-		for (int i = 1; i < less; i++) {
-			arr[i] = arr[i - 1] + (rowmore ? m[0][i] : m[i][0]);
+		int row = m.length;
+		int col = m[0].length;
+		int[] dp = new int[col];
+		dp[0] = m[0][0];
+		for (int j = 1; j < col; j++) {
+			dp[j] = dp[j - 1] + m[0][j];
 		}
-		for (int i = 1; i < more; i++) {
-			arr[0] = arr[0] + (rowmore ? m[i][0] : m[0][i]);
-			for (int j = 1; j < less; j++) {
-				arr[j] = Math.min(arr[j - 1], arr[j])
-						+ (rowmore ? m[i][j] : m[j][i]);
+		for (int i = 1; i < row; i++) {
+			dp[0] += m[i][0];
+			for (int j = 1; j < col; j++) {
+				dp[j] = Math.min(dp[j - 1], dp[j]) + m[i][j];
 			}
 		}
-		return arr[less - 1];
+		return dp[col - 1];
 	}
 
 	// for test
@@ -54,7 +52,7 @@ public class Code01_MinPathSum {
 		int[][] result = new int[rowSize][colSize];
 		for (int i = 0; i != result.length; i++) {
 			for (int j = 0; j != result[0].length; j++) {
-				result[i][j] = (int) (Math.random() * 10);
+				result[i][j] = (int) (Math.random() * 100);
 			}
 		}
 		return result;
@@ -71,10 +69,9 @@ public class Code01_MinPathSum {
 	}
 
 	public static void main(String[] args) {
-		// int[][] m = generateRandomMatrix(3, 4);
-		int[][] m = { { 1, 3, 5, 9 }, { 8, 1, 3, 4 }, { 5, 0, 6, 1 },
-				{ 8, 8, 4, 0 } };
-		printMatrix(m);
+		int rowSize = 10;
+		int colSize = 10;
+		int[][] m = generateRandomMatrix(rowSize, colSize);
 		System.out.println(minPathSum1(m));
 		System.out.println(minPathSum2(m));
 

@@ -1,18 +1,21 @@
-package class22;
+package class21;
 
-public class Code01_BobDie {
+public class Code05_BobDie {
 
 	public static double livePosibility1(int row, int col, int k, int N, int M) {
 		return (double) process(row, col, k, N, M) / Math.pow(4, k);
 	}
 
+	// 目前在row，col位置，还有rest步要走，走完了如果还在棋盘中就获得1个生存点，返回总的生存点数
 	public static long process(int row, int col, int rest, int N, int M) {
 		if (row < 0 || row == N || col < 0 || col == M) {
 			return 0;
 		}
+		// 还在棋盘中！
 		if (rest == 0) {
 			return 1;
 		}
+		// 还在棋盘中！还有步数要走
 		long up = process(row - 1, col, rest - 1, N, M);
 		long down = process(row + 1, col, rest - 1, N, M);
 		long left = process(row, col - 1, rest - 1, N, M);

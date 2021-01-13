@@ -1,6 +1,6 @@
 package class22;
 
-public class Code02_KillMonster {
+public class Code01_KillMonster {
 
 	public static double right1(int N, int M, int K) {
 		if (N < 1 || M < 1 || K < 1) {

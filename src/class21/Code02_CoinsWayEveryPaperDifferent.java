@@ -6,11 +6,12 @@ public class Code02_CoinsWayEveryPaperDifferent {
 		return process(arr, 0, aim);
 	}
 
+	// arr[index....] 组成正好rest这么多的钱，有几种方法
 	public static int process(int[] arr, int index, int rest) {
 		if (rest < 0) {
 			return 0;
 		}
-		if (index == arr.length) {
+		if (index == arr.length) { // 没钱了！
 			return rest == 0 ? 1 : 0;
 		} else {
 			return process(arr, index + 1, rest) + process(arr, index + 1, rest - arr[index]);
