@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.LinkedList;
 
-public class Code02_MinCoinsOnePaper {
+public class Code04_MinCoinsOnePaper {
 
 	public static int minCoins(int[] arr, int aim) {
 		return process(arr, 0, aim);
