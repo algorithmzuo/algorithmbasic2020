@@ -24,11 +24,11 @@ public class KillMonster {
         }
 
         private static long process(int hp, int m, int rest) {
+            if (rest == 0) {
+                return hp <= 0 ? 1 : 0;
+            }
             if (hp <= 0) {
                 return (long) Math.pow(m + 1, rest);
-            }
-            if (rest == 0) {
-                return hp == 0 ? 1 : 0;
             }
             int ans = 0;
             for (int i = 0; i <= m; i++) {
@@ -40,4 +40,72 @@ public class KillMonster {
 
     }
 
+    static class Dp {
+        public static double kill(int n, int m, int k) {
+            if (n < 1 || m < 1 || k < 1) {
+                return 0;
+            }
+            long[][] dp = new long[n + 1][k + 1];
+            dp[0][0] = 1;
+            for (int hp = 1; hp <= n; hp++) {
+                for (int rest = 1; rest <= k; rest++) {
+                    dp[0][rest] = (long) Math.pow(m + 1, rest);
+                    long ans = 0;
+                    for (int i = 0; i <= m; i++) {
+                        if (hp - i <= 0) {
+                            ans += (long) Math.pow(m + 1, rest - 1);
+                        } else {
+                            ans += dp[hp - i][rest - 1];
+                        }
+                    }
+                    dp[hp][rest] = ans;
+                }
+            }
+            return dp[n][k] / Math.pow(m + 1, k);
+        }
+    }
+    static class OptDp{
+        public static double kill(int n, int m, int k) {
+            if (n < 1 || m < 1 || k < 1) {
+                return 0;
+            }
+            long[][] dp = new long[n + 1][k + 1];
+            dp[0][0] = 1;
+            for (int hp = 1; hp <= n; hp++) {
+                for (int rest = 1; rest <= k; rest++) {
+                    dp[0][rest] = (long) Math.pow(m + 1, rest);
+                    dp[hp][rest] = dp[hp][rest - 1] + dp[hp-1][rest];
+                    if (hp - m - 1 >=0) {
+                        dp[hp][rest] -= dp[hp - m - 1][rest - 1];
+                    }else{
+                        dp[hp][rest] -= (long) Math.pow(m + 1, rest - 1);
+                    }
+
+                }
+            }
+            return dp[n][k] / Math.pow(m + 1, k);
+        }
+    }
+
+    public static void main(String[] args){
+        int NMax = 10;
+        int MMax = 10;
+        int KMax = 10;
+        int testTime = 200;
+        System.out.println("测试开始");
+        for (int i = 0; i < testTime; i++) {
+            int N = (int) (Math.random() * NMax);
+            int M = (int) (Math.random() * MMax);
+            int K = (int) (Math.random() * KMax);
+            double ans1 = Recursion.kill(N, M, K);
+            double ans2 = Dp.kill(N, M, K);
+            double ans3 = OptDp.kill(N, M, K);
+            if (ans1 != ans2 || ans1 != ans3) {
+                System.out.println("Oops!");
+                break;
+            }
+        }
+        System.out.println("测试结束");
+
+    }
 }
