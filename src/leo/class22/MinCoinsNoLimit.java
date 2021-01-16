@@ -16,7 +16,6 @@ public class MinCoinsNoLimit {
 
     static class Recursion{
         public static int minCoins(int[] arr, int aim) {
-
             return process(arr, aim, 0);
         }
 
@@ -35,6 +34,66 @@ public class MinCoinsNoLimit {
         }
     }
 
+    static class Recursion1 {
+        public static int minCoins(int[] arr, int aim) {
+            return process(arr, 0, aim);
+        }
+        private static int process(int[] arr, int i, int rest) {
+            if (i == arr.length) {
+                return rest == 0 ? 0 : Integer.MAX_VALUE;
+            }
+            int min = Integer.MAX_VALUE;
+            for (int z = 0; z * arr[i] <= rest; z++) {
+                int next = process(arr, i + 1, rest - z * arr[i]);
+                if (next != Integer.MAX_VALUE) {
+                    min = Math.min(min, next + z);
+                }
+            }
+            return min;
+        }
+    }
+    static class Dp1{
+        public static int minCoins(int[] arr, int aim) {
+            int n = arr.length;
+            int[][] dp = new int[n + 1][aim + 1];
+            dp[n][0] = 0;
+            for (int i = 1; i <= aim; i++) {
+                dp[n][i] = Integer.MAX_VALUE;
+            }
+            for (int i = n - 1; i >= 0; i--) {
+                for (int rest = 0; rest <= aim; rest++) {
+                    int min = Integer.MAX_VALUE;
+                    for (int z = 0; z * arr[i] <= rest; z++) {
+                        int next = dp[i + 1][rest - z * arr[i]];
+                        if (next != Integer.MAX_VALUE) {
+                            min = Math.min(min, next + z);
+                        }
+                    }
+                    dp[i][rest] = min;
+                }
+            }
+            return dp[0][aim];
+        }
+    }
+    static class OptDp1 {
+        public static int minCoins(int[] arr, int aim) {
+            int n = arr.length;
+            int[][] dp = new int[n + 1][aim + 1];
+            dp[n][0] = 0;
+            for (int i = 1; i <= aim; i++) {
+                dp[n][i] = Integer.MAX_VALUE;
+            }
+            for (int i = n - 1; i >= 0; i--) {
+                for (int rest = 0; rest <= aim; rest++) {
+                    dp[i][rest] = dp[i + 1][rest];
+                    if (rest - arr[i] >= 0 && dp[i][rest - arr[i]] != Integer.MAX_VALUE) {
+                        dp[i][rest] = Math.min(dp[i][rest], dp[i][rest - arr[i]] + 1);
+                    }
+                }
+            }
+            return dp[0][aim];
+        }
+    }
 
     static class Dp {
         public static int minCoins(int[] arr, int aim) {
@@ -120,14 +179,14 @@ public class MinCoinsNoLimit {
             int N = (int) (Math.random() * maxLen);
             int[] arr = randomArray(N, maxValue);
             int aim = (int) (Math.random() * maxValue);
-            int ans1 = Recursion.minCoins(arr, aim);
-            int ans2 = Dp.minCoins(arr, aim);
-            int ans3 = OptDp.minCoins(arr, aim);
+            int ans1 = Recursion1.minCoins(arr, aim);
+            int ans2 = Dp1.minCoins(arr, aim);
+            int ans3 = OptDp1.minCoins(arr, aim);
             if (ans1 != ans2 || ans1 != ans3) {
                 System.out.println("Oops!");
                 printArray(arr);
                 System.out.println(aim);
-                System.out.println("--0---");
+                System.out.println("-----");
                 System.out.println(ans1);
                 System.out.println(ans2);
                 System.out.println(ans3);
