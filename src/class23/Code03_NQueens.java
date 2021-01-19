@@ -66,7 +66,7 @@ public class Code03_NQueens {
 	}
 
 	public static void main(String[] args) {
-		int n = 15;
+		int n = 14;
 
 		long start = System.currentTimeMillis();
 		System.out.println(num2(n));

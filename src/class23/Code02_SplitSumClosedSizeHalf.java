@@ -1,7 +1,5 @@
 package class23;
 
-import java.util.TreeSet;
-
 public class Code02_SplitSumClosedSizeHalf {
 
 	public static int right(int[] arr) {
@@ -12,29 +10,76 @@ public class Code02_SplitSumClosedSizeHalf {
 		for (int num : arr) {
 			sum += num;
 		}
-		TreeSet<Integer> ans = new TreeSet<>();
-		process(arr, 0, 0, 0, ans, sum >> 1);
-		return ans.last();
+		return process(arr, 0, 0, sum >> 1);
 	}
 
-	public static void process(int[] arr, int i, int sum, int picks, TreeSet<Integer> ans, int limit) {
+	public static int process(int[] arr, int i, int picks, int rest) {
 		if (i == arr.length) {
 			if ((arr.length & 1) == 0) {
-				if (picks == (arr.length >> 1) && sum <= limit) {
-					ans.add(sum);
-				}
+				return picks == (arr.length >> 1) ? 0 : -1;
 			} else {
-				if ((picks == (arr.length >> 1) || picks == (arr.length >> 1) + 1) && sum <= limit) {
-					ans.add(sum);
-				}
+				return (picks == (arr.length >> 1) || picks == (arr.length >> 1) + 1) ? 0 : -1;
 			}
-		} else {
-			process(arr, i + 1, sum, picks, ans, limit);
-			process(arr, i + 1, sum + arr[i], picks + 1, ans, limit);
 		}
+		int p1 = process(arr, i + 1, picks, rest);
+		int p2 = -1;
+		int next2 = -1;
+		if (arr[i] <= rest) {
+			next2 = process(arr, i + 1, picks + 1, rest - arr[i]);
+		}
+		if (next2 != -1) {
+			p2 = arr[i] + next2;
+		}
+		return Math.max(p1, p2);
 	}
 
-	public static int dp(int[] arr) {
+	public static int dp1(int[] arr) {
+		if (arr == null || arr.length < 2) {
+			return 0;
+		}
+		int sum = 0;
+		for (int num : arr) {
+			sum += num;
+		}
+		sum >>= 1;
+		int N = arr.length;
+		int M = (arr.length + 1) >> 1;
+		int[][][] dp = new int[N + 1][M + 1][sum + 1];
+		for (int i = 0; i <= N; i++) {
+			for (int j = 0; j <= M; j++) {
+				for (int k = 0; k <= sum; k++) {
+					dp[i][j][k] = -1;
+				}
+			}
+		}
+		for (int k = 0; k <= sum; k++) {
+			dp[N][M][k] = 0;
+		}
+		if ((arr.length & 1) != 0) {
+			for (int k = 0; k <= sum; k++) {
+				dp[N][M - 1][k] = 0;
+			}
+		}
+		for (int i = N - 1; i >= 0; i--) {
+			for (int picks = 0; picks <= M; picks++) {
+				for (int rest = 0; rest <= sum; rest++) {
+					int p1 = dp[i + 1][picks][rest];
+					int p2 = -1;
+					int next2 = -1;
+					if (picks + 1 <= M && arr[i] <= rest) {
+						next2 = dp[i + 1][picks + 1][rest - arr[i]];
+					}
+					if (next2 != -1) {
+						p2 = arr[i] + next2;
+					}
+					dp[i][picks][rest] = Math.max(p1, p2);
+				}
+			}
+		}
+		return dp[0][0][sum];
+	}
+
+	public static int dp2(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return 0;
 		}
@@ -74,6 +119,7 @@ public class Code02_SplitSumClosedSizeHalf {
 		return Math.max(dp[N - 1][M][sum], dp[N - 1][N - M][sum]);
 	}
 
+	// for test
 	public static int[] randomArray(int len, int value) {
 		int[] arr = new int[len];
 		for (int i = 0; i < arr.length; i++) {
@@ -82,6 +128,7 @@ public class Code02_SplitSumClosedSizeHalf {
 		return arr;
 	}
 
+	// for test
 	public static void printArray(int[] arr) {
 		for (int num : arr) {
 			System.out.print(num + " ");
@@ -89,6 +136,7 @@ public class Code02_SplitSumClosedSizeHalf {
 		System.out.println();
 	}
 
+	// for test
 	public static void main(String[] args) {
 		int maxLen = 20;
 		int maxValue = 50;
@@ -98,11 +146,13 @@ public class Code02_SplitSumClosedSizeHalf {
 			int len = (int) (Math.random() * maxLen);
 			int[] arr = randomArray(len, maxValue);
 			int ans1 = right(arr);
-			int ans2 = dp(arr);
-			if (ans1 != ans2) {
+			int ans2 = dp1(arr);
+			int ans3 = dp2(arr);
+			if (ans1 != ans2 || ans1 != ans3) {
 				printArray(arr);
 				System.out.println(ans1);
 				System.out.println(ans2);
+				System.out.println(ans3);
 				System.out.println("Oops!");
 				break;
 			}
