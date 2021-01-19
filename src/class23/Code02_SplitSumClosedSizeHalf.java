@@ -1,7 +1,5 @@
 package class23;
 
-import java.util.TreeSet;
-
 public class Code02_SplitSumClosedSizeHalf {
 
 	public static int right(int[] arr) {
@@ -12,26 +10,27 @@ public class Code02_SplitSumClosedSizeHalf {
 		for (int num : arr) {
 			sum += num;
 		}
-		TreeSet<Integer> ans = new TreeSet<>();
-		process(arr, 0, 0, 0, ans, sum >> 1);
-		return ans.last();
+		return process(arr, 0, 0, sum >> 1, (arr.length & 1) == 0);
 	}
 
-	public static void process(int[] arr, int i, int sum, int picks, TreeSet<Integer> ans, int limit) {
+	public static int process(int[] arr, int i, int picks, int rest, boolean sizeEven) {
 		if (i == arr.length) {
-			if ((arr.length & 1) == 0) {
-				if (picks == (arr.length >> 1) && sum <= limit) {
-					ans.add(sum);
-				}
+			if (sizeEven) {
+				return picks == (arr.length >> 1) ? 0 : -1;
 			} else {
-				if ((picks == (arr.length >> 1) || picks == (arr.length >> 1) + 1) && sum <= limit) {
-					ans.add(sum);
-				}
+				return (picks == (arr.length >> 1) || picks == (arr.length >> 1) + 1) ? 0 : -1;
 			}
-		} else {
-			process(arr, i + 1, sum, picks, ans, limit);
-			process(arr, i + 1, sum + arr[i], picks + 1, ans, limit);
 		}
+		int p1 = process(arr, i + 1, picks, rest, sizeEven);
+		int p2 = -1;
+		int next2 = -1;
+		if (arr[i] <= rest) {
+			next2 = process(arr, i + 1, picks + 1, rest - arr[i], sizeEven);
+		}
+		if (next2 != -1) {
+			p2 = arr[i] + next2;
+		}
+		return Math.max(p1, p2);
 	}
 
 	public static int dp(int[] arr) {
