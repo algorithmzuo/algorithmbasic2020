@@ -4,62 +4,71 @@ import java.util.LinkedList;
 
 public class Code02_AllLessNumSubArray {
 
-	public static int getNum(int[] arr, int num) {
-		if (arr == null || arr.length == 0) {
+	// 暴力的对数器方法
+	public static int right(int[] arr, int sum) {
+		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;
 		}
-		LinkedList<Integer> qmin = new LinkedList<Integer>();
-		LinkedList<Integer> qmax = new LinkedList<Integer>();
-		int L = 0;
-		int R = 0;
-		// [L..R) -> [0,0) 窗口内无数 [1,1)
-		// [0,1) -> [0~0]
-		int res = 0;
-		while (L < arr.length) { // L是开头位置，尝试每一个开头
-
-			// 如果此时窗口的开头是L,下面的while工作:R向右扩到违规为止
-
-			while (R < arr.length) { // R是最后一个达标位置的再下一个
-				while (!qmin.isEmpty() && arr[qmin.peekLast()] >= arr[R]) {
-					qmin.pollLast();
+		int N = arr.length;
+		int count = 0;
+		for (int L = 0; L < N; L++) {
+			for (int R = L; R < N; R++) {
+				int max = arr[L];
+				int min = arr[L];
+				for (int i = L + 1; i <= R; i++) {
+					max = Math.max(max, arr[i]);
+					min = Math.min(min, arr[i]);
 				}
-				qmin.addLast(R);
-				// R -> arr[R],
-				while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
-					qmax.pollLast();
+				if (max - min <= sum) {
+					count++;
 				}
-				qmax.addLast(R);
-
-				if (arr[qmax.getFirst()] - arr[qmin.getFirst()] > num) {
-					break;
-				}
-				R++;
 			}
-
-			// R是最后一个达标位置的再下一个，第一个违规的位置
-			res += R - L;
-
-			if (qmin.peekFirst() == L) {
-				qmin.pollFirst();
-			}
-			if (qmax.peekFirst() == L) {
-				qmax.pollFirst();
-			}
-
-			L++;
-
 		}
-		return res;
+		return count;
+	}
+
+	public static int num(int[] arr, int sum) {
+		if (arr == null || arr.length == 0 || sum < 0) {
+			return 0;
+		}
+		int N = arr.length;
+		int count = 0;
+		LinkedList<Integer> maxWindow = new LinkedList<>();
+		LinkedList<Integer> minWindow = new LinkedList<>();
+		int R = 0;
+		for (int L = 0; L < N; L++) {
+			while (R < N) {
+				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {
+					maxWindow.pollLast();
+				}
+				maxWindow.addLast(R);
+				while (!minWindow.isEmpty() && arr[minWindow.peekLast()] >= arr[R]) {
+					minWindow.pollLast();
+				}
+				minWindow.addLast(R);
+				if (arr[maxWindow.peekFirst()] - arr[minWindow.peekFirst()] > sum) {
+					break;
+				} else {
+					R++;
+				}
+			}
+			count += R - L;
+			if (maxWindow.peekFirst() == L) {
+				maxWindow.pollFirst();
+			}
+			if (minWindow.peekFirst() == L) {
+				minWindow.pollFirst();
+			}
+		}
+		return count;
 	}
 
 	// for test
-	public static int[] getRandomArray(int len) {
-		if (len < 0) {
-			return null;
-		}
+	public static int[] generateRandomArray(int maxLen, int maxValue) {
+		int len = (int) (Math.random() * (maxLen + 1));
 		int[] arr = new int[len];
 		for (int i = 0; i < len; i++) {
-			arr[i] = (int) (Math.random() * 10);
+			arr[i] = (int) (Math.random() * (maxValue + 1)) - (int) (Math.random() * (maxValue + 1));
 		}
 		return arr;
 	}
@@ -75,10 +84,25 @@ public class Code02_AllLessNumSubArray {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = getRandomArray(30);
-		int num = 5;
-		printArray(arr);
-		System.out.println(getNum(arr, num));
+		int maxLen = 100;
+		int maxValue = 200;
+		int testTime = 100000;
+		System.out.println("测试开始");
+		for (int i = 0; i < testTime; i++) {
+			int[] arr = generateRandomArray(maxLen, maxValue);
+			int sum = (int) (Math.random() * (maxValue + 1));
+			int ans1 = right(arr, sum);
+			int ans2 = num(arr, sum);
+			if (ans1 != ans2) {
+				System.out.println("Oops!");
+				printArray(arr);
+				System.out.println(sum);
+				System.out.println(ans1);
+				System.out.println(ans2);
+				break;
+			}
+		}
+		System.out.println("测试结束");
 
 	}
 

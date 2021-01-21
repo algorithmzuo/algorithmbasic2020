@@ -4,37 +4,8 @@ import java.util.LinkedList;
 
 public class Code01_SlidingWindowMaxArray {
 
-	public static int[] getMaxWindow(int[] arr, int w) {
-		if (arr == null || w < 1 || arr.length < w) {
-			return null;
-		}
-		// 其中放的是位置，头代表 （大->小）尾
-		LinkedList<Integer> qmax = new LinkedList<Integer>();
-		int[] res = new int[arr.length - w + 1];
-		int index = 0;
-		// L...R
-		//     i
-		for (int R = 0; R < arr.length; R++) { // 当前让 i -> [i] 进窗口 ， i 就是 r
-			// R -> 值  可以放在比他大的数后，或者空
-			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
-				qmax.pollLast();
-			}
-			qmax.addLast(R);
-			// 数进来了
-			// 如果窗口没有形成W的长度之前，不弹出数字的
-			if (qmax.peekFirst() == R - w) {
-				qmax.pollFirst();
-			}
-			// 以上窗口更新做完了
-			if (R >= w - 1) {
-				res[index++] = arr[qmax.peekFirst()];
-			}
-		}
-		return res;
-	}
-
-	// for test
-	public static int[] rightWay(int[] arr, int w) {
+	// 暴力的对数器方法
+	public static int[] right(int[] arr, int w) {
 		if (arr == null || w < 1 || arr.length < w) {
 			return null;
 		}
@@ -51,6 +22,28 @@ public class Code01_SlidingWindowMaxArray {
 			res[index++] = max;
 			L++;
 			R++;
+		}
+		return res;
+	}
+
+	public static int[] getMaxWindow(int[] arr, int w) {
+		if (arr == null || w < 1 || arr.length < w) {
+			return null;
+		}
+		LinkedList<Integer> qmax = new LinkedList<Integer>();
+		int[] res = new int[arr.length - w + 1];
+		int index = 0;
+		for (int R = 0; R < arr.length; R++) {
+			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
+				qmax.pollLast();
+			}
+			qmax.addLast(R);
+			if (qmax.peekFirst() == R - w) {
+				qmax.pollFirst();
+			}
+			if (R >= w - 1) {
+				res[index++] = arr[qmax.peekFirst()];
+			}
 		}
 		return res;
 	}
@@ -92,7 +85,7 @@ public class Code01_SlidingWindowMaxArray {
 			int[] arr = generateRandomArray(maxSize, maxValue);
 			int w = (int) (Math.random() * (arr.length + 1));
 			int[] ans1 = getMaxWindow(arr, w);
-			int[] ans2 = rightWay(arr, w);
+			int[] ans2 = right(arr, w);
 			if (!isEqual(ans1, ans2)) {
 				System.out.println("Oops!");
 			}
