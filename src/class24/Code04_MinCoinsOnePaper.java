@@ -110,10 +110,8 @@ public class Code04_MinCoinsOnePaper {
 		return dp[0][aim];
 	}
 
-	// 这种解法课上不讲
-	// 因为需要理解窗口内最小值的更新结构
-	// 后面的课会讲
 	// dp3时间复杂度为：O(arr长度) + O(货币种数 * aim)
+	// 优化需要用到窗口内最小值的更新结构
 	public static int dp3(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
@@ -132,6 +130,8 @@ public class Code04_MinCoinsOnePaper {
 		// 因为用了窗口内最小值的更新结构
 		for (int i = N - 1; i >= 0; i--) {
 			for (int mod = 0; mod < Math.min(aim + 1, c[i]); mod++) {
+				// 当前面值 X
+				// mod  mod + x   mod + 2*x   mod + 3 * x
 				LinkedList<Integer> w = new LinkedList<>();
 				w.add(mod);
 				dp[i][mod] = dp[i + 1][mod];
@@ -244,7 +244,7 @@ public class Code04_MinCoinsOnePaper {
 
 		System.out.println("当货币很少出现重复，dp2比dp3有常数时间优势");
 		System.out.println("当货币大量出现重复，dp3时间复杂度明显优于dp2");
-		System.out.println("dp3的讲解放在窗口内最大值或最小值的更新结构里");
+		System.out.println("dp3的优化用到了窗口内最小值的更新结构");
 	}
 
 }

@@ -9,11 +9,12 @@ public class Code01_SlidingWindowMaxArray {
 		if (arr == null || w < 1 || arr.length < w) {
 			return null;
 		}
-		int[] res = new int[arr.length - w + 1];
+		int N = arr.length;
+		int[] res = new int[N - w + 1];
 		int index = 0;
 		int L = 0;
 		int R = w - 1;
-		while (R < arr.length) {
+		while (R < N) {
 			int max = arr[L];
 			for (int i = L + 1; i <= R; i++) {
 				max = Math.max(max, arr[i]);
@@ -30,6 +31,8 @@ public class Code01_SlidingWindowMaxArray {
 		if (arr == null || w < 1 || arr.length < w) {
 			return null;
 		}
+		// qmax 窗口最大值的更新结构
+		// 放下标
 		LinkedList<Integer> qmax = new LinkedList<Integer>();
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
