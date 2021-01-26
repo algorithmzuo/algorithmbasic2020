@@ -6,23 +6,32 @@ import java.util.Stack;
 
 public class Code01_MonotonousStack {
 
+	// arr = [ 3, 1, 2, 3]
+	//         0  1  2  3
+	//  [
+	//     0 : [-1,  1]
+	//     1 : [-1, -1]
+	//     2 : [ 1, -1]
+	//     3 : [ 2, -1]
+	//  ]
 	public static int[][] getNearLessNoRepeat(int[] arr) {
 		int[][] res = new int[arr.length][2];
+		// 只存位置！
 		Stack<Integer> stack = new Stack<>();
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) { // 当遍历到i位置的数，arr[i]
 			while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
-				int popIndex = stack.pop();
+				int j = stack.pop();
 				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-				res[popIndex][0] = leftLessIndex;
-				res[popIndex][1] = i;
+				res[j][0] = leftLessIndex;
+				res[j][1] = i;
 			}
 			stack.push(i);
 		}
 		while (!stack.isEmpty()) {
-			int popIndex = stack.pop();
+			int j = stack.pop();
 			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
-			res[popIndex][0] = leftLessIndex;
-			res[popIndex][1] = -1;
+			res[j][0] = leftLessIndex;
+			res[j][1] = -1;
 		}
 		return res;
 	}
@@ -31,17 +40,14 @@ public class Code01_MonotonousStack {
 		int[][] res = new int[arr.length][2];
 		Stack<List<Integer>> stack = new Stack<>();
 		for (int i = 0; i < arr.length; i++) { // i -> arr[i] 进栈
-			// 底 -> 顶， 小 -> 大
 			while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
 				List<Integer> popIs = stack.pop();
-				// 取位于下面位置的列表中，最晚加入的那个
 				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
 				for (Integer popi : popIs) {
 					res[popi][0] = leftLessIndex;
 					res[popi][1] = i;
 				}
 			}
-			// 相等的、比你小的
 			if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
 				stack.peek().add(Integer.valueOf(i));
 			} else {
@@ -52,7 +58,6 @@ public class Code01_MonotonousStack {
 		}
 		while (!stack.isEmpty()) {
 			List<Integer> popIs = stack.pop();
-			// 取位于下面位置的列表中，最晚加入的那个
 			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
 			for (Integer popi : popIs) {
 				res[popi][0] = leftLessIndex;
@@ -140,6 +145,7 @@ public class Code01_MonotonousStack {
 		int size = 10;
 		int max = 20;
 		int testTimes = 2000000;
+		System.out.println("测试开始");
 		for (int i = 0; i < testTimes; i++) {
 			int[] arr1 = getRandomArrayNoRepeat(size);
 			int[] arr2 = getRandomArray(size, max);
@@ -154,5 +160,6 @@ public class Code01_MonotonousStack {
 				break;
 			}
 		}
+		System.out.println("测试结束");
 	}
 }
