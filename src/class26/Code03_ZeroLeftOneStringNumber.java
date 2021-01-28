@@ -1,6 +1,6 @@
 package class26;
 
-public class Code02_ZeroLeftOneStringNumber {
+public class Code03_ZeroLeftOneStringNumber {
 
 	public static int getNum1(int n) {
 		if (n < 1) {

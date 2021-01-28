@@ -1,4 +1,4 @@
-package class25;
+package class26;
 
 import java.util.Stack;
 
@@ -7,7 +7,7 @@ import java.util.Stack;
 // subArrayMinSum2是最优解的思路
 // sumSubarrayMins是最优解思路下的单调栈优化
 // Leetcode上只提交sumSubarrayMins方法，时间复杂度O(N)，可以直接通过
-public class Code06_SumOfSubarrayMinimums {
+public class Code01_SumOfSubarrayMinimums {
 
 	public static int subArrayMinSum1(int[] arr) {
 		int ans = 0;

@@ -1,6 +1,6 @@
 package class26;
 
-public class Code01_FibonacciProblem {
+public class Code02_FibonacciProblem {
 
 	public static int f1(int n) {
 		if (n < 1) {
