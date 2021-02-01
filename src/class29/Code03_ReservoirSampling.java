@@ -1,4 +1,4 @@
-package class27;
+package class29;
 
 public class Code03_ReservoirSampling {
 

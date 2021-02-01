@@ -23,8 +23,11 @@ public class Code01_SumOfSubarrayMinimums {
 		return ans;
 	}
 
+	// 没有用单调栈
 	public static int subArrayMinSum2(int[] arr) {
+		// left[i] = x : arr[i]左边，离arr[i]最近，<=arr[i]，位置在x
 		int[] left = leftNearLessEqual2(arr);
+		// right[i] = y : arr[i]右边，离arr[i]最近，< arr[i],的数，位置在y
 		int[] right = rightNearLess2(arr);
 		int ans = 0;
 		for (int i = 0; i < arr.length; i++) {

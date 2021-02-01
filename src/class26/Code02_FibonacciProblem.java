@@ -30,6 +30,7 @@ public class Code02_FibonacciProblem {
 		return res;
 	}
 
+	// O(logN)
 	public static int f3(int n) {
 		if (n < 1) {
 			return 0;
@@ -52,14 +53,13 @@ public class Code02_FibonacciProblem {
 		for (int i = 0; i < res.length; i++) {
 			res[i][i] = 1;
 		}
-		
 		// res = 矩阵中的1
-		int[][] tmp = m;// 矩阵1次方
+		int[][] t = m;// 矩阵1次方
 		for (; p != 0; p >>= 1) {
 			if ((p & 1) != 0) {
-				res = muliMatrix(res, tmp);
+				res = muliMatrix(res, t);
 			}
-			tmp = muliMatrix(tmp, tmp);
+			t = muliMatrix(t, t);
 		}
 		return res;
 	}

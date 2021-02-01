@@ -1,4 +1,4 @@
-package class29;
+package class28;
 
 public class Code01_Manacher {
 
