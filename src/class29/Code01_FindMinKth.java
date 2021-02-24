@@ -30,6 +30,7 @@ public class Code01_FindMinKth {
 	}
 
 	// 改写快排，时间复杂度O(N)
+	// k >= 1
 	public static int minKth2(int[] array, int k) {
 		int[] arr = copyArray(array);
 		return process2(arr, 0, arr.length - 1, k - 1);
@@ -53,10 +54,6 @@ public class Code01_FindMinKth {
 		}
 		// 不止一个数  L +  [0, R -L]
 		int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
-		
-		// range[0] range[1]
-		//  L   ..... R     pivot 
-		//  0         1000     70...800
 		int[] range = partition(arr, L, R, pivot);
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
@@ -100,6 +97,10 @@ public class Code01_FindMinKth {
 		if (L == R) {
 			return arr[L];
 		}
+		// L...R  每五个数一组
+		// 每一个小组内部排好序
+		// 小组的中位数组成新数组
+		// 这个新数组的中位数返回
 		int pivot = medianOfMedians(arr, L, R);
 		int[] range = partition(arr, L, R, pivot);
 		if (index >= range[0] && index <= range[1]) {

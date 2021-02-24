@@ -38,7 +38,38 @@ public class Code03_ReservoirSampling {
 
 	}
 
+	// 请等概率返回1~i中的一个数字
+	public static int random(int i) {
+		return (int) (Math.random() * i) + 1;
+	}
+
 	public static void main(String[] args) {
+		System.out.println("hello");
+		int test = 10000;
+		int ballNum = 17;
+		int[] count = new int[ballNum + 1];
+		for (int i = 0; i < test; i++) {
+			int[] bag = new int[10];
+			int bagi = 0;
+			for (int num = 1; num <= ballNum; num++) {
+				if (num <= 10) {
+					bag[bagi++] = num;
+				} else { // num > 10
+					if (random(num) <= 10) { // 一定要把num球入袋子
+						bagi = (int) (Math.random() * 10);
+						bag[bagi] = num;
+					}
+				}
+
+			}
+			for (int num : bag) {
+				count[num]++;
+			}
+		}
+		for (int i = 0; i <= ballNum; i++) {
+			System.out.println(count[i]);
+		}
+
 		System.out.println("hello");
 		int all = 100;
 		int choose = 10;
