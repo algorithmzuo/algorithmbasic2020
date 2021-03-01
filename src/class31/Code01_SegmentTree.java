@@ -5,7 +5,7 @@ public class Code01_SegmentTree {
 	public static class SegmentTree {
 		// arr[]为原序列的信息从0开始，但在arr里是从1开始的
 		// sum[]模拟线段树维护区间和
-		// lazy[]为累加懒惰标记
+		// lazy[]为累加和懒惰标记
 		// change[]为更新的值
 		// update[]为更新慵懒标记
 		private int MAXN;
@@ -17,12 +17,11 @@ public class Code01_SegmentTree {
 
 		public SegmentTree(int[] origin) {
 			MAXN = origin.length + 1;
-			arr = new int[MAXN]; // arr[0] 不用  从1开始使用
+			arr = new int[MAXN]; // arr[0] 不用 从1开始使用
 			for (int i = 1; i < MAXN; i++) {
 				arr[i] = origin[i - 1];
 			}
 			sum = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围的累加和信息
-			
 			lazy = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围沒有往下傳遞的纍加任務
 			change = new int[MAXN << 2]; // 用来支持脑补概念中，某一个范围有没有更新操作的任务
 			update = new boolean[MAXN << 2]; // 用来支持脑补概念中，某一个范围更新任务，更新成了什么
@@ -58,7 +57,7 @@ public class Code01_SegmentTree {
 
 		// 在初始化阶段，先把sum数组，填好
 		// 在arr[l~r]范围上，去build，1~N，
-		// rt :  这个范围在sum中的下标
+		// rt : 这个范围在sum中的下标
 		public void build(int l, int r, int rt) {
 			if (l == r) {
 				sum[rt] = arr[l];
@@ -70,6 +69,9 @@ public class Code01_SegmentTree {
 			pushUp(rt);
 		}
 
+		
+		// L~R  所有的值变成C
+		// l~r  rt
 		public void update(int L, int R, int C, int l, int r, int rt) {
 			if (L <= l && r <= R) {
 				update[rt] = true;
@@ -90,38 +92,30 @@ public class Code01_SegmentTree {
 			pushUp(rt);
 		}
 
-		// L..R -> 任务范围 ,所有的值累加上C
-		// l,r -> 表达的范围
-		// rt  去哪找l，r范围上的信息
-		public void add(
-				int L, int R, int C,
-				int l, int r, 
-				int rt) {
-			// 任务的范围彻底覆盖了，当前表达的范围
+		// L~R, C 任务！
+		// rt，l~r
+		public void add(int L, int R, int C, int l, int r, int rt) {
+			// 任务如果把此时的范围全包了！
 			if (L <= l && r <= R) {
 				sum[rt] += C * (r - l + 1);
 				lazy[rt] += C;
 				return;
 			}
-			// 任务并没有把l...r全包住
-			// 要把当前任务往下发
-			// 任务  L, R  没有把本身表达范围 l,r 彻底包住
-			int mid = (l + r) >> 1; // l..mid  (rt << 1)   mid+1...r(rt << 1 | 1)
-			// 下发之前所有攒的懒任务
+			// 任务没有把你全包！
+			// l  r  mid = (l+r)/2
+			int mid = (l + r) >> 1;
 			pushDown(rt, mid - l + 1, r - mid);
-			// 左孩子是否需要接到任务
+			// L~R
 			if (L <= mid) {
 				add(L, R, C, l, mid, rt << 1);
 			}
-			// 右孩子是否需要接到任务
 			if (R > mid) {
 				add(L, R, C, mid + 1, r, rt << 1 | 1);
 			}
-			// 左右孩子做完任务后，我更新我的sum信息
 			pushUp(rt);
 		}
 
-		//   1~6 累加和是多少？ 1~8   rt
+		// 1~6 累加和是多少？ 1~8 rt
 		public long query(int L, int R, int l, int r, int rt) {
 			if (L <= l && r <= R) {
 				return sum[rt];

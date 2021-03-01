@@ -19,6 +19,7 @@ public class Code05_MinHeight {
 		return p(head);
 	}
 
+	// 返回x为头的树，最小深度是多少
 	public static int p(Node x) {
 		if (x.left == null && x.right == null) {
 			return 1;

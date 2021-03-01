@@ -12,6 +12,17 @@ public class Code01_MorrisTraversal {
 		}
 	}
 
+	public static void process(Node root) {
+		if (root == null) {
+			return;
+		}
+		// 1
+		process(root.left);
+		// 2
+		process(root.right);
+		// 3
+	}
+
 	public static void morris(Node head) {
 		if (head == null) {
 			return;
@@ -19,25 +30,49 @@ public class Code01_MorrisTraversal {
 		Node cur = head;
 		Node mostRight = null;
 		while (cur != null) {
-			// cur有没有左树
 			mostRight = cur.left;
-			if (mostRight != null) { // 有左树的情况下
-				// 找到cur左树上，真实的最右
+			if (mostRight != null) {
 				while (mostRight.right != null && mostRight.right != cur) {
 					mostRight = mostRight.right;
 				}
-				// 从while中出来，mostRight一定是cur左树上的最右节点
-				// mostRight
 				if (mostRight.right == null) {
 					mostRight.right = cur;
 					cur = cur.left;
 					continue;
-				} else { // mostRight.right != null -> mostRight.right == cur
+				} else {
 					mostRight.right = null;
 				}
 			}
 			cur = cur.right;
 		}
+	}
+
+	public static void morrisPre(Node head) {
+		if (head == null) {
+			return;
+		}
+		Node cur = head;
+		Node mostRight = null;
+		while (cur != null) {
+			mostRight = cur.left;
+			if (mostRight != null) {
+				while (mostRight.right != null && mostRight.right != cur) {
+					mostRight = mostRight.right;
+				}
+				if (mostRight.right == null) {
+					System.out.print(cur.value + " ");
+					mostRight.right = cur;
+					cur = cur.left;
+					continue;
+				} else {
+					mostRight.right = null;
+				}
+			} else {
+				System.out.print(cur.value + " ");
+			}
+			cur = cur.right;
+		}
+		System.out.println();
 	}
 
 	public static void morrisIn(Node head) {
@@ -62,34 +97,6 @@ public class Code01_MorrisTraversal {
 			}
 			System.out.print(cur.value + " ");
 			cur = cur.right;
-		}
-		System.out.println();
-	}
-
-	public static void morrisPre(Node head) {
-		if (head == null) {
-			return;
-		}
-		Node cur1 = head;
-		Node cur2 = null;
-		while (cur1 != null) {
-			cur2 = cur1.left;
-			if (cur2 != null) {
-				while (cur2.right != null && cur2.right != cur1) {
-					cur2 = cur2.right;
-				}
-				if (cur2.right == null) {
-					cur2.right = cur1;
-					System.out.print(cur1.value + " ");
-					cur1 = cur1.left;
-					continue;
-				} else {
-					cur2.right = null;
-				}
-			} else {
-				System.out.print(cur1.value + " ");
-			}
-			cur1 = cur1.right;
 		}
 		System.out.println();
 	}
