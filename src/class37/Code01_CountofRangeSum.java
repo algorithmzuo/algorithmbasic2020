@@ -164,18 +164,17 @@ public class Code01_CountofRangeSum {
 	}
 
 	public static int countRangeSum2(int[] nums, int lower, int upper) {
+		// 黑盒，加入数字（前缀和），不去重，可以接受重复数字
+		// < num , 有几个数？
 		SizeBalancedTreeSet treeSet = new SizeBalancedTreeSet();
 		long sum = 0;
 		int ans = 0;
 		treeSet.add(0);// 一个数都没有的时候，就已经有一个前缀和累加和为0，
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
-			// sum    i结尾的时候[lower, upper]
-			// 之前所有前缀累加和中，有多少累加和落在[sum - upper, sum - lower]
-			// 查 ？ < sum - lower + 1   a
-			// 查 ?  < sum - upper    b
-			// a - b
-			
+			// [sum - upper, sum - lower]
+			// [10, 20] ?
+			// < 10 ?  < 21 ?   
 			long a = treeSet.lessKeySize(sum - lower + 1);
 			long b = treeSet.lessKeySize(sum - upper);
 			ans += a - b;

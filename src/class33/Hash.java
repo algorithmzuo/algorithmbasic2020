@@ -29,7 +29,7 @@ public class Hash {
 		}
 		System.out.println("=======");
 
-		String algorithm = "SHA";
+		String algorithm = "MD5";
 		Hash hash = new Hash(algorithm);
 
 		String input1 = "zuochengyunzuochengyun1";

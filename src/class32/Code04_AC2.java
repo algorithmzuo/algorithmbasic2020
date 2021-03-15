@@ -17,6 +17,7 @@ public class Code04_AC2 {
 		public boolean endUse;
 		public Node fail;
 		public Node[] nexts;
+
 		public Node() {
 			endUse = false;
 			end = null;
@@ -39,8 +40,7 @@ public class Code04_AC2 {
 			for (int i = 0; i < str.length; i++) {
 				index = str[i] - 'a';
 				if (cur.nexts[index] == null) {
-					Node next = new Node();
-					cur.nexts[index] = next;
+					cur.nexts[index] = new Node();
 				}
 				cur = cur.nexts[index];
 			}
@@ -53,14 +53,12 @@ public class Code04_AC2 {
 			Node cur = null;
 			Node cfail = null;
 			while (!queue.isEmpty()) {
-				// 当前节点弹出，
-				// 当前节点的所有后代加入到队列里去，
-				// 当前节点给它的子去设置fail指针
-				// cur -> 父亲
+				// 某个父亲，cur
 				cur = queue.poll();
 				for (int i = 0; i < 26; i++) { // 所有的路
-					if (cur.nexts[i] != null) { // 找到所有有效的路
-						cur.nexts[i].fail = root; //
+					// cur -> 父亲  i号儿子，必须把i号儿子的fail指针设置好！
+					if (cur.nexts[i] != null) { // 如果真的有i号儿子
+						cur.nexts[i].fail = root;
 						cfail = cur.fail;
 						while (cfail != null) {
 							if (cfail.nexts[i] != null) {
@@ -75,6 +73,7 @@ public class Code04_AC2 {
 			}
 		}
 
+		// 大文章：content
 		public List<String> containWords(String content) {
 			char[] str = content.toCharArray();
 			Node cur = root;
@@ -92,7 +91,7 @@ public class Code04_AC2 {
 				cur = cur.nexts[index] != null ? cur.nexts[index] : root;
 				follow = cur;
 				while (follow != root) {
-					if(follow.endUse) {
+					if (follow.endUse) {
 						break;
 					}
 					// 不同的需求，在这一段之间修改
@@ -115,8 +114,8 @@ public class Code04_AC2 {
 		ac.insert("he");
 		ac.insert("abcdheks");
 		// 设置fail指针
-		ac.build();	
-		
+		ac.build();
+
 		List<String> contains = ac.containWords("abcdhekskdjfafhasldkflskdjhwqaeruv");
 		for (String word : contains) {
 			System.out.println(word);
