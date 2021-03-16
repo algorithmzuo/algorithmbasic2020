@@ -19,9 +19,6 @@ public class Code03_MSumToN {
 	}
 
 	public static boolean isMSum2(int num) {
-		if (num < 3) {
-			return false;
-		}
 		return (num & (num - 1)) != 0;
 	}
 
