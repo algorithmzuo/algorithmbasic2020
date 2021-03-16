@@ -3,9 +3,9 @@ package class38;
 public class Code03_MSumToN {
 
 	public static boolean isMSum1(int num) {
-		for (int i = 1; i <= num; i++) {
-			int sum = i;
-			for (int j = i + 1; j <= num; j++) {
+		for (int start = 1; start <= num; start++) {
+			int sum = start;
+			for (int j = start + 1; j <= num; j++) {
 				if (sum + j > num) {
 					break;
 				}
@@ -19,6 +19,12 @@ public class Code03_MSumToN {
 	}
 
 	public static boolean isMSum2(int num) {
+//		
+//		return num == (num & (~num + 1));
+//		
+//		return num == (num & (-num));
+//		
+//		
 		return (num & (num - 1)) != 0;
 	}
 

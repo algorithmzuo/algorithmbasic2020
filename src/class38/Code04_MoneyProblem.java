@@ -9,23 +9,60 @@ public class Code04_MoneyProblem {
 
 	// 目前，你的能力是ability，你来到了index号怪兽的面前，如果要通过后续所有的怪兽，
 	// 请返回需要花的最少钱数
-	public static long process(int[] d, int[] p, int ability, int index) {
+	public static long process1(int[] d, int[] p, int ability, int index) {
 		if (index == d.length) {
 			return 0;
 		}
 		if (ability < d[index]) {
-			return p[index] + process(d, p, ability + d[index], index + 1);
-		} else { // 可以贿赂，也可以不贿赂
-			return 
-					Math.min(
-							p[index] + process(d, p, ability + d[index], index + 1),
-						    process(d, p, ability, index + 1)
-							);
+			return p[index] + process1(d, p, ability + d[index], index + 1);
+		} else { // ability >= d[index] 可以贿赂，也可以不贿赂
+			return Math.min(
+
+					p[index] + process1(d, p, ability + d[index], index + 1),
+
+					0 + process1(d, p, ability, index + 1));
 		}
 	}
 
 	public static long func1(int[] d, int[] p) {
-		return process(d, p, 0, 0);
+		return process1(d, p, 0, 0);
+	}
+
+	// 从0....index号怪兽，花的钱，必须严格==money
+	// 如果通过不了，返回-1
+	// 如果可以通过，返回能通过情况下的最大能力值
+	public static long process2(int[] d, int[] p, int index, int money) {
+		if (index == -1) { // 一个怪兽也没遇到呢
+			return money == 0 ? 0 : -1;
+		}
+		// index >= 0
+		// 1) 不贿赂当前index号怪兽
+		long preMaxAbility = process2(d, p, index - 1, money);
+		long p1 = -1;
+		if (preMaxAbility != -1 && preMaxAbility >= d[index]) {
+			p1 = preMaxAbility;
+		}
+		// 2) 贿赂当前的怪兽 当前的钱 p[index]
+		long preMaxAbility2 = process2(d, p, index - 1, money - p[index]);
+		long p2 = -1;
+		if (preMaxAbility2 != -1) {
+			p2 = d[index] + preMaxAbility2;
+		}
+		return Math.max(p1, p2);
+	}
+
+	public static int minMoney2(int[] d, int[] p) {
+		int allMoney = 0;
+		for (int i = 0; i < p.length; i++) {
+			allMoney += p[i];
+		}
+		int N = d.length;
+		for (int money = 0; money < allMoney; money++) {
+			if (process2(d, p, N - 1, money) != -1) {
+				return money;
+			}
+		}
+		return allMoney;
 	}
 
 	public static long func2(int[] d, int[] p) {
@@ -113,7 +150,7 @@ public class Code04_MoneyProblem {
 	public static void main(String[] args) {
 		int len = 10;
 		int value = 20;
-		int testTimes = 1000000;
+		int testTimes = 10000;
 		for (int i = 0; i < testTimes; i++) {
 			int[][] arrs = generateTwoRandomArray(len, value);
 			int[] d = arrs[0];
@@ -121,7 +158,8 @@ public class Code04_MoneyProblem {
 			long ans1 = func1(d, p);
 			long ans2 = func2(d, p);
 			long ans3 = func3(d, p);
-			if (ans1 != ans2 || ans2 != ans3) {
+			long ans4 = minMoney2(d,p);
+			if (ans1 != ans2 || ans2 != ans3 || ans1 != ans4) {
 				System.out.println("oops!");
 			}
 		}
