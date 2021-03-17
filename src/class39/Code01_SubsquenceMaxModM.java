@@ -1,10 +1,10 @@
-package class38;
+package class39;
 
 import java.util.HashSet;
 import java.util.TreeSet;
 
 // 给定一个非负数组arr，和一个正数m。 返回arr的所有子序列中累加和%m之后的最大值。
-public class Code05_SubsquenceMaxModM {
+public class Code01_SubsquenceMaxModM {
 
 	public static int max1(int[] arr, int m) {
 		HashSet<Integer> set = new HashSet<>();

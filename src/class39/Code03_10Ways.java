@@ -2,7 +2,7 @@ package class39;
 
 import java.util.LinkedList;
 
-public class Code02_10Ways {
+public class Code03_10Ways {
 
 	public static long ways1(int N) {
 		int zero = N;

@@ -1,6 +1,6 @@
 package class39;
 
-public class Code01_DifferentBTNum {
+public class Code04_DifferentBTNum {
 
 //	k(0) = 1, k(1) = 1
 //
