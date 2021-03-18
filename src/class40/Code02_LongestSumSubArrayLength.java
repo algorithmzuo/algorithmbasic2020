@@ -8,6 +8,8 @@ public class Code02_LongestSumSubArrayLength {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
+		// key:前缀和
+		// value : 0~value这个前缀和是最早出现key这个值的
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		map.put(0, -1); // important
 		int len = 0;

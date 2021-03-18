@@ -19,12 +19,10 @@ public class Code03_LongestLessSumSubArrayLength {
 				minSumEnds[i] = i;
 			}
 		}
+		// 迟迟扩不进来那一块儿的开头位置
 		int end = 0;
 		int sum = 0;
-		int res = 0;
-		// i是窗口的最左的位置，end扩出来的最右有效块儿的最后一个位置的，再下一个位置
-		// end也是下一块儿的开始位置
-		// 窗口：[i~end)
+		int ans = 0;
 		for (int i = 0; i < arr.length; i++) {
 			// while循环结束之后：
 			// 1) 如果以i开头的情况下，累加和<=k的最长子数组是arr[i..end-1]，看看这个子数组长度能不能更新res；
@@ -33,14 +31,14 @@ public class Code03_LongestLessSumSubArrayLength {
 				sum += minSums[end];
 				end = minSumEnds[end] + 1;
 			}
-			res = Math.max(res, end - i);
-			if (end > i) { // 窗口内还有数 [i~end) [4,4)
+			ans = Math.max(ans, end - i);
+			if (end > i) { // 还有窗口，哪怕窗口没有数字 [i~end) [4,4)
 				sum -= arr[i];
-			} else { // 窗口内已经没有数了，说明从i开头的所有子数组累加和都不可能<=k
+			} else { // i == end,  即将 i++, i > end, 此时窗口概念维持不住了，所以end跟着i一起走
 				end = i + 1;
 			}
 		}
-		return res;
+		return ans;
 	}
 
 	public static int maxLength(int[] arr, int k) {

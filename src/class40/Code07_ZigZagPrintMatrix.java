@@ -21,8 +21,7 @@ public class Code07_ZigZagPrintMatrix {
 		System.out.println();
 	}
 
-	public static void printLevel(int[][] m, int tR, int tC, int dR, int dC,
-			boolean f) {
+	public static void printLevel(int[][] m, int tR, int tC, int dR, int dC, boolean f) {
 		if (f) {
 			while (tR != dR + 1) {
 				System.out.print(m[tR++][tC--] + " ");
