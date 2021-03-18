@@ -1,4 +1,4 @@
-package class39;
+package class40;
 
 public class Code07_ZigZagPrintMatrix {
 
