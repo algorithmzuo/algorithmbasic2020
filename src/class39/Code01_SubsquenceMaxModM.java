@@ -40,7 +40,7 @@ public class Code01_SubsquenceMaxModM {
 			for (int j = 1; j <= sum; j++) {
 				dp[i][j] = dp[i - 1][j];
 				if (j - arr[i] >= 0) {
-					dp[i][j] = dp[i][j] | dp[i - 1][j - arr[i]];
+					dp[i][j] |= dp[i - 1][j - arr[i]];
 				}
 			}
 		}
@@ -51,11 +51,11 @@ public class Code01_SubsquenceMaxModM {
 			}
 		}
 		return ans;
-
 	}
 
 	public static int max3(int[] arr, int m) {
 		int N = arr.length;
+		// 0...m-1
 		boolean[][] dp = new boolean[N][m];
 		for (int i = 0; i < N; i++) {
 			dp[i][0] = true;
@@ -66,11 +66,10 @@ public class Code01_SubsquenceMaxModM {
 				// dp[i][j] T or F
 				dp[i][j] = dp[i - 1][j];
 				int cur = arr[i] % m;
-				if (j - cur >= 0) {
-					dp[i][j] = dp[i][j] | dp[i - 1][j - cur];
-				}
-				if (j - cur < 0) {
-					dp[i][j] = dp[i][j] | dp[i - 1][m + j - cur];
+				if (cur <= j) {
+					dp[i][j] |= dp[i - 1][j - cur];
+				} else {
+					dp[i][j] |= dp[i - 1][m + j - cur];
 				}
 			}
 		}
@@ -132,7 +131,7 @@ public class Code01_SubsquenceMaxModM {
 			int ans3 = max3(arr, m);
 			int ans4 = max4(arr, m);
 			if (ans1 != ans2 || ans2 != ans3 || ans3 != ans4) {
-				System.out.print("Oops!");
+				System.out.println("Oops!");
 			}
 		}
 		System.out.println("test finish!");

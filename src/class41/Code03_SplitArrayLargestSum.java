@@ -1,6 +1,6 @@
 package class41;
 
-public class Code02_SplitArrayLargestSum {
+public class Code03_SplitArrayLargestSum {
 
 	public static int splitArray1(int[] nums, int m) {
 		return process(nums, 0, m);
