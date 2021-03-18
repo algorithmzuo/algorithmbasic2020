@@ -26,14 +26,11 @@ public class Code01_BurstBalloons {
 			return arr[L - 1] * arr[L] * arr[R + 1];
 		}
 		// 最后打爆arr[L]的方案，和最后打爆arr[R]的方案，先比较一下
-		int max = Math.max(
-				arr[L - 1] * arr[L] * arr[R + 1] + process(arr, L + 1, R),
+		int max = Math.max(arr[L - 1] * arr[L] * arr[R + 1] + process(arr, L + 1, R),
 				arr[L - 1] * arr[R] * arr[R + 1] + process(arr, L, R - 1));
 		// 尝试中间位置的气球最后被打爆的每一种方案
 		for (int i = L + 1; i < R; i++) {
-			max = Math.max(max,
-					arr[L - 1] * arr[i] * arr[R + 1] + process(arr, L, i - 1)
-							+ process(arr, i + 1, R));
+			max = Math.max(max, arr[L - 1] * arr[i] * arr[R + 1] + process(arr, L, i - 1) + process(arr, i + 1, R));
 		}
 		return max;
 	}
@@ -55,22 +52,17 @@ public class Code01_BurstBalloons {
 		int[][] dp = new int[N + 2][N + 2];
 		for (int i = 1; i <= N; i++) {
 			dp[i][i] = help[i - 1] * help[i] * help[i + 1];
-			System.out.println(dp[i][i]);
 		}
 		for (int L = N; L >= 1; L--) {
 			for (int R = L + 1; R <= N; R++) {
-				// 求解dp[L][R]，表示help[L..R]上打爆所有气球的最大分数
-				// 最后打爆help[L]的方案
 				int finalL = help[L - 1] * help[L] * help[R + 1] + dp[L + 1][R];
-				// 最后打爆help[R]的方案
 				int finalR = help[L - 1] * help[R] * help[R + 1] + dp[L][R - 1];
-				// 最后打爆help[L]的方案，和最后打爆help[R]的方案，先比较一下
-				dp[L][R] = Math.max(finalL, finalR);
-				// 尝试中间位置的气球最后被打爆的每一种方案
-				for (int i = L + 1; i < R; i++) {
-					dp[L][R] = Math.max(dp[L][R], help[L - 1] * help[i]
-							* help[R + 1] + dp[L][i - 1] + dp[i + 1][R]);
+				int max = Math.max(finalL, finalR);
+				for (int leftEnd = L + 1; leftEnd < R; leftEnd++) {
+					max = Math.max(max,
+							help[L - 1] * help[leftEnd] * help[R + 1] + dp[L][leftEnd - 1] + dp[leftEnd + 1][R]);
 				}
+				dp[L][R] = max;
 			}
 		}
 		return dp[1][N];
