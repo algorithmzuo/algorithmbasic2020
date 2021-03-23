@@ -1,6 +1,8 @@
 package class41;
 
-public class Code03_SplitArrayLargestSum {
+// leetcode原题
+// 测试链接：https://leetcode.com/problems/split-array-largest-sum/
+public class Code04_SplitArrayLargestSum {
 
 	public static int splitArray1(int[] nums, int m) {
 		return process(nums, 0, m);

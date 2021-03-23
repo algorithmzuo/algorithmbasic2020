@@ -1,7 +1,7 @@
 package class41;
 
 // 四边形不等式：合并石子问题
-public class Code02_StoneMerge {
+public class Code03_StoneMerge {
 
 	public static int[] sum(int[] arr) {
 		int N = arr.length;
