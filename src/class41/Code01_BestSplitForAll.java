@@ -33,6 +33,7 @@ public class Code01_BestSplitForAll {
 		}
 		int ans = 0;
 		int sumL = 0;
+		// [0...s]  [s+1...N-1]
 		for (int s = 0; s < N - 1; s++) {
 			sumL += arr[s];
 			int sumR = sumAll - sumL;

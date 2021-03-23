@@ -25,6 +25,7 @@ public class Code02_BestSplitForEveryPosition {
 		return ans;
 	}
 
+	// 求原来的数组arr中，arr[L...R]的累加和
 	public static int sum(int[] sum, int L, int R) {
 		return sum[R + 1] - sum[L];
 	}
@@ -57,10 +58,18 @@ public class Code02_BestSplitForEveryPosition {
 		int N = arr.length;
 		int[] ans = new int[N];
 		ans[0] = 0;
+		// arr =   {5, 3, 1, 3}
+		//          0  1  2  3
+		// sum ={0, 5, 8, 9, 12}
+		//       0  1  2  3   4
+		// 0~2 ->  sum[3] - sum[0]
+		// 1~3 ->  sum[4] - sum[1]
 		int[] sum = new int[N + 1];
 		for (int i = 0; i < N; i++) {
 			sum[i + 1] = sum[i] + arr[i];
 		}
+		// 最优划分
+		// 0~range-1上，最优划分是左部分[0~best]  右部分[best+1~range-1]
 		int best = 0;
 		for (int range = 1; range < N; range++) {
 			while (best + 1 < range) {

@@ -44,9 +44,11 @@ public class Code03_StoneMerge {
 		int N = arr.length;
 		int[] s = sum(arr);
 		int[][] dp = new int[N][N];
+		// dp[i][i] = 0
 		for (int L = N - 2; L >= 0; L--) {
 			for (int R = L + 1; R < N; R++) {
 				int next = Integer.MAX_VALUE;
+				// dp(L..leftEnd)  + dp[leftEnd+1...R]  + 累加和[L...R]
 				for (int leftEnd = L; leftEnd < R; leftEnd++) {
 					next = Math.min(next, dp[L][leftEnd] + dp[leftEnd + 1][R]);
 				}

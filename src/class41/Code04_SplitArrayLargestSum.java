@@ -4,86 +4,114 @@ package class41;
 // 测试链接：https://leetcode.com/problems/split-array-largest-sum/
 public class Code04_SplitArrayLargestSum {
 
-	public static int splitArray1(int[] nums, int m) {
-		return process(nums, 0, m);
+	// 求原数组arr[L...R]的累加和
+	public static int sum(int[] sum, int L, int R) {
+		return sum[R + 1] - sum[L];
 	}
 
-	public static int process(int[] arr, int index, int part) {
-		if (index == arr.length) {
-			return 0;
-		}
-		if (part == 0) {
-			return -1;
-		}
-		int first = 0;
-		int min = Integer.MAX_VALUE;
-		for (int end = index; arr.length - end >= part; end++) {
-			first += arr[end];
-			int next = process(arr, end + 1, part - 1);
-			if (next != -1) {
-				min = Math.min(min, Math.max(first, next));
-			}
-		}
-		return min;
-	}
-
-	public static int splitArray2(int[] nums, int M) {
+	// 不优化枚举的动态规划方法，O(N^2 * K)
+	public static int splitArray1(int[] nums, int K) {
 		int N = nums.length;
-		int[] help = new int[nums.length + 1];
+		int[] sum = new int[N + 1];
 		for (int i = 0; i < N; i++) {
-			help[i + 1] = help[i] + nums[i];
+			sum[i + 1] = sum[i] + nums[i];
 		}
-		int[][] dp = new int[N][M + 1];
-		for (int i = 0; i < N; i++) {
-			dp[i][1] = help[i + 1] - help[0];
+		int[][] dp = new int[N][K + 1];
+		for (int j = 1; j <= K; j++) {
+			dp[0][j] = nums[0];
 		}
-		for (int i = 1; i < Math.min(N, M); i++) {
-			dp[i][i + 1] = Math.max(dp[i - 1][i], nums[i]);
+		for (int i = 1; i < N; i++) {
+			dp[i][1] = sum(sum, 0, i);
 		}
-		for (int i = 2; i < N; i++) {
-			for (int j = 2; j <= Math.min(i, M); j++) {
-				dp[i][j] = Integer.MAX_VALUE;
-				for (int k = i; k >= j - 1; k--) {
-					dp[i][j] = Math.min(dp[i][j], Math.max(dp[k - 1][j - 1], help[i + 1] - help[k]));
+		// 每一行从上往下
+		// 每一列从左往右
+		// 根本不去凑优化位置对儿！
+		for (int i = 1; i < N; i++) {
+			for (int j = 2; j <= K; j++) {
+				int ans = Integer.MAX_VALUE;
+				// 枚举是完全不优化的！
+				for (int leftEnd = 0; leftEnd <= i; leftEnd++) {
+					int leftCost = leftEnd == -1 ? 0 : dp[leftEnd][j - 1];
+					int rightCost = leftEnd == i ? 0 : sum(sum, leftEnd + 1, i);
+					int cur = Math.max(leftCost, rightCost);
+					if (cur < ans) {
+						ans = cur;
+					}
 				}
+				dp[i][j] = ans;
 			}
 		}
-		return dp[N - 1][M];
+		return dp[N - 1][K];
+	}
+
+	// 课上现场写的方法，用了枚举优化，O(N * K)
+	public static int splitArray2(int[] nums, int K) {
+		int N = nums.length;
+		int[] sum = new int[N + 1];
+		for (int i = 0; i < N; i++) {
+			sum[i + 1] = sum[i] + nums[i];
+		}
+		int[][] dp = new int[N][K + 1];
+		int[][] best = new int[N][K + 1];
+		for (int j = 1; j <= K; j++) {
+			dp[0][j] = nums[0];
+			best[0][j] = -1;
+		}
+		for (int i = 1; i < N; i++) {
+			dp[i][1] = sum(sum, 0, i);
+			best[i][1] = -1;
+		}
+		// 从第2列开始，从左往右
+		// 每一列，从下往上
+		// 为什么这样的顺序？因为要去凑（左，下）优化位置对儿！
+		for (int j = 2; j <= K; j++) {
+			for (int i = N - 1; i >= 1; i--) {
+				int down = best[i][j - 1];
+				// 如果i==N-1，则不优化上限
+				int up = i == N - 1 ? N - 1 : best[i + 1][j];
+				int ans = Integer.MAX_VALUE;
+				int bestChoose = -1;
+				for (int leftEnd = down; leftEnd <= up; leftEnd++) {
+					int leftCost = leftEnd == -1 ? 0 : dp[leftEnd][j - 1];
+					int rightCost = leftEnd == i ? 0 : sum(sum, leftEnd + 1, i);
+					int cur = Math.max(leftCost, rightCost);
+					// 注意下面的if一定是 < 课上的错误就是此处！当时写的 <= ！
+					// 也就是说，只有取得明显的好处才移动！
+					// 举个例子来说明，比如[2,6,4,4]，3个画匠时候，如下两种方案都是最优:
+					// (2,6) (4) 两个画匠负责 | (4) 最后一个画匠负责
+					// (2,6) (4,4)两个画匠负责 | 最后一个画匠什么也不负责
+					// 第一种方案划分为，[0~2] [3~3]
+					// 第二种方案划分为，[0~3] [无]
+					// 两种方案的答案都是8，但是划分点位置一定不要移动!
+					// 只有明显取得好处时(<)，划分点位置才移动!
+					// 也就是说后面的方案如果==前面的最优，不要移动！只有优于前面的最优，才移动
+					// 比如上面的两个方案，如果你移动到了方案二，你会得到:
+					// [2,6,4,4] 三个画匠时，最优为[0~3](前两个画家) [无](最后一个画家)，
+					// 最优划分点为3位置(best[3][3])
+					// 那么当4个画匠时，也就是求解dp[3][4]时
+					// 因为best[3][3] = 3，这个值提供了dp[3][4]的下限
+					// 而事实上dp[3][4]的最优划分为:
+					// [0~2]（三个画家处理） [3~3] (一个画家处理)，此时最优解为6
+					// 所以，你就得不到dp[3][4]的最优解了，因为划分点已经越过2了
+					// 提供了对数器验证，你可以改成<=，对数器和leetcode都过不了
+					// 这里是<，对数器和leetcode都能通过
+					// 这里面会让同学们感到困惑的点：
+					// 为啥==的时候，不移动，只有<的时候，才移动呢？例子懂了，但是道理何在？
+					// 这是因为你用最后一个画匠来做的可能性划分，而最后一个画匠对划分点往右移动敏感！
+					// 划分点往右滑动，会让最后一个画匠的可能性变少，所以划分点一定要贪到足够的好处，才能往右划
+					if (cur < ans) {
+						ans = cur;
+						bestChoose = leftEnd;
+					}
+				}
+				dp[i][j] = ans;
+				best[i][j] = bestChoose;
+			}
+		}
+		return dp[N - 1][K];
 	}
 
 	public static int splitArray3(int[] nums, int M) {
-		int N = nums.length;
-		int[] help = new int[nums.length + 1];
-		for (int i = 0; i < N; i++) {
-			help[i + 1] = help[i] + nums[i];
-		}
-		int[][] dp = new int[N][M + 1];
-		int[][] best = new int[N][M + 1];
-		for (int i = 0; i < N; i++) {
-			dp[i][1] = help[i + 1] - help[0];
-		}
-		for (int i = 1; i < Math.min(N, M); i++) {
-			dp[i][i + 1] = Math.max(dp[i - 1][i], nums[i]);
-			best[i][i + 1] = i;
-		}
-		for (int i = 2; i < N; i++) {
-			for (int j = Math.min(i, M); j >= 2; j--) {
-				dp[i][j] = Integer.MAX_VALUE;
-				int left = best[i - 1][j];
-				int right = j + 1 > M ? i : best[i][j + 1];
-				for (int k = left; k <= right; k++) {
-					int curAns = Math.max(dp[k - 1][j - 1], help[i + 1] - help[k]);
-					if (dp[i][j] > curAns) {
-						dp[i][j] = curAns;
-						best[i][j] = k;
-					}
-				}
-			}
-		}
-		return dp[N - 1][M];
-	}
-
-	public static int splitArray4(int[] nums, int M) {
 		long sum = 0;
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
@@ -123,4 +151,44 @@ public class Code04_SplitArrayLargestSum {
 		return parts;
 	}
 
+	public static int[] randomArray(int len, int maxValue) {
+		int[] arr = new int[len];
+		for (int i = 0; i < len; i++) {
+			arr[i] = (int) (Math.random() * maxValue);
+		}
+		return arr;
+	}
+
+	public static void printArray(int[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			System.out.print(arr[i] + " ");
+		}
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		int N = 100;
+		int maxValue = 100;
+		int testTime = 10000;
+		System.out.println("test begin");
+		for (int i = 0; i < testTime; i++) {
+			int len = (int) (Math.random() * N) + 1;
+			int M = (int) (Math.random() * N) + 1;
+			int[] arr = randomArray(len, maxValue);
+			int ans1 = splitArray1(arr, M);
+			int ans2 = splitArray2(arr, M);
+			int ans3 = splitArray3(arr, M);
+			if (ans1 != ans2 || ans1 != ans3) {
+				System.out.print("arr : ");
+				printArray(arr);
+				System.out.println("M : " + M);
+				System.out.println("ans1 : " + ans1);
+				System.out.println("ans2 : " + ans2);
+				System.out.println("ans3 : " + ans3);
+				System.out.println("Oops!");
+				break;
+			}
+		}
+		System.out.println("test end");
+	}
 }
