@@ -133,7 +133,7 @@ public class Code02_ThrowChessPiecesProblem {
 			int ans3 = superEggDrop3(K, N);
 			int ans4 = superEggDrop4(K, N);
 			if (ans2 != ans3 || ans2 != ans4) {
-				System.out.println("Oops!");
+				System.out.println("出错了!");
 			}
 		}
 		System.out.println("测试结束");
