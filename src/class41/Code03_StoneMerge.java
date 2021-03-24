@@ -76,7 +76,7 @@ public class Code03_StoneMerge {
 				int choose = -1;
 				for (int leftEnd = best[L][R - 1]; leftEnd <= best[L + 1][R]; leftEnd++) {
 					int cur = dp[L][leftEnd] + dp[leftEnd + 1][R];
-					if (cur < next) {
+					if (cur <= next) {
 						next = cur;
 						choose = leftEnd;
 					}
@@ -100,7 +100,7 @@ public class Code03_StoneMerge {
 		int N = 15;
 		int maxValue = 100;
 		int testTime = 1000;
-		System.out.println("test begin");
+		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int len = (int) (Math.random() * N);
 			int[] arr = randomArray(len, maxValue);
@@ -111,7 +111,7 @@ public class Code03_StoneMerge {
 				System.out.println("Oops!");
 			}
 		}
-		System.out.println("test end");
+		System.out.println("测试结束");
 	}
 
 }

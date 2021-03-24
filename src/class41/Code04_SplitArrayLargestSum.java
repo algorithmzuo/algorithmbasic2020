@@ -97,8 +97,7 @@ public class Code04_SplitArrayLargestSum {
 					// 这里是<，对数器和leetcode都能通过
 					// 这里面会让同学们感到困惑的点：
 					// 为啥==的时候，不移动，只有<的时候，才移动呢？例子懂了，但是道理何在？
-					// 这是因为你用最后一个画匠来做的可能性划分，而最后一个画匠对划分点往右移动敏感！
-					// 划分点往右滑动，会让最后一个画匠的可能性变少，所以划分点一定要贪到足够的好处，才能往右划
+					// 哈哈哈哈哈，看了邮局选址问题，你更懵，请看42节！
 					if (cur < ans) {
 						ans = cur;
 						bestChoose = leftEnd;
@@ -170,7 +169,7 @@ public class Code04_SplitArrayLargestSum {
 		int N = 100;
 		int maxValue = 100;
 		int testTime = 10000;
-		System.out.println("test begin");
+		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int len = (int) (Math.random() * N) + 1;
 			int M = (int) (Math.random() * N) + 1;
@@ -189,6 +188,6 @@ public class Code04_SplitArrayLargestSum {
 				break;
 			}
 		}
-		System.out.println("test end");
+		System.out.println("测试结束");
 	}
 }

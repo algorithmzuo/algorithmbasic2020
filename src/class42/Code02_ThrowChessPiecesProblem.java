@@ -1,8 +1,12 @@
 package class42;
 
-public class Code01_ThrowChessPiecesProblem {
+// leetcode测试链接：https://leetcode.com/problems/super-egg-drop
+// 方法1和方法2会超时
+// 方法3勉强通过
+// 方法4打败100%
+public class Code02_ThrowChessPiecesProblem {
 
-	public static int solution1(int nLevel, int kChess) {
+	public static int superEggDrop1(int kChess, int nLevel) {
 		if (nLevel < 1 || kChess < 1) {
 			return 0;
 		}
@@ -22,13 +26,12 @@ public class Code01_ThrowChessPiecesProblem {
 		}
 		int min = Integer.MAX_VALUE;
 		for (int i = 1; i != rest + 1; i++) { // 第一次扔的时候，仍在了i层
-			min = Math.min(min,
-					Math.max(Process1(i - 1, k - 1), Process1(rest - i, k)));
+			min = Math.min(min, Math.max(Process1(i - 1, k - 1), Process1(rest - i, k)));
 		}
 		return min + 1;
 	}
 
-	public static int solution2(int nLevel, int kChess) {
+	public static int superEggDrop2(int kChess, int nLevel) {
 		if (nLevel < 1 || kChess < 1) {
 			return 0;
 		}
@@ -51,34 +54,7 @@ public class Code01_ThrowChessPiecesProblem {
 		return dp[nLevel][kChess];
 	}
 
-	public static int solution3(int nLevel, int kChess) {
-		if (nLevel < 1 || kChess < 1) {
-			return 0;
-		}
-		if (kChess == 1) {
-			return nLevel;
-		}
-		int[] preArr = new int[nLevel + 1];
-		int[] curArr = new int[nLevel + 1];
-		for (int i = 1; i != curArr.length; i++) {
-			curArr[i] = i;
-		}
-		for (int i = 1; i != kChess; i++) {
-			int[] tmp = preArr;
-			preArr = curArr;
-			curArr = tmp;
-			for (int j = 1; j != curArr.length; j++) {
-				int min = Integer.MAX_VALUE;
-				for (int k = 1; k != j + 1; k++) {
-					min = Math.min(min, Math.max(preArr[k - 1], curArr[j - k]));
-				}
-				curArr[j] = min + 1;
-			}
-		}
-		return curArr[curArr.length - 1];
-	}
-
-	public static int solution4(int nLevel, int kChess) {
+	public static int superEggDrop3(int kChess, int nLevel) {
 		if (nLevel < 1 || kChess < 1) {
 			return 0;
 		}
@@ -112,7 +88,7 @@ public class Code01_ThrowChessPiecesProblem {
 		return dp[nLevel][kChess];
 	}
 
-	public static int solution5(int nLevel, int kChess) {
+	public static int superEggDrop4(int kChess, int nLevel) {
 		if (nLevel < 1 || kChess < 1) {
 			return 0;
 		}
@@ -146,49 +122,21 @@ public class Code01_ThrowChessPiecesProblem {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(solution1(21, 2));
-		System.out.println(solution2(21, 2));
-		System.out.println(solution3(21, 2));
-		System.out.println(solution4(21, 2));
-		System.out.println(solution5(21, 2));
-
-		System.out.println("==============");
-
-		System.out.println(solution2(105, 2));
-		System.out.println(solution3(105, 2));
-		System.out.println(solution4(105, 2));
-		System.out.println(solution5(105, 2));
-
-		System.out.println("==============");
-
-		System.out.println(solution2(3000, 10));
-		System.out.println(solution3(3000, 10));
-		System.out.println(solution4(3000, 10));
-		System.out.println(solution5(3000, 10));
-
-		System.out.println("==============");
-
-		System.out.println(solution2(6884, 5));
-		System.out.println(solution3(6884, 5));
-		System.out.println(solution4(6884, 5));
-		System.out.println(solution5(6884, 5));
-
-		System.out.println("==============");
-
-		System.out.println(solution2(6885, 5));
-		System.out.println(solution3(6885, 5));
-		System.out.println(solution4(6885, 5));
-		System.out.println(solution5(6885, 5));
-
-		System.out.println("==============");
-
-		int nLevel = 100000000;
-		int kChess = 10;
-		long start = System.currentTimeMillis();
-		System.out.println(solution5(nLevel, kChess));
-		long end = System.currentTimeMillis();
-		System.out.println("cost time: " + (end - start) + " ms");
-
+		int maxN = 500;
+		int maxK = 30;
+		int testTime = 1000;
+		System.out.println("测试开始");
+		for (int i = 0; i < testTime; i++) {
+			int N = (int)(Math.random() * maxN) + 1;
+			int K = (int)(Math.random() * maxK) + 1;
+			int ans2 = superEggDrop2(K, N);
+			int ans3 = superEggDrop3(K, N);
+			int ans4 = superEggDrop4(K, N);
+			if(ans2 != ans3 || ans2 != ans4) {
+				System.out.println("Oops!");
+			}
+		}
+		System.out.println("测试结束");
 	}
 
 }
