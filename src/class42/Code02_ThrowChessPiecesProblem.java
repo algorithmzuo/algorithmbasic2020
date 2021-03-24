@@ -127,12 +127,12 @@ public class Code02_ThrowChessPiecesProblem {
 		int testTime = 1000;
 		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
-			int N = (int)(Math.random() * maxN) + 1;
-			int K = (int)(Math.random() * maxK) + 1;
+			int N = (int) (Math.random() * maxN) + 1;
+			int K = (int) (Math.random() * maxK) + 1;
 			int ans2 = superEggDrop2(K, N);
 			int ans3 = superEggDrop3(K, N);
 			int ans4 = superEggDrop4(K, N);
-			if(ans2 != ans3 || ans2 != ans4) {
+			if (ans2 != ans3 || ans2 != ans4) {
 				System.out.println("Oops!");
 			}
 		}
