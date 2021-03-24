@@ -4,6 +4,7 @@ package class42;
 // 方法1和方法2会超时
 // 方法3勉强通过
 // 方法4打败100%
+// 方法5打败100%，方法5是在方法4的基础上做了进一步的常数优化
 public class Code02_ThrowChessPiecesProblem {
 
 	public static int superEggDrop1(int kChess, int nLevel) {
@@ -94,6 +95,26 @@ public class Code02_ThrowChessPiecesProblem {
 		if (nLevel < 1 || kChess < 1) {
 			return 0;
 		}
+		int[] dp = new int[kChess];
+		int res = 0;
+		while (true) {
+			res++;
+			int previous = 0;
+			for (int i = 0; i < dp.length; i++) {
+				int tmp = dp[i];
+				dp[i] = dp[i] + previous + 1;
+				previous = tmp;
+				if (dp[i] >= nLevel) {
+					return res;
+				}
+			}
+		}
+	}
+
+	public static int superEggDrop5(int kChess, int nLevel) {
+		if (nLevel < 1 || kChess < 1) {
+			return 0;
+		}
 		int bsTimes = log2N(nLevel) + 1;
 		if (kChess >= bsTimes) {
 			return bsTimes;
@@ -134,7 +155,8 @@ public class Code02_ThrowChessPiecesProblem {
 			int ans2 = superEggDrop2(K, N);
 			int ans3 = superEggDrop3(K, N);
 			int ans4 = superEggDrop4(K, N);
-			if (ans2 != ans3 || ans2 != ans4) {
+			int ans5 = superEggDrop5(K, N);
+			if (ans2 != ans3 || ans4 != ans5 || ans2 != ans4) {
 				System.out.println("出错了!");
 			}
 		}
