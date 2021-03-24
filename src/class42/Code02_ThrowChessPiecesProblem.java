@@ -65,24 +65,26 @@ public class Code02_ThrowChessPiecesProblem {
 		for (int i = 1; i != dp.length; i++) {
 			dp[i][1] = i;
 		}
-		int[] cands = new int[kChess + 1];
+		int[][] best = new int[nLevel + 1][kChess + 1];
 		for (int i = 1; i != dp[0].length; i++) {
 			dp[1][i] = 1;
-			cands[i] = 1;
+			best[1][i] = 1;
 		}
 		for (int i = 2; i < nLevel + 1; i++) {
 			for (int j = kChess; j > 1; j--) {
-				int min = Integer.MAX_VALUE;
-				int minEnum = cands[j];
-				int maxEnum = j == kChess ? i / 2 + 1 : cands[j + 1];
-				for (int k = minEnum; k < maxEnum + 1; k++) {
-					int cur = Math.max(dp[k - 1][j - 1], dp[i - k][j]);
-					if (cur <= min) {
-						min = cur;
-						cands[j] = k;
+				int ans = Integer.MAX_VALUE;
+				int bestChoose = -1;
+				int down = best[i - 1][j];
+				int up = j == kChess ? i : best[i][j + 1];
+				for (int first = down; first <= up; first++) {
+					int cur = Math.max(dp[first - 1][j - 1], dp[i - first][j]);
+					if (cur <= ans) {
+						ans = cur;
+						bestChoose = first;
 					}
 				}
-				dp[i][j] = min + 1;
+				dp[i][j] = ans + 1;
+				best[i][j] = bestChoose;
 			}
 		}
 		return dp[nLevel][kChess];
