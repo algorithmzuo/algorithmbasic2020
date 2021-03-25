@@ -148,7 +148,7 @@ public class Code03_PavingTile {
 		}
 		int ans = 0;
 		ans += dfs3(op, col - 1, level, N, M, dp);
-		if ((op & (1 << col)) == 0 && col - 1 >= 0 && (op & (1 << (col - 1))) == 0) {
+		if (col > 0 && (op & (3 << (col - 1))) == 0) {
 			ans += dfs3((op | (3 << (col - 1))), col - 2, level, N, M, dp);
 		}
 		return ans;
