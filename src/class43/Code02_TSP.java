@@ -31,11 +31,11 @@ public class Code02_TSP {
 		if (cityNum == 1) {
 			return matrix[start][0];
 		}
-		// 不只start这一座城
+		// cityNum > 1  不只start这一座城
 		set.set(start, null);
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < set.size(); i++) {
-			if (set.get(i) != null && i != start) {
+			if (set.get(i) != null) {
 				// start -> i i... -> 0
 				int cur = matrix[start][i] + func1(matrix, set, i);
 				min = Math.min(min, cur);
@@ -68,7 +68,7 @@ public class Code02_TSP {
 		int min = Integer.MAX_VALUE;
 		// 枚举所有的城市
 		for (int move = 0; move < matrix.length; move++) {
-			if (move != start && (cityStatus & (1 << move)) != 0) {
+			if ((cityStatus & (1 << move)) != 0) {
 				int cur = matrix[start][move] + f2(matrix, cityStatus, move);
 				min = Math.min(min, cur);
 			}
