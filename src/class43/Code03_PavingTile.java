@@ -1,6 +1,6 @@
 package class43;
 
-public class Code02_PavingTile {
+public class Code03_PavingTile {
 
 	/*
 	 * 2*M铺地的问题非常简单，这个是解决N*M铺地的问题

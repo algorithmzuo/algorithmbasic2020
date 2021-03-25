@@ -21,10 +21,11 @@ public class Code01_PostOfficeProblem {
 		}
 		for (int i = 1; i < N; i++) {
 			for (int j = 2; j <= Math.min(i, num); j++) {
-				dp[i][j] = Integer.MAX_VALUE;
+				int ans = Integer.MAX_VALUE;
 				for (int k = 0; k <= i; k++) {
-					dp[i][j] = Math.min(dp[i][j], dp[k][j - 1] + w[k + 1][i]);
+					ans = Math.min(ans, dp[k][j - 1] + w[k + 1][i]);
 				}
+				dp[i][j] = ans;
 			}
 		}
 		return dp[N - 1][num];

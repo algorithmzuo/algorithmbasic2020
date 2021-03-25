@@ -1,7 +1,7 @@
 package class43;
 
 // leetcode 464题
-public class Code03_CanIWin {
+public class Code01_CanIWin {
 
 	// 这个是暴力尝试，思路是正确的，超时而已
 	public static boolean canIWin1(int choose, int total) {

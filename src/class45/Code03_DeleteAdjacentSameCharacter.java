@@ -1,4 +1,4 @@
-package class46;
+package class45;
 
 // 如果一个字符相邻的位置没有相同字符，那么这个位置的字符出现不能被消掉
 // 比如:"ab"，其中a和b都不能被消掉
@@ -16,7 +16,7 @@ package class46;
 // 如果先消除中间的两个c，剩下"baaabb"，
 // 如果再消除中间的三个a，剩下"bbb"，
 // 最后消除三个b，不留下任何字符，返回0，这才是最优解
-public class Code02_DeleteAdjacentSameCharacter {
+public class Code03_DeleteAdjacentSameCharacter {
 
 	// 暴力解
 	public static int restMin1(String s) {

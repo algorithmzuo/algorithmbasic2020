@@ -1,6 +1,6 @@
-package class45;
+package class46;
 
-public class Code03_StrangePrinter {
+public class Code01_StrangePrinter {
 
 	public static int strangePrinter(String s) {
 		if (s == null || s.length() == 0) {

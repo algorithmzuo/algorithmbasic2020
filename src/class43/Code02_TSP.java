@@ -3,7 +3,7 @@ package class43;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Code01_TSP {
+public class Code02_TSP {
 
 	public static int t1(int[][] matrix) {
 		int N = matrix.length; // 0...N-1
