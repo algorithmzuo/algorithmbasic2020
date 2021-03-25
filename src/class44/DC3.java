@@ -120,4 +120,23 @@ public class DC3 {
 		return ans;
 	}
 
+	// 为了测试
+	public static int[] randomArray(int len, int maxValue) {
+		int[] arr = new int[len];
+		for (int i = 0; i < len; i++) {
+			arr[i] = (int) (Math.random() * maxValue) + 1;
+		}
+		return arr;
+	}
+
+	// 为了测试
+	public static void main(String[] args) {
+		int len = 3000000;
+		int maxValue = 100;
+		long start = System.currentTimeMillis();
+		new DC3(randomArray(len, maxValue), maxValue);
+		long end = System.currentTimeMillis();
+		System.out.println("数据量 " + len + ", 运行时间 " + (end - start) + " ms");
+	}
+
 }
