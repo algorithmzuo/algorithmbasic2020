@@ -6,9 +6,12 @@ public class DC3 {
 
 	public int[] rank;
 
+	public int[] height;
+
 	public DC3(int[] nums, int max) {
 		sa = sa(nums, max);
 		rank = rank();
+		height = height(nums);
 	}
 
 	private int[] sa(int[] nums, int max) {
@@ -115,7 +118,25 @@ public class DC3 {
 		int n = sa.length;
 		int[] ans = new int[n];
 		for (int i = 0; i < n; i++) {
-			ans[sa[i]] = i + 1;
+			ans[sa[i]] = i;
+		}
+		return ans;
+	}
+
+	private int[] height(int[] s) {
+		int n = s.length;
+		int[] ans = new int[n];
+		for (int i = 0, k = 0; i < n; ++i) {
+			if (rank[i] != 0) {
+				if (k > 0) {
+					--k;
+				}
+				int j = sa[rank[i] - 1];
+				while (i + k < n && j + k < n && s[i + k] == s[j + k]) {
+					++k;
+				}
+				ans[rank[i]] = k;
+			}
 		}
 		return ans;
 	}

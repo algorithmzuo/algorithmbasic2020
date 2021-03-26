@@ -27,11 +27,8 @@ public class Code01_LastSubstringInLexicographicalOrder {
 
 		public int[] sa;
 
-		public int[] rank;
-
 		public DC3(int[] nums, int max) {
 			sa = sa(nums, max);
-			rank = rank();
 		}
 
 		private int[] sa(int[] nums, int max) {
@@ -132,15 +129,6 @@ public class Code01_LastSubstringInLexicographicalOrder {
 
 		private boolean leq(int a1, int a2, int a3, int b1, int b2, int b3) {
 			return a1 < b1 || (a1 == b1 && leq(a2, a3, b2, b3));
-		}
-
-		private int[] rank() {
-			int n = sa.length;
-			int[] ans = new int[n];
-			for (int i = 0; i < n; i++) {
-				ans[sa[i]] = i + 1;
-			}
-			return ans;
 		}
 
 	}

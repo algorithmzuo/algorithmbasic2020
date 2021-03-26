@@ -99,6 +99,7 @@ public class Code03_CreateMaximumNumber {
 	public static class DC3 {
 
 		public int[] sa;
+
 		public int[] rank;
 
 		public DC3(int[] nums, int max) {
@@ -210,7 +211,7 @@ public class Code03_CreateMaximumNumber {
 			int n = sa.length;
 			int[] ans = new int[n];
 			for (int i = 0; i < n; i++) {
-				ans[sa[i]] = i + 1;
+				ans[sa[i]] = i;
 			}
 			return ans;
 		}
