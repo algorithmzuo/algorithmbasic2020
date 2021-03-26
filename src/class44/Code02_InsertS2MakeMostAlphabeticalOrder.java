@@ -22,8 +22,10 @@ public class Code02_InsertS2MakeMostAlphabeticalOrder {
 		return ans;
 	}
 
-	// 正式方法
-	public static String max(String s1, String s2) {
+	// 正式方法 O(N+M) + O(M^2)
+	// N : s1长度
+	// M : s2长度
+	public static String maxCombine(String s1, String s2) {
 		if (s1 == null || s1.length() == 0) {
 			return s2;
 		}
@@ -58,11 +60,33 @@ public class Code02_InsertS2MakeMostAlphabeticalOrder {
 		int comp = N + 1;
 		for (int i = 0; i < N; i++) {
 			if (rank[i] < rank[comp]) {
-				int best = whereSplit(s1, s2, i);
+				int best = bestSplit(s1, s2, i);
 				return s1.substring(0, best) + s2 + s1.substring(best);
 			}
 		}
 		return s1 + s2;
+	}
+
+	public static int bestSplit(String s1, String s2, int first) {
+		int N = s1.length();
+		int M = s2.length();
+		int end = N;
+		for (int i = first, j = 0; i < N && j < M; i++, j++) {
+			if (s1.charAt(i) < s2.charAt(j)) {
+				end = i;
+				break;
+			}
+		}
+		String bestPrefix = s2;
+		int bestSplit = first;
+		for (int i = first + 1, j = M - 1; i <= end; i++, j--) {
+			String curPrefix = s1.substring(first, i) + s2.substring(0, j);
+			if (curPrefix.compareTo(bestPrefix) >= 0) {
+				bestPrefix = curPrefix;
+				bestSplit = i;
+			}
+		}
+		return bestSplit;
 	}
 
 	public static class DC3 {
@@ -186,20 +210,6 @@ public class Code02_InsertS2MakeMostAlphabeticalOrder {
 
 	}
 
-	public static int whereSplit(String str1, String str2, int first) {
-		int M = str2.length();
-		String bestPrefix = str2;
-		int bestSplit = first;
-		for (int i = first + 1, j = M - 1; i <= Math.min(str1.length(), first + M); i++, j--) {
-			String curPrefix = str1.substring(first, i) + str2.substring(0, j);
-			if (curPrefix.compareTo(bestPrefix) >= 0) {
-				bestPrefix = curPrefix;
-				bestSplit = i;
-			}
-		}
-		return bestSplit;
-	}
-
 	// for test
 	public static String randomNumberString(int len, int range) {
 		char[] str = new char[len];
@@ -221,7 +231,7 @@ public class Code02_InsertS2MakeMostAlphabeticalOrder {
 			String s1 = randomNumberString(s1Len, range);
 			String s2 = randomNumberString(s2Len, range);
 			String ans1 = right(s1, s2);
-			String ans2 = max(s1, s2);
+			String ans2 = maxCombine(s1, s2);
 			if (!ans1.equals(ans2)) {
 				System.out.println("Oops!");
 				System.out.println(s1);
@@ -236,11 +246,11 @@ public class Code02_InsertS2MakeMostAlphabeticalOrder {
 		System.out.println("性能测试开始");
 
 		int s1Len = 1000000;
-		int s2Len = 50;
+		int s2Len = 500;
 		String s1 = randomNumberString(s1Len, range);
 		String s2 = randomNumberString(s2Len, range);
 		long start = System.currentTimeMillis();
-		max(s1, s2);
+		maxCombine(s1, s2);
 		long end = System.currentTimeMillis();
 		System.out.println("运行时间 : " + (end - start) + " ms");
 		System.out.println("性能测试结束");
