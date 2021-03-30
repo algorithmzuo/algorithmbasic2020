@@ -1,53 +1,36 @@
-package class44;
+package class45;
 
-// 最长公共子串问题是面试常见题目之一
-// 假设str1长度N，str2长度M
-// 因为最优解的难度所限，一般在面试场上回答出O(N*M)的解法已经是比较优秀了
-// 因为得到O(N*M)的解法，就已经需要用到动态规划了
-// 但其实这个问题的最优解是O(N+M)，为了达到这个复杂度可是不容易
-// 首先需要用到DC3算法得到后缀数组(sa)
-// 进而用sa数组去生成height数组
-// 而且在生成的时候，还有一个不回退的优化，都非常不容易理解
-// 这就是后缀数组在面试算法中的地位 : 德高望重的噩梦
-public class Code04_LongestCommonSubstringConquerByHeight {
+public class Code01_InsertS2MakeMostAlphabeticalOrder {
 
-	public static int lcs1(String s1, String s2) {
-		if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0) {
-			return 0;
+	// 暴力方法
+	public static String right(String s1, String s2) {
+		if (s1 == null || s1.length() == 0) {
+			return s2;
 		}
-		char[] str1 = s1.toCharArray();
-		char[] str2 = s2.toCharArray();
-		int row = 0;
-		int col = str2.length - 1;
-		int max = 0;
-		while (row < str1.length) {
-			int i = row;
-			int j = col;
-			int len = 0;
-			while (i < str1.length && j < str2.length) {
-				if (str1[i] != str2[j]) {
-					len = 0;
-				} else {
-					len++;
-				}
-				if (len > max) {
-					max = len;
-				}
-				i++;
-				j++;
-			}
-			if (col > 0) {
-				col--;
-			} else {
-				row++;
+		if (s2 == null || s2.length() == 0) {
+			return s1;
+		}
+		String p1 = s1 + s2;
+		String p2 = s2 + s1;
+		String ans = p1.compareTo(p2) > 0 ? p1 : p2;
+		for (int end = 1; end < s1.length(); end++) {
+			String cur = s1.substring(0, end) + s2 + s1.substring(end);
+			if (cur.compareTo(ans) > 0) {
+				ans = cur;
 			}
 		}
-		return max;
+		return ans;
 	}
 
-	public static int lcs2(String s1, String s2) {
-		if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0) {
-			return 0;
+	// 正式方法 O(N+M) + O(M^2)
+	// N : s1长度
+	// M : s2长度
+	public static String maxCombine(String s1, String s2) {
+		if (s1 == null || s1.length() == 0) {
+			return s2;
+		}
+		if (s2 == null || s2.length() == 0) {
+			return s1;
 		}
 		char[] str1 = s1.toCharArray();
 		char[] str2 = s2.toCharArray();
@@ -73,18 +56,37 @@ public class Code04_LongestCommonSubstringConquerByHeight {
 			all[index++] = str2[i] - min + 2;
 		}
 		DC3 dc3 = new DC3(all, max - min + 2);
-		int n = all.length;
-		int[] sa = dc3.sa;
-		int[] height = dc3.height;
-		int ans = 0;
-		for (int i = 1; i < n; i++) {
-			int up = sa[i - 1];
-			int down = sa[i];
-			if (Math.min(up, down) < N && Math.max(up, down) > N) {
-				ans = Math.max(ans, height[i]);
+		int[] rank = dc3.rank;
+		int comp = N + 1;
+		for (int i = 0; i < N; i++) {
+			if (rank[i] < rank[comp]) {
+				int best = bestSplit(s1, s2, i);
+				return s1.substring(0, best) + s2 + s1.substring(best);
 			}
 		}
-		return ans;
+		return s1 + s2;
+	}
+
+	public static int bestSplit(String s1, String s2, int first) {
+		int N = s1.length();
+		int M = s2.length();
+		int end = N;
+		for (int i = first, j = 0; i < N && j < M; i++, j++) {
+			if (s1.charAt(i) < s2.charAt(j)) {
+				end = i;
+				break;
+			}
+		}
+		String bestPrefix = s2;
+		int bestSplit = first;
+		for (int i = first + 1, j = M - 1; i <= end; i++, j--) {
+			String curPrefix = s1.substring(first, i) + s2.substring(0, j);
+			if (curPrefix.compareTo(bestPrefix) >= 0) {
+				bestPrefix = curPrefix;
+				bestSplit = i;
+			}
+		}
+		return bestSplit;
 	}
 
 	public static class DC3 {
@@ -93,12 +95,9 @@ public class Code04_LongestCommonSubstringConquerByHeight {
 
 		public int[] rank;
 
-		public int[] height;
-
 		public DC3(int[] nums, int max) {
 			sa = sa(nums, max);
 			rank = rank();
-			height = height(nums);
 		}
 
 		private int[] sa(int[] nums, int max) {
@@ -210,75 +209,52 @@ public class Code04_LongestCommonSubstringConquerByHeight {
 			return ans;
 		}
 
-		private int[] height(int[] s) {
-			int n = s.length;
-			int[] ans = new int[n];
-			for (int i = 0, k = 0; i < n; ++i) {
-				if (rank[i] != 0) {
-					if (k > 0) {
-						--k;
-					}
-					int j = sa[rank[i] - 1];
-					while (i + k < n && j + k < n && s[i + k] == s[j + k]) {
-						++k;
-					}
-					ans[rank[i]] = k;
-				}
-			}
-			return ans;
-		}
-
 	}
 
 	// for test
 	public static String randomNumberString(int len, int range) {
 		char[] str = new char[len];
 		for (int i = 0; i < len; i++) {
-			str[i] = (char) ((int) (Math.random() * range) + 'a');
+			str[i] = (char) ((int) (Math.random() * range) + '0');
 		}
 		return String.valueOf(str);
 	}
 
+	// for test
 	public static void main(String[] args) {
-		int len = 30;
-		int range = 5;
+		int range = 10;
+		int len = 50;
 		int testTime = 100000;
 		System.out.println("功能测试开始");
 		for (int i = 0; i < testTime; i++) {
-			int N1 = (int) (Math.random() * len);
-			int N2 = (int) (Math.random() * len);
-			String str1 = randomNumberString(N1, range);
-			String str2 = randomNumberString(N2, range);
-			int ans1 = lcs1(str1, str2);
-			int ans2 = lcs2(str1, str2);
-			if (ans1 != ans2) {
+			int s1Len = (int) (Math.random() * len);
+			int s2Len = (int) (Math.random() * len);
+			String s1 = randomNumberString(s1Len, range);
+			String s2 = randomNumberString(s2Len, range);
+			String ans1 = right(s1, s2);
+			String ans2 = maxCombine(s1, s2);
+			if (!ans1.equals(ans2)) {
 				System.out.println("Oops!");
+				System.out.println(s1);
+				System.out.println(s2);
+				System.out.println(ans1);
+				System.out.println(ans2);
+				break;
 			}
 		}
 		System.out.println("功能测试结束");
 		System.out.println("==========");
-
 		System.out.println("性能测试开始");
-		len = 80000;
-		range = 26;
-		long start;
-		long end;
 
-		String str1 = randomNumberString(len, range);
-		String str2 = randomNumberString(len, range);
-
-		start = System.currentTimeMillis();
-		int ans1 = lcs1(str1, str2);
-		end = System.currentTimeMillis();
-		System.out.println("方法1结果 : " + ans1 + " , 运行时间 : " + (end - start) + " ms");
-
-		start = System.currentTimeMillis();
-		int ans2 = lcs2(str1, str2);
-		end = System.currentTimeMillis();
-		System.out.println("方法2结果 : " + ans2 + " , 运行时间 : " + (end - start) + " ms");
-
+		int s1Len = 1000000;
+		int s2Len = 500;
+		String s1 = randomNumberString(s1Len, range);
+		String s2 = randomNumberString(s2Len, range);
+		long start = System.currentTimeMillis();
+		maxCombine(s1, s2);
+		long end = System.currentTimeMillis();
+		System.out.println("运行时间 : " + (end - start) + " ms");
 		System.out.println("性能测试结束");
-
 	}
 
 }

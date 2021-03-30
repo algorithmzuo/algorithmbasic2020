@@ -1,7 +1,7 @@
-package class44;
+package class45;
 
 // 测试链接: https://leetcode.com/problems/create-maximum-number/
-public class Code03_CreateMaximumNumber {
+public class Code02_CreateMaximumNumber {
 
 	public static int[] maxNumber1(int[] nums1, int[] nums2, int k) {
 		int len1 = nums1.length;

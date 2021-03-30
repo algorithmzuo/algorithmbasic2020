@@ -1,4 +1,4 @@
-package class45;
+package class46;
 
 public class Code02_RemoveBoxes {
 
