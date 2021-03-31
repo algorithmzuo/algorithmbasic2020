@@ -243,9 +243,10 @@ public class Code01_InsertS2MakeMostAlphabeticalOrder {
 			}
 		}
 		System.out.println("功能测试结束");
-		System.out.println("==========");
-		System.out.println("性能测试开始");
 
+		System.out.println("==========");
+
+		System.out.println("性能测试开始");
 		int s1Len = 1000000;
 		int s2Len = 500;
 		String s1 = randomNumberString(s1Len, range);

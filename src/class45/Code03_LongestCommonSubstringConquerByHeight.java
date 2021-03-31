@@ -78,9 +78,9 @@ public class Code03_LongestCommonSubstringConquerByHeight {
 		int[] height = dc3.height;
 		int ans = 0;
 		for (int i = 1; i < n; i++) {
-			int up = sa[i - 1];
-			int down = sa[i];
-			if (Math.min(up, down) < N && Math.max(up, down) > N) {
+			int Y = sa[i - 1];
+			int X = sa[i];
+			if (Math.min(X, Y) < N && Math.max(X, Y) > N) {
 				ans = Math.max(ans, height[i]);
 			}
 		}
@@ -213,6 +213,7 @@ public class Code03_LongestCommonSubstringConquerByHeight {
 		private int[] height(int[] s) {
 			int n = s.length;
 			int[] ans = new int[n];
+			// 依次求h[i] , k = 0
 			for (int i = 0, k = 0; i < n; ++i) {
 				if (rank[i] != 0) {
 					if (k > 0) {
@@ -222,6 +223,7 @@ public class Code03_LongestCommonSubstringConquerByHeight {
 					while (i + k < n && j + k < n && s[i + k] == s[j + k]) {
 						++k;
 					}
+					// h[i] = k
 					ans[rank[i]] = k;
 				}
 			}

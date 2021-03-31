@@ -1,10 +1,10 @@
-package class45;
+package class47;
 
 import java.util.LinkedList;
 
 // 给定一个数组arr，和一个正数M
 // 返回在子数组长度不大于M的情况下，最大的子数组累加和
-public class Code04_MaxSumLengthNoMore {
+public class Code03_MaxSumLengthNoMore {
 
 	// O(N^2)的解法，暴力解，用作对数器
 	public static int test(int[] arr, int M) {
