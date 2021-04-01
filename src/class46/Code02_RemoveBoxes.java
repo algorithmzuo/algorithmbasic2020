@@ -17,10 +17,10 @@ public class Code02_RemoveBoxes {
 		if (dp[L][R][K] > 0) {
 			return dp[L][R][K];
 		}
-		int ans = process(boxes, L, R - 1, 0, dp) + (K + 1) * (K + 1);
-		for (int i = L; i < R; i++) {
-			if (boxes[i] == boxes[R]) {
-				ans = Math.max(ans, process(boxes, i + 1, R - 1, 0, dp) + process(boxes, L, i, K + 1, dp));
+		int ans = process(boxes, L + 1, R, 0, dp) + (K + 1) * (K + 1);
+		for (int i = L + 1; i <= R; i++) {
+			if (boxes[i] == boxes[L]) {
+				ans = Math.max(ans, process(boxes, L + 1, i - 1, 0, dp) + process(boxes, i, R, K + 1, dp));
 			}
 		}
 		dp[L][R][K] = ans;
