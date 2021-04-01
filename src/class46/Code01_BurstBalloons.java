@@ -56,23 +56,15 @@ public class Code01_BurstBalloons {
 		}
 		for (int L = N; L >= 1; L--) {
 			for (int R = L + 1; R <= N; R++) {
-				int finalL = help[L - 1] * help[L] * help[R + 1] + dp[L + 1][R];
-				int finalR = help[L - 1] * help[R] * help[R + 1] + dp[L][R - 1];
-				int max = Math.max(finalL, finalR);
-				for (int leftEnd = L + 1; leftEnd < R; leftEnd++) {
-					max = Math.max(max,
-							help[L - 1] * help[leftEnd] * help[R + 1] + dp[L][leftEnd - 1] + dp[leftEnd + 1][R]);
+				int ans = help[L - 1] * help[L] * help[R + 1] + dp[L + 1][R];
+				ans = Math.max(ans, help[L - 1] * help[R] * help[R + 1] + dp[L][R - 1]);
+				for (int i = L + 1; i < R; i++) {
+					ans = Math.max(ans, help[L - 1] * help[i] * help[R + 1] + dp[L][i - 1] + dp[i + 1][R]);
 				}
-				dp[L][R] = max;
+				dp[L][R] = ans;
 			}
 		}
 		return dp[1][N];
-	}
-
-	public static void main(String[] args) {
-		int[] arr = { 4, 2, 3, 5, 1, 6 };
-		System.out.println(maxCoins1(arr));
-		System.out.println(maxCoins2(arr));
 	}
 
 }
