@@ -1,5 +1,6 @@
 package class47;
 
+// 本题测试链接 : https://leetcode.com/problems/strange-printer/
 public class Code01_StrangePrinter {
 
 	public static int strangePrinter(String s) {
@@ -16,12 +17,7 @@ public class Code01_StrangePrinter {
 		}
 		for (int L = N - 3; L >= 0; L--) {
 			for (int R = L + 2; R < N; R++) {
-
-				// L....R
-
 				dp[L][R] = R - L + 1;
-
-				// L...k-1 k...R
 				for (int k = L + 1; k <= R; k++) {
 					dp[L][R] = Math.min(dp[L][R], dp[L][k - 1] + dp[k][R] - (str[L] == str[k] ? 1 : 0));
 				}
