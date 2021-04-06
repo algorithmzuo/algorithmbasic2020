@@ -90,10 +90,6 @@ public class Code02_RestoreWays {
 	public static int ways2(int[] arr) {
 		int N = arr.length;
 		int[][][] dp = new int[N][201][3];
-		// dp[0][...][...]
-		// dp[0][...][2] = 0
-		// dp[0][...][0] = 1
-		// dp[0][...][1] = 1
 		if (arr[0] != 0) {
 			dp[0][arr[0]][0] = 1;
 			dp[0][arr[0]][1] = 1;
@@ -108,13 +104,13 @@ public class Code02_RestoreWays {
 				for (int s = 0; s < 3; s++) {
 					if (arr[i] == 0 || v == arr[i]) {
 						if (s == 0 || s == 1) {
-							for (int pre = 1; pre < 201; pre++) {
-								dp[i][v][s] += dp[i - 1][pre][pre < v ? 0 : (pre == v ? 1 : 2)];
+							for (int pre = 1; pre < v; pre++) {
+								dp[i][v][s] += dp[i - 1][pre][0];
 							}
-						} else {
-							for (int pre = v; pre < 201; pre++) {
-								dp[i][v][s] += dp[i - 1][pre][pre < v ? 0 : (pre == v ? 1 : 2)];
-							}
+						}
+						dp[i][v][s] += dp[i - 1][v][1];
+						for (int pre = v + 1; pre < 201; pre++) {
+							dp[i][v][s] += dp[i - 1][pre][2];
 						}
 					}
 				}
@@ -143,11 +139,7 @@ public class Code02_RestoreWays {
 				dp[0][v][1] = 1;
 			}
 		}
-		// presum[0~V][0] -> sum0[]
-		// presum[0~V][1] -> sum1[]
-		// presum[0~V][2] -> sum2[]
 		int[][] presum = new int[201][3];
-		// presum -> dp[0][..][..] 三张表
 		for (int v = 1; v < 201; v++) {
 			for (int s = 0; s < 3; s++) {
 				presum[v][s] = presum[v - 1][s] + dp[0][v][s];
@@ -158,14 +150,10 @@ public class Code02_RestoreWays {
 				for (int s = 0; s < 3; s++) {
 					if (arr[i] == 0 || v == arr[i]) {
 						if (s == 0 || s == 1) {
-							// dp[i][..][..] -> dp[i-1][..][..]
 							dp[i][v][s] += sum(1, v - 1, 0, presum);
-							dp[i][v][s] += dp[i - 1][v][1];
-							dp[i][v][s] += sum(v + 1, 200, 2, presum);
-						} else {
-							dp[i][v][s] += dp[i - 1][v][1];
-							dp[i][v][s] += sum(v + 1, 200, 2, presum);
 						}
+						dp[i][v][s] += dp[i - 1][v][1];
+						dp[i][v][s] += sum(v + 1, 200, 2, presum);
 					}
 				}
 			}
@@ -188,7 +176,7 @@ public class Code02_RestoreWays {
 
 	// for test
 	public static int[] generateRandomArray(int len) {
-		int[] ans = new int[(int) (Math.random() * len) + 2];
+		int[] ans = new int[len];
 		for (int i = 0; i < ans.length; i++) {
 			if (Math.random() < 0.5) {
 				ans[i] = 0;
@@ -209,11 +197,12 @@ public class Code02_RestoreWays {
 	}
 
 	public static void main(String[] args) {
-		int len = 3;
-		int testTime = 10;
-		System.out.println("test begin");
+		int len = 4;
+		int testTime = 15;
+		System.out.println("功能测试开始");
 		for (int i = 0; i < testTime; i++) {
-			int[] arr = generateRandomArray(len);
+			int N = (int) (Math.random() * len) + 2;
+			int[] arr = generateRandomArray(N);
 			int ans0 = ways0(arr);
 			int ans1 = ways1(arr);
 			int ans2 = ways2(arr);
@@ -222,14 +211,14 @@ public class Code02_RestoreWays {
 				System.out.println("Oops!");
 			}
 		}
-		System.out.println("test finish");
-		int[] arr = generateRandomArray(100000);
-		System.out.println(arr.length);
+		System.out.println("功能测试结束");
+		System.out.println("===========");
+		int N = 100000;
+		int[] arr = generateRandomArray(N);
 		long begin = System.currentTimeMillis();
 		ways3(arr);
 		long end = System.currentTimeMillis();
 		System.out.println("run time : " + (end - begin) + " ms");
-
 	}
 
 }
