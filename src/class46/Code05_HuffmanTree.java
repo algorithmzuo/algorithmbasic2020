@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 // 字符串为空的时候，自己处理边界吧
 // 实现的代码通过了大样本随机测试的对数器
 // 可以从main函数的内容开始看起
-public class HuffmanTree {
+public class Code05_HuffmanTree {
 
 	// 根据文章str, 生成词频统计表
 	public static HashMap<Character, Integer> countMap(String str) {
