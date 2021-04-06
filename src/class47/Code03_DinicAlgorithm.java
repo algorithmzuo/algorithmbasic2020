@@ -1,10 +1,9 @@
 // 本题测试链接:
 // https://lightoj.com/problem/internet-bandwidth
 // 这是一道DinicAlgorithm算法的题
-// 把如下代码粘贴进网页所提供的编译器环境中
-// 选择java编译环境
+// 把如下代码粘贴进网页所提供的java编译器环境中
 // 不需要修改任何内容可以直接通过
-// DinicAlgorithm用法请看网页上的题目描述并结合main函数的写法
+// 请看网页上的题目描述并结合main函数的写法去了解这个模板的用法
 
 package class47;
 
