@@ -67,6 +67,7 @@ public class Code03_DinicAlgorithm {
 			boolean[] visited = new boolean[N];
 			visited[s] = true;
 			while (!queue.isEmpty()) {
+				// u是当前节点
 				int u = queue.pollLast();
 				for (int i = 0; i < nexts.get(u).size(); i++) {
 					Edge e = edges.get(nexts.get(u).get(i));
@@ -81,12 +82,17 @@ public class Code03_DinicAlgorithm {
 			return visited[t];
 		}
 
+		// 当前来到了s点，s可变
+		// 最终目标是t，t固定参数
+		// r，收到的任务
+		// 收集到的流，作为结果返回，ans <= r
 		private int dfs(int s, int t, int r) {
 			if (s == t || r == 0) {
 				return r;
 			}
 			int f = 0;
 			int flow = 0;
+			// s点从哪条边开始试 -> cur[s]
 			for (; cur[s] < nexts.get(s).size(); cur[s]++) {
 				int ei = nexts.get(s).get(cur[s]);
 				Edge e = edges.get(ei);

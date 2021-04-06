@@ -62,27 +62,49 @@ public class Code02_RestoreWays {
 	// 如果i位置的数字变成了v,
 	// 并且arr[i]和arr[i+1]的关系为s，
 	// s==0，代表arr[i] < arr[i+1] 右大
-	// s==1，代表arr[i] == arr[i+1]
+	// s==1，代表arr[i] == arr[i+1] 右=当前
 	// s==2，代表arr[i] > arr[i+1] 右小
 	// 返回0...i范围上有多少种有效的转化方式？
 	public static int process1(int[] arr, int i, int v, int s) {
 		if (i == 0) { // 0...i 只剩一个数了，0...0
-			return ((s == 0 || s == 1) && (arr[i] == 0 || v == arr[i])) ? 1 : 0;
+			return ((s == 0 || s == 1) && (arr[0] == 0 || v == arr[0])) ? 1 : 0;
 		}
 		// i > 0
 		if (arr[i] != 0 && v != arr[i]) {
 			return 0;
 		}
-		// i>0 并且 i位置的数真的可以变成V，
+		// i>0 ，并且， i位置的数真的可以变成V，
 		int ways = 0;
-		if (s == 0 || s == 1) { // [i - 1] [i] <= 右
+		if (s == 0 || s == 1) { // [i] -> V <= [i+1]
 			for (int pre = 1; pre < 201; pre++) {
 				ways += process1(arr, i - 1, pre, pre < v ? 0 : (pre == v ? 1 : 2));
 			}
-		} else { // s == 2 i > 右 i-1 >= i > 右
+		} else { // ? 当前 > 右 当前 <= max{左，右}
 			for (int pre = v; pre < 201; pre++) {
 				ways += process1(arr, i - 1, pre, pre == v ? 1 : 2);
 			}
+		}
+		return ways;
+	}
+
+	public static int zuo(int[] arr, int i, int v, int s) {
+		if (i == 0) { // 0...i 只剩一个数了，0...0
+			return ((s == 0 || s == 1) && (arr[0] == 0 || v == arr[0])) ? 1 : 0;
+		}
+		// i > 0
+		if (arr[i] != 0 && v != arr[i]) {
+			return 0;
+		}
+		// i>0 ，并且， i位置的数真的可以变成V，
+		int ways = 0;
+		if (s == 0 || s == 1) { // [i] -> V <= [i+1]
+			for (int pre = 1; pre < v; pre++) {
+				ways += zuo(arr, i - 1, pre, 0);
+			}
+		}
+		ways += zuo(arr, i - 1, v, 1);
+		for (int pre = v + 1; pre < 201; pre++) {
+			ways += zuo(arr, i - 1, pre, 2);
 		}
 		return ways;
 	}

@@ -11,12 +11,16 @@ public class Code01_StrangePrinter {
 		return process1(str, 0, str.length - 1);
 	}
 
+	// 要想刷出str[L...R]的样子！
+	// 返回最少的转数
 	public static int process1(char[] str, int L, int R) {
 		if (L == R) {
 			return 1;
 		}
+		// L...R
 		int ans = R - L + 1;
 		for (int k = L + 1; k <= R; k++) {
+			// L...k-1 k....R
 			ans = Math.min(ans, process1(str, L, k - 1) + process1(str, k, R) - (str[L] == str[k] ? 1 : 0));
 		}
 		return ans;
