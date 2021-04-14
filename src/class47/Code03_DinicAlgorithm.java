@@ -90,6 +90,9 @@ public class Code03_DinicAlgorithm {
 			if (s == t || r == 0) {
 				return r;
 			}
+			if (depth[s] >= depth[t]) {
+				return 0;
+			}
 			int f = 0;
 			int flow = 0;
 			// s点从哪条边开始试 -> cur[s]
