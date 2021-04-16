@@ -57,6 +57,7 @@ public class Code03_DinicAlgorithm {
 			while (bfs(s, t)) {
 				Arrays.fill(cur, 0);
 				flow += dfs(s, t, Integer.MAX_VALUE);
+				Arrays.fill(depth, 0);
 			}
 			return flow;
 		}
@@ -67,7 +68,6 @@ public class Code03_DinicAlgorithm {
 			boolean[] visited = new boolean[N];
 			visited[s] = true;
 			while (!queue.isEmpty()) {
-				// u是当前节点
 				int u = queue.pollLast();
 				for (int i = 0; i < nexts.get(u).size(); i++) {
 					Edge e = edges.get(nexts.get(u).get(i));
@@ -75,6 +75,9 @@ public class Code03_DinicAlgorithm {
 					if (!visited[v] && e.available > 0) {
 						visited[v] = true;
 						depth[v] = depth[u] + 1;
+						if (v == t) {
+							break;
+						}
 						queue.addFirst(v);
 					}
 				}
@@ -89,9 +92,6 @@ public class Code03_DinicAlgorithm {
 		private int dfs(int s, int t, int r) {
 			if (s == t || r == 0) {
 				return r;
-			}
-			if (depth[s] >= depth[t]) {
-				return 0;
 			}
 			int f = 0;
 			int flow = 0;
@@ -112,7 +112,6 @@ public class Code03_DinicAlgorithm {
 			}
 			return flow;
 		}
-
 	}
 
 	public static void main(String[] args) {
