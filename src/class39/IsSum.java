@@ -148,8 +148,8 @@ public class IsSum {
 	// 对数器验证所有方法
 	public static void main(String[] args) {
 		int N = 20;
-		int M = 20;
-		int testTime = 10000;
+		int M = 100;
+		int testTime = 100000;
 		System.out.println("测试开始");
 		for (int i = 0; i < testTime; i++) {
 			int size = (int) (Math.random() * (N + 1));
