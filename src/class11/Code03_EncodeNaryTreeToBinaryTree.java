@@ -58,7 +58,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 					cur.right = tNode;
 				}
 				cur = tNode;
-				cur.left = en(child.children);
+				cur.left = child.children != null ? en(child.children) : null;
 			}
 			return head;
 		}
@@ -72,7 +72,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 		}
 
 		public List<Node> de(TreeNode root) {
-			List<Node> children = new ArrayList<>();
+			List<Node> children = root != null ? new ArrayList<>() : null;
 			while (root != null) {
 				Node cur = new Node(root.val, de(root.left));
 				children.add(cur);
