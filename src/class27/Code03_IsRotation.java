@@ -1,11 +1,15 @@
 package class27;
 
 public class Code03_IsRotation {
-
+	/*
+	判断a是否是b的旋转串
+	 */
 	public static boolean isRotation(String a, String b) {
 		if (a == null || b == null || a.length() != b.length()) {
 			return false;
 		}
+		//自己拼接自己后，b2中就包含所有的b的旋转串,举例就很清晰了
+		//12345 1234512345
 		String b2 = b + b;
 		return getIndexOf(b2, a) != -1;
 	}

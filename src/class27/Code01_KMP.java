@@ -1,7 +1,9 @@
 package class27;
-
+//KMP : 判断s2是否是s1的子串
 public class Code01_KMP {
-
+	/*
+	 next数组:记录s2的每个位置的相同的前缀字符串和后缀字符串（顺序都是左->右）的最长长度
+	 */
 	public static int getIndexOf(String s1, String s2) {
 		if (s1 == null || s2 == null || s2.length() < 1 || s1.length() < s2.length()) {
 			return -1;
@@ -34,7 +36,7 @@ public class Code01_KMP {
 		next[0] = -1;
 		next[1] = 0;
 		int i = 2; // 目前在哪个位置上求next数组的值
-		int cn = 0; // 当前是哪个位置的值再和i-1位置的字符比较
+		int cn = 0; // 当前是哪个位置的值在和i-1位置的字符比较
 		while (i < next.length) {
 			if (str2[i - 1] == str2[cn]) { // 配成功的时候
 				next[i++] = ++cn;

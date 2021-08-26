@@ -1,7 +1,10 @@
 package class28;
 
 public class Code02_AddShortestEnd {
-
+	/*
+	在一个字符串后面追加字符，添加最少的字符，使之成为回文串,返回追加的字符串
+	在manacher算法基础之上，R到最右边时停止即可。
+	 */
 	public static String shortestEnd(String s) {
 		if (s == null || s.length() == 0) {
 			return null;
@@ -29,6 +32,8 @@ public class Code02_AddShortestEnd {
 				break;
 			}
 		}
+		//倒着填 注意下标转换，举例说明
+		//ab1221 需要ab #a#b#1#2#2#1#
 		char[] res = new char[s.length() - maxContainsEnd + 1];
 		for (int i = 0; i < res.length; i++) {
 			res[res.length - 1 - i] = str[i * 2 + 1];

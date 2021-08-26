@@ -13,7 +13,7 @@ public class Code02_TreeEqual {
 			value = v;
 		}
 	}
-
+	//判断small是否为big的子树,注意子树必须是以其根节点完整的子树，而不是一部分
 	public static boolean containsTree1(Node big, Node small) {
 		if (small == null) {
 			return true;

@@ -1,5 +1,7 @@
 package class28;
-
+/*
+这个算法，感觉得完整看一遍逻辑才行
+ */
 public class Code01_Manacher {
 
 	public static int manacher(String s) {
@@ -10,7 +12,7 @@ public class Code01_Manacher {
 		char[] str = manacherString(s);
 		// 回文半径的大小
 		int[] pArr = new int[str.length];
-		int C = -1;
+		int C = -1;//中心位置
 		// 讲述中：R代表最右的扩成功的位置
 		// coding：最右的扩成功位置的，再下一个位置
 		int R = -1;
@@ -18,6 +20,7 @@ public class Code01_Manacher {
 		for (int i = 0; i < str.length; i++) { // 0 1 2
 			// R第一个违规的位置，i>= R
 			// i位置扩出来的答案，i位置扩的区域，至少是多大。
+			//在确定是回文的基础上，继续向左右扩展比较，不符合立刻break
 			pArr[i] = R > i ? Math.min(pArr[2 * C - i], R - i) : 1;
 			while (i + pArr[i] < str.length && i - pArr[i] > -1) {
 				if (str[i + pArr[i]] == str[i - pArr[i]])
@@ -26,12 +29,15 @@ public class Code01_Manacher {
 					break;
 				}
 			}
+			//更新R和C
 			if (i + pArr[i] > R) {
 				R = i + pArr[i];
 				C = i;
 			}
 			max = Math.max(max, pArr[i]);
 		}
+		//最大回文半径-1 就是原始字符串中的最大回文子串长度，这个按奇偶举例就明白了
+		//121 #1#2#1# 就是4-1=3  ； 1221 #1#2#2#1# 就是5-1=4 均符合max-1
 		return max - 1;
 	}
 
