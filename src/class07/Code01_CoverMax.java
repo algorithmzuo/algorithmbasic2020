@@ -36,7 +36,7 @@ public class Code01_CoverMax {
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
 		int max = 0;
 		for (int i = 0; i < lines.length; i++) {
-			// lines[i] -> cur  在黑盒中，把<=cur.start 东西都弹出
+			// lines[i] -> cur 在黑盒中，把<=cur.start 东西都弹出
 			while (!heap.isEmpty() && heap.peek() <= lines[i].start) {
 				heap.poll();
 			}
@@ -63,6 +63,28 @@ public class Code01_CoverMax {
 			return o1.end - o2.end;
 		}
 
+	}
+
+	// 和maxCover2过程是一样的
+	// 只是代码更短
+	// 不使用类定义的写法
+	public static int maxCover3(int[][] m) {
+		// m是二维数组，可以认为m内部是一个一个的一维数组
+		// 每一个一维数组就是一个对象，也就是线段
+		// 如下的code，就是根据每一个线段的开始位置排序
+		// 比如, m = { {5,7}, {1,4}, {2,6} } 跑完如下的code之后变成：{ {1,4}, {2,6}, {5,7} }
+		Arrays.sort(m, (a, b) -> (a[0] - b[0]));
+		// 准备好小根堆，和课堂的说法一样
+		PriorityQueue<Integer> heap = new PriorityQueue<>();
+		int max = 0;
+		for (int[] line : m) {
+			while (!heap.isEmpty() && heap.peek() <= line[0]) {
+				heap.poll();
+			}
+			heap.add(line[1]);
+			max = Math.max(max, heap.size());
+		}
+		return max;
 	}
 
 	// for test
@@ -122,7 +144,8 @@ public class Code01_CoverMax {
 			int[][] lines = generateLines(N, L, R);
 			int ans1 = maxCover1(lines);
 			int ans2 = maxCover2(lines);
-			if (ans1 != ans2) {
+			int ans3 = maxCover3(lines);
+			if (ans1 != ans2 || ans1 != ans3) {
 				System.out.println("Oops!");
 			}
 		}
