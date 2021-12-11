@@ -15,6 +15,13 @@ public class Code01_LevelTraversalBT {
 		}
 	}
 
+	/**
+	 * 按层遍历
+	 * 容器使用队列
+	 * 出一个cur，打印
+	 * 有左入左，有右入右
+	 * @param head
+	 */
 	public static void level(Node head) {
 		if (head == null) {
 			return;

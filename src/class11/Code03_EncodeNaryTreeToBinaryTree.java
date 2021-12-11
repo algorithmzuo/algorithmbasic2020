@@ -3,6 +3,10 @@ package class11;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 多叉树序列化为二叉树
+ * 然后用二叉树转为多叉树
+ */
 // 本题测试链接：https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree
 public class Code03_EncodeNaryTreeToBinaryTree {
 
@@ -47,6 +51,11 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 			return head;
 		}
 
+		/**
+		 * 把每个节点的子节点，挂在节点的左树（深度遍历）
+		 * @param children
+		 * @return
+		 */
 		private TreeNode en(List<Node> children) {
 			TreeNode head = null;
 			TreeNode cur = null;
@@ -64,6 +73,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 		}
 
 		// Decodes your binary tree to an n-ary tree.
+		// 反序列化
 		public Node decode(TreeNode root) {
 			if (root == null) {
 				return null;
@@ -71,6 +81,11 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 			return new Node(root.val, de(root.left));
 		}
 
+		/**
+		 * 把节点的所有子节点弄成练链表返回给该节点
+		 * @param root
+		 * @return
+		 */
 		public List<Node> de(TreeNode root) {
 			List<Node> children = new ArrayList<>();
 			while (root != null) {

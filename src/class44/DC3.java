@@ -8,6 +8,11 @@ public class DC3 {
 
 	public int[] height;
 
+	// 构造方法的约定:
+	// 数组叫nums，如果你是字符串，请转成整型数组nums
+	// 数组中，最小值>=1
+	// 如果不满足，处理成满足的，也不会影响使用
+	// max, nums里面最大值是多少
 	public DC3(int[] nums, int max) {
 		sa = sa(nums, max);
 		rank = rank();
@@ -152,7 +157,7 @@ public class DC3 {
 
 	// 为了测试
 	public static void main(String[] args) {
-		int len = 3000000;
+		int len = 100000;
 		int maxValue = 100;
 		long start = System.currentTimeMillis();
 		new DC3(randomArray(len, maxValue), maxValue);

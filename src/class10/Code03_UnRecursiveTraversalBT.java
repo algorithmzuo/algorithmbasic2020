@@ -2,6 +2,10 @@ package class10;
 
 import java.util.Stack;
 
+/**
+ * 一般生产环境是不让上递归的，递归的层数不可控会导致系统栈溢出
+ * 这里改用非递归，使用自己定的栈，此时栈的存储是内存，内存比系统栈大的多
+ */
 public class Code03_UnRecursiveTraversalBT {
 
 	public static class Node {
@@ -14,6 +18,13 @@ public class Code03_UnRecursiveTraversalBT {
 		}
 	}
 
+	/**
+	 * 非递归先序遍历
+	 * 1.有头结点先入头结点
+	 * 2.栈顶出来记cur
+	 * 2.有右结点先入右，有左先入左
+	 * @param head
+	 */
 	public static void pre(Node head) {
 		System.out.print("pre-order: ");
 		if (head != null) {
@@ -33,6 +44,13 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
+	/**
+	 * 当前节点为cur，cur的整个左边界进栈，直到遇到空
+	 * 弹出栈中节点并打印
+	 * 节点的右孩子转为cur，然后进行第一步
+	 * 栈为空停
+	 * @param cur
+	 */
 	public static void in(Node cur) {
 		System.out.print("in-order: ");
 		if (cur != null) {
@@ -51,6 +69,14 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
+	/**
+	 * 非递归后序遍历
+	 * 1.基于先序遍历的基础：先左右
+	 * 2.改代码变成2‘：先右左
+	 * 3.代码2’的顺序遍历时，把弹出的元素存入一个栈中，然后在将这个新栈打印出
+	 * 4.得到2’的逆序，也就得到了后序左右先
+	 * @param head
+	 */
 	public static void pos1(Node head) {
 		System.out.print("pos-order: ");
 		if (head != null) {

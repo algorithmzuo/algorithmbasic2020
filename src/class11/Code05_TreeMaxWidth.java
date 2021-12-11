@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 求二叉树最宽的层
+ */
 public class Code05_TreeMaxWidth {
 
 	public static class Node {

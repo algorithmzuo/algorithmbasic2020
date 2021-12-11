@@ -66,7 +66,6 @@ public class Code02_RecursiveTraversalBT {
 		System.out.println("========");
 		pos(head);
 		System.out.println("========");
-
 	}
 
 }

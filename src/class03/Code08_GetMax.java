@@ -1,5 +1,7 @@
 package class03;
 
+import java.util.Arrays;
+
 public class Code08_GetMax {
 
 	// 求arr中的最大值
@@ -19,6 +21,29 @@ public class Code08_GetMax {
 		int leftMax = process(arr, L, mid);
 		int rightMax = process(arr, mid + 1, R);
 		return Math.max(leftMax, rightMax);
+	}
+	private static int[] generateArr(int maxValue,int maxSize){
+		int[] arr = new int[(int)(Math.random()*maxSize)];
+		for (int i = 0;i < arr.length;i++){
+			arr[i] = (int)(Math.random()*(maxValue +1)) - (int)(Math.random() * maxValue);
+		}
+		return arr;
+	}
+
+	public static void main(String[] args) {
+		int testTime = 10;
+		int maxValue = 100;
+		int maxSize = 10;
+		for (int i = 0;i < testTime;i++){
+			int[] arr = generateArr(maxValue,maxSize);
+
+			if (!Integer.valueOf(getMax(arr)).equals(Arrays.stream(arr).max().getAsInt())){
+				System.out.println(getMax(arr));
+				System.out.println(Arrays.stream(arr).max());
+				System.out.println("function has problem");
+			}
+		}
+		System.out.println("success");
 	}
 
 }

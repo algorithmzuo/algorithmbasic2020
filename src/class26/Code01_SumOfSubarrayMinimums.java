@@ -1,11 +1,10 @@
 package class26;
 
-import java.util.Stack;
-
 // 测试链接：https://leetcode.com/problems/sum-of-subarray-minimums/
 // subArrayMinSum1是暴力解
 // subArrayMinSum2是最优解的思路
 // sumSubarrayMins是最优解思路下的单调栈优化
+// Leetcode上不要提交subArrayMinSum1、subArrayMinSum2方法，因为没有考虑取摸
 // Leetcode上只提交sumSubarrayMins方法，时间复杂度O(N)，可以直接通过
 public class Code01_SumOfSubarrayMinimums {
 
@@ -71,8 +70,9 @@ public class Code01_SumOfSubarrayMinimums {
 	}
 
 	public static int sumSubarrayMins(int[] arr) {
-		int[] left = nearLessEqualLeft(arr);
-		int[] right = nearLessRight(arr);
+		int[] stack = new int[arr.length];
+		int[] left = nearLessEqualLeft(arr, stack);
+		int[] right = nearLessRight(arr, stack);
 		long ans = 0;
 		for (int i = 0; i < arr.length; i++) {
 			long start = i - left[i];
@@ -83,34 +83,34 @@ public class Code01_SumOfSubarrayMinimums {
 		return (int) ans;
 	}
 
-	public static int[] nearLessEqualLeft(int[] arr) {
+	public static int[] nearLessEqualLeft(int[] arr, int[] stack) {
 		int N = arr.length;
 		int[] left = new int[N];
-		Stack<Integer> stack = new Stack<>();
+		int size = 0;
 		for (int i = N - 1; i >= 0; i--) {
-			while (!stack.isEmpty() && arr[i] <= arr[stack.peek()]) {
-				left[stack.pop()] = i;
+			while (size != 0 && arr[i] <= arr[stack[size - 1]]) {
+				left[stack[--size]] = i;
 			}
-			stack.push(i);
+			stack[size++] = i;
 		}
-		while (!stack.isEmpty()) {
-			left[stack.pop()] = -1;
+		while (size != 0) {
+			left[stack[--size]] = -1;
 		}
 		return left;
 	}
 
-	public static int[] nearLessRight(int[] arr) {
+	public static int[] nearLessRight(int[] arr, int[] stack) {
 		int N = arr.length;
 		int[] right = new int[N];
-		Stack<Integer> stack = new Stack<>();
+		int size = 0;
 		for (int i = 0; i < N; i++) {
-			while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
-				right[stack.pop()] = i;
+			while (size != 0 && arr[stack[size - 1]] > arr[i]) {
+				right[stack[--size]] = i;
 			}
-			stack.push(i);
+			stack[size++] = i;
 		}
-		while (!stack.isEmpty()) {
-			right[stack.pop()] = N;
+		while (size != 0) {
+			right[stack[--size]] = N;
 		}
 		return right;
 	}

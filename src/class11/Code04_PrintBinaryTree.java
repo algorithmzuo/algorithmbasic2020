@@ -1,5 +1,9 @@
 package class11;
 
+/**
+ * 打印整棵树的打印函数
+ *
+ */
 public class Code04_PrintBinaryTree {
 
 	public static class Node {

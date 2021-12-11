@@ -31,16 +31,27 @@ public class Code02_SerializeAndReconstructTree {
 		}
 	}
 
+	/**
+	 * 先序方式序列化
+	 * @param head
+	 * @return
+	 */
 	public static Queue<String> preSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
 		pres(head, ans);
 		return ans;
 	}
 
+	/**
+	 * 为空的节点用null填充
+	 * @param head
+	 * @param ans
+	 */
 	public static void pres(Node head, Queue<String> ans) {
 		if (head == null) {
 			ans.add(null);
 		} else {
+			// 这里用到递归序，一个节点总能回到自己三次，自己一次，左树一次，右树一次
 			ans.add(String.valueOf(head.value));
 			pres(head.left, ans);
 			pres(head.right, ans);
@@ -120,6 +131,13 @@ public class Code02_SerializeAndReconstructTree {
 		return head;
 	}
 
+	/**
+	 * 按层方式序列化
+	 * 当前节点cur，子节点为null，既往序列化队列放，但不往控制弹出队列里放
+	 * 子节点不为空，则相反
+	 * @param head
+	 * @return
+	 */
 	public static Queue<String> levelSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
 		if (head == null) {
@@ -147,6 +165,13 @@ public class Code02_SerializeAndReconstructTree {
 		return ans;
 	}
 
+	/**
+	 * 按层反序列化
+	 * 1.先对头节点 反序列化
+	 * 2.子节点序列化时不为空才入队列
+	 * @param levelList
+	 * @return
+	 */
 	public static Node buildByLevelQueue(Queue<String> levelList) {
 		if (levelList == null || levelList.size() == 0) {
 			return null;

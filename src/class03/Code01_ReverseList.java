@@ -180,8 +180,8 @@ public class Code01_ReverseList {
 
 	// for test
 	public static void main(String[] args) {
-		int len = 50;
-		int value = 100;
+		int len = 10;
+		int value = 10;
 		int testTime = 100000;
 		System.out.println("test begin!");
 		for (int i = 0; i < testTime; i++) {
