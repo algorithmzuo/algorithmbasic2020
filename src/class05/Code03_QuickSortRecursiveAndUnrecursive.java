@@ -1,5 +1,7 @@
 package class05;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Code03_QuickSortRecursiveAndUnrecursive {
@@ -64,7 +66,7 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		}
 	}
 
-	// 快排3.0 非递归版本
+	// 快排3.0 非递归版本 用栈来执行
 	public static void quickSort2(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -78,7 +80,7 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		stack.push(new Op(0, el - 1));
 		stack.push(new Op(er + 1, N - 1));
 		while (!stack.isEmpty()) {
-			Op op = stack.pop(); // op.l  ... op.r
+			Op op = stack.pop(); // op.l ... op.r
 			if (op.l < op.r) {
 				swap(arr, op.l + (int) (Math.random() * (op.r - op.l + 1)), op.r);
 				equalArea = netherlandsFlag(arr, op.l, op.r);
@@ -86,6 +88,32 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 				er = equalArea[1];
 				stack.push(new Op(op.l, el - 1));
 				stack.push(new Op(er + 1, op.r));
+			}
+		}
+	}
+
+	// 快排3.0 非递归版本 用队列来执行
+	public static void quickSort3(int[] arr) {
+		if (arr == null || arr.length < 2) {
+			return;
+		}
+		int N = arr.length;
+		swap(arr, (int) (Math.random() * N), N - 1);
+		int[] equalArea = netherlandsFlag(arr, 0, N - 1);
+		int el = equalArea[0];
+		int er = equalArea[1];
+		Queue<Op> queue = new LinkedList<>();
+		queue.offer(new Op(0, el - 1));
+		queue.offer(new Op(er + 1, N - 1));
+		while (!queue.isEmpty()) {
+			Op op = queue.poll();
+			if (op.l < op.r) {
+				swap(arr, op.l + (int) (Math.random() * (op.r - op.l + 1)), op.r);
+				equalArea = netherlandsFlag(arr, op.l, op.r);
+				el = equalArea[0];
+				er = equalArea[1];
+				queue.offer(new Op(op.l, el - 1));
+				queue.offer(new Op(er + 1, op.r));
 			}
 		}
 	}
@@ -151,9 +179,11 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
+			int[] arr3 = copyArray(arr1);
 			quickSort1(arr1);
 			quickSort2(arr2);
-			if (!isEqual(arr1, arr2)) {
+			quickSort3(arr3);
+			if (!isEqual(arr1, arr2) || !isEqual(arr1, arr3)) {
 				succeed = false;
 				break;
 			}
