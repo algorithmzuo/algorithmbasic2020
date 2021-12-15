@@ -4,6 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+
+/**
+ * 求最低公共祖先
+ * 1）x无关 x不是最低汇聚点
+ *		1.1汇聚点在x的左子树上
+ *		1.2汇聚点在x的右子树上
+ *		1.3x整颗子树上不全
+ *2）x是汇聚点
+ * 		2.1左右子树分别为一个节点
+ * 		2.2x本身是a，x的左右边是b
+ * 		2.3x本身是b，x的左右边是a
+ *
+ * 每个节点需要信息：
+ * 1 树发没发现a
+ * 2 树发没发现b
+ * 3 有没有最低公共祖先答案
+ */
 public class Code03_lowestAncestor {
 
 	public static class Node {

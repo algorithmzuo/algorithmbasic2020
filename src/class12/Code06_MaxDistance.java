@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 每两个节点之间都有距离，求最大节点间距离
+ * x左树最大距离
+ * x右树最大距离
+ * x左数与x最远（左树高度）+x右数与x最远（右树高度） + 1
+ *
+ */
 public class Code06_MaxDistance {
 
 	public static class Node {

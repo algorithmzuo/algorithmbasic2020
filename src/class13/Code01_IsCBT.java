@@ -2,6 +2,13 @@ package class13;
 
 import java.util.LinkedList;
 
+/**
+ * 判断是完全二叉树
+ * 1.左子树为满二叉树，右为满二叉树，左子树高度=右子树高度
+ * 2.左子树完全二叉树，右为满二叉树，左子树高度=右子树高度+1
+ * 3.左子树满二叉树，右子书满二叉树，左子树高度=右高+1
+ * 4.左子树满二叉树，右完全二叉树，左高=右高
+ */
 public class Code01_IsCBT {
 
 	public static class Node {

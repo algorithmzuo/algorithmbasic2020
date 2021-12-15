@@ -1,5 +1,9 @@
 package class12;
 
+/**
+ * 判断一棵树是不是满二叉树
+ * 树的高度是h，那么该树的节点数一定是2^h-1
+ */
 public class Code04_IsFull {
 
 	public static class Node {

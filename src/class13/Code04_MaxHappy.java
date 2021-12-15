@@ -3,6 +3,19 @@ package class13;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 多叉树代表公司的层级结构
+ * 选择原则：
+ * 1.可以选择节点
+ * 2.选择节点不能选择上下级
+ * 3.满足1，2条件下选择的人数最多
+ *
+ *
+ * x来的情况
+ *  x.happy + x的子节点不来时的最大值
+ * x不来的情况
+ * 0+ x的子节点来和x的子节点不来之间取最大值
+ */
 public class Code04_MaxHappy {
 
 	public static class Employee {

@@ -7,7 +7,7 @@ import java.util.Queue;
 /**
  * 求二叉树最宽的层
  */
-public class Code05_TreeMaxWidth {
+public class   Code05_TreeMaxWidth {
 
 	public static class Node {
 		public int value;
@@ -54,6 +54,11 @@ public class Code05_TreeMaxWidth {
 		return max;
 	}
 
+	/**
+	 * 求最宽得到层
+	 * @param head
+	 * @return
+	 */
 	public static int maxWidthNoMap(Node head) {
 		if (head == null) {
 			return 0;
@@ -66,6 +71,7 @@ public class Code05_TreeMaxWidth {
 		int curLevelNodes = 0; // 当前层的节点数
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
+			// 为下层做准备
 			if (cur.left != null) {
 				queue.add(cur.left);
 				nextEnd = cur.left;

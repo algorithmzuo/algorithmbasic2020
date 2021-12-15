@@ -2,6 +2,11 @@ package class12;
 
 import java.util.ArrayList;
 
+/**
+ * 搜索二叉树，x的左子树为搜索二叉树，x的右子树为搜索二叉树
+ * x的左子树的最大值小于x
+ * x的右子树的最小值大于x
+ */
 public class Code02_IsBST {
 
 	public static class Node {

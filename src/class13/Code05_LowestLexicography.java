@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+/**
+ * 贪心算法
+ *
+ */
 public class Code05_LowestLexicography {
 
 	public static String lowestString1(String[] strs) {

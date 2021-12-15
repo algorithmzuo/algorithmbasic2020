@@ -1,5 +1,8 @@
 package class12;
 
+/**
+ * 平衡二叉树：每一棵字数，左子树和右子树的高度差不超过一
+ */
 public class Code03_IsBalanced {
 
 	public static class Node {

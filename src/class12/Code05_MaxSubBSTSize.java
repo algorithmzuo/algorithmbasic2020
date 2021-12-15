@@ -2,6 +2,22 @@ package class12;
 
 import java.util.ArrayList;
 
+/**
+ * x树上，搜索二叉树子数上的最大size
+ * 1.左子树为搜索二叉树
+ * 2.右子树为搜索二叉树
+ * 3.左子树的最大值小于x
+ * 4.右子树的最小值大于x
+ * 5.最大size
+ *
+ * x不做头节点：
+ * x左树上的最大搜索二叉树子树
+ * x右树的最大搜索二叉树子树
+ * x做头节点
+ * x左，x右都为搜索二叉树
+ * x左max小于x，x右min大于x
+ * x左子树大小，x右子树大小
+ */
 public class Code05_MaxSubBSTSize {
 
 	public static class Node {

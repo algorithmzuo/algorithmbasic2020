@@ -2,6 +2,13 @@ package class11;
 
 public class Code06_SuccessorNode {
 
+	/**
+	 * 后继节点，生成中序遍历后，x的下一个节点是前一个节点的后继节点
+	 * 1.x有右树，后继节点一定是x右树的最左节点
+	 * 2.x没有右树，那么x一直往父节点找，直到找到一个节点M是节点Y的左子节点，
+	 * 此时Y就是x的后继结点。这个过程也就是再找x是哪个节点的左子节点最右的节点。
+	 * 如果没有找到这个Y，那么这个x就是整棵树的最右结点，即该x没有后继
+	 */
 	public static class Node {
 		public int value;
 		public Node left;
