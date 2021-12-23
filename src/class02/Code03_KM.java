@@ -110,7 +110,7 @@ public class Code03_KM {
 
 	// [-range, +range]
 	public static int randomNumber(int range) {
-		return ((int) (Math.random() * range) + 1) - ((int) (Math.random() * range) + 1);
+		return (int) (Math.random() * (range + 1)) - (int) (Math.random() * (range + 1));
 	}
 
 	public static void main(String[] args) {
