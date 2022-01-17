@@ -1,8 +1,9 @@
 package class04;
 
+//  本题测试链接 : https://leetcode.com/problems/reverse-pairs/
 public class Code04_BiggerThanRightTwice {
 
-	public static int biggerTwice(int[] arr) {
+	public static int reversePairs(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return 0;
 		}
@@ -19,19 +20,16 @@ public class Code04_BiggerThanRightTwice {
 	}
 
 	public static int merge(int[] arr, int L, int m, int r) {
-		// [L....M]   [M+1....R]
-		
+		// [L....M] [M+1....R]
 		int ans = 0;
 		// 目前囊括进来的数，是从[M+1, windowR)
 		int windowR = m + 1;
 		for (int i = L; i <= m; i++) {
-			while (windowR <= r && arr[i] > (arr[windowR] * 2)) {
+			while (windowR <= r && (long) arr[i] > (long) arr[windowR] * 2) {
 				windowR++;
 			}
 			ans += windowR - m - 1;
 		}
-		
-		
 		int[] help = new int[r - L + 1];
 		int i = 0;
 		int p1 = L;
@@ -124,7 +122,7 @@ public class Code04_BiggerThanRightTwice {
 		for (int i = 0; i < testTime; i++) {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
-			if (biggerTwice(arr1) != comparator(arr2)) {
+			if (reversePairs(arr1) != comparator(arr2)) {
 				System.out.println("Oops!");
 				printArray(arr1);
 				printArray(arr2);
