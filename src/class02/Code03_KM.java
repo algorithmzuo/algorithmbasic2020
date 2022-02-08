@@ -71,6 +71,31 @@ public class Code03_KM {
 		}
 	}
 
+	// 更简洁的写法
+	public static int km(int[] arr, int k, int m) {
+		int[] help = new int[32];
+		for (int num : arr) {
+			for (int i = 0; i < 32; i++) {
+				help[i] += (num >> i) & 1;
+			}
+		}
+		int ans = 0;
+		for (int i = 0; i < 32; i++) {
+			help[i] %= m;
+			if (help[i] != 0) {
+				ans |= 1 << i;
+			}
+		}
+		int real = 0;
+		for (int num : arr) {
+			if (num == ans) {
+				real++;
+			}
+		}
+		return real == k ? ans : -1;
+	}
+
+	// 为了测试
 	public static int[] randomArray(int maxKinds, int range, int k, int m) {
 		int ktimeNum = randomNumber(range);
 		// 真命天子出现的次数
@@ -108,11 +133,13 @@ public class Code03_KM {
 		return arr;
 	}
 
+	// 为了测试
 	// [-range, +range]
 	public static int randomNumber(int range) {
 		return (int) (Math.random() * (range + 1)) - (int) (Math.random() * (range + 1));
 	}
 
+	// 为了测试
 	public static void main(String[] args) {
 		int kinds = 5;
 		int range = 30;
@@ -131,14 +158,14 @@ public class Code03_KM {
 			int[] arr = randomArray(kinds, range, k, m);
 			int ans1 = test(arr, k, m);
 			int ans2 = onlyKTimes(arr, k, m);
-			if (ans1 != ans2) {
+			int ans3 = km(arr, k, m);
+			if (ans1 != ans2 || ans1 != ans3) {
 				System.out.println(ans1);
-				System.out.println(ans2);
+				System.out.println(ans3);
 				System.out.println("出错了！");
 			}
 		}
 		System.out.println("测试结束");
-
 	}
 
 }
