@@ -64,4 +64,31 @@ public class Code02_AllTimesMinToMax {
 		System.out.println("test finish");
 	}
 
+	// 本题可以在leetcode上找到原题
+	// 测试链接 : https://leetcode.com/problems/maximum-subarray-min-product/
+	// 注意测试题目数量大，要取模，但是思路和课上讲的是完全一样的
+	// 注意溢出的处理即可
+	public static int maxSumMinProduct(int[] arr) {
+		int size = arr.length;
+		long[] sums = new long[size];
+		sums[0] = arr[0];
+		for (int i = 1; i < size; i++) {
+			sums[i] = sums[i - 1] + arr[i];
+		}
+		long max = Long.MIN_VALUE;
+		Stack<Integer> stack = new Stack<Integer>();
+		for (int i = 0; i < size; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+				int j = stack.pop();
+				max = Math.max(max, (stack.isEmpty() ? sums[i - 1] : (sums[i - 1] - sums[stack.peek()])) * arr[j]);
+			}
+			stack.push(i);
+		}
+		while (!stack.isEmpty()) {
+			int j = stack.pop();
+			max = Math.max(max, (stack.isEmpty() ? sums[size - 1] : (sums[size - 1] - sums[stack.peek()])) * arr[j]);
+		}
+		return (int) (max % 1000000007);
+	}
+
 }
