@@ -162,7 +162,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 					}
 				}
 				int numq = (int) (Math.random() * value);
-				if (stack.isEmpty()) {
+				if (queue.isEmpty()) {
 					myQueue.push(numq);
 					queue.offer(numq);
 				} else {
