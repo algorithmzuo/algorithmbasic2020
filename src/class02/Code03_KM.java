@@ -51,9 +51,7 @@ public class Code03_KM {
 		// 那么ans就会一直维持0，最后返回0，也是对的！
 		for (int i = 0; i < 32; i++) {
 			if (t[i] % m != 0) {
-				if (t[i] % m == k) {
-					ans |= (1 << i);
-				}
+				ans |= (1 << i);
 			}
 		}
 		return ans;
