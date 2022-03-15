@@ -3,6 +3,9 @@ package class02;
 import java.util.HashMap;
 import java.util.HashSet;
 
+// 输入一定能够保证，数组中所有的数都出现了M次，只有一种数出现了K次
+// 1 <= K < M
+// 返回这种数
 public class Code03_KM {
 
 	public static int test(int[] arr, int k, int m) {
@@ -14,12 +17,14 @@ public class Code03_KM {
 				map.put(num, 1);
 			}
 		}
+		int ans = 0;
 		for (int num : map.keySet()) {
 			if (map.get(num) == k) {
-				return num;
+				ans = num;
+				break;
 			}
 		}
-		return -1;
+		return ans;
 	}
 
 	public static HashMap<Integer, Integer> map = new HashMap<>();
@@ -40,24 +45,15 @@ public class Code03_KM {
 			}
 		}
 		int ans = 0;
+		// 如果这个出现了K次的数，就是0
+		// 那么下面代码中的 : ans |= (1 << i);
+		// 就不会发生
+		// 那么ans就会一直维持0，最后返回0，也是对的！
 		for (int i = 0; i < 32; i++) {
 			if (t[i] % m != 0) {
 				if (t[i] % m == k) {
 					ans |= (1 << i);
-				} else {
-					return -1;
 				}
-			}
-		}
-		if (ans == 0) {
-			int count = 0;
-			for (int num : arr) {
-				if (num == 0) {
-					count++;
-				}
-			}
-			if (count != k) {
-				return -1;
 			}
 		}
 		return ans;
@@ -86,20 +82,14 @@ public class Code03_KM {
 				ans |= 1 << i;
 			}
 		}
-		int real = 0;
-		for (int num : arr) {
-			if (num == ans) {
-				real++;
-			}
-		}
-		return real == k ? ans : -1;
+		return ans;
 	}
 
 	// 为了测试
 	public static int[] randomArray(int maxKinds, int range, int k, int m) {
 		int ktimeNum = randomNumber(range);
 		// 真命天子出现的次数
-		int times = Math.random() < 0.5 ? k : ((int) (Math.random() * (m - 1)) + 1);
+		int times = k;
 		// 2
 		int numKinds = (int) (Math.random() * maxKinds) + 2;
 		// k * 1 + (numKinds - 1) * m
