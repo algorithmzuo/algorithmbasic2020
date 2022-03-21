@@ -34,11 +34,11 @@ public class Code06_BSAwesome {
 		if (arr.length <= 1) {
 			return true;
 		}
-		if (index == 0 && arr[index] < arr[index + 1]) {
-			return true;
+		if (index == 0) {
+			return arr[index] < arr[index + 1];
 		}
-		if (index == arr.length - 1 && arr[index] < arr[index - 1]) {
-			return true;
+		if (index == arr.length - 1) {
+			return arr[index] < arr[index - 1];
 		}
 		return arr[index] < arr[index - 1] && arr[index] < arr[index + 1];
 	}
