@@ -48,7 +48,7 @@ public class Code01_Light {
 				light++;
 				if (i + 1 == str.length) {
 					break;
-				} else { // 有i位置  i+ 1   X  .
+				} else { // 有i位置 i+ 1 X .
 					if (str[i + 1] == 'X') {
 						i = i + 2;
 					} else {
@@ -57,6 +57,25 @@ public class Code01_Light {
 				}
 			}
 		}
+		return light;
+	}
+
+	// 更简洁的解法
+	// 两个X之间，数一下.的数量，然后除以3，向上取整
+	// 把灯数累加
+	public static int minLight3(String road) {
+		char[] str = road.toCharArray();
+		int cur = 0;
+		int light = 0;
+		for (char c : str) {
+			if (c == 'X') {
+				light += (cur + 2) / 3;
+				cur = 0;
+			} else {
+				cur++;
+			}
+		}
+		light += (cur + 2) / 3;
 		return light;
 	}
 
@@ -76,7 +95,8 @@ public class Code01_Light {
 			String test = randomString(len);
 			int ans1 = minLight1(test);
 			int ans2 = minLight2(test);
-			if (ans1 != ans2) {
+			int ans3 = minLight3(test);
+			if (ans1 != ans2 || ans1 != ans3) {
 				System.out.println("oops!");
 			}
 		}
