@@ -78,13 +78,13 @@ public class Code06_Dijkstra {
 		public void addOrUpdateOrIgnore(Node node, int distance) {
 			if (inHeap(node)) {
 				distanceMap.put(node, Math.min(distanceMap.get(node), distance));
-				insertHeapify(node, heapIndexMap.get(node));
+				insertHeapify(heapIndexMap.get(node));
 			}
 			if (!isEntered(node)) {
 				nodes[size] = node;
 				heapIndexMap.put(node, size);
 				distanceMap.put(node, distance);
-				insertHeapify(node, size++);
+				insertHeapify(size++);
 			}
 		}
 
@@ -99,7 +99,7 @@ public class Code06_Dijkstra {
 			return nodeRecord;
 		}
 
-		private void insertHeapify(Node node, int index) {
+		private void insertHeapify(int index) {
 			while (distanceMap.get(nodes[index]) < distanceMap.get(nodes[(index - 1) / 2])) {
 				swap(index, (index - 1) / 2);
 				index = (index - 1) / 2;
