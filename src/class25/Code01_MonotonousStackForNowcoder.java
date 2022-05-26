@@ -12,6 +12,13 @@ public class Code01_MonotonousStackForNowcoder {
 
 	public static int[] arr = new int[1000000];
 	public static int[][] ans = new int[1000000][2];
+	// stack1 : 相等值的位置也放
+	// stack2 : 只放不相等值的最后一个位置
+	// 比如 : arr = { 3, 3, 3, 4, 4, 6, 6, 6}
+	//           位置 0  1  2  3  4  5  6  7
+	// 如果位置依次压栈，
+	// stack1中的记录是（位置） : 0 1 2 3 4 5 6 7
+	// stack1中的记录是（位置） : 2 4 7
 	public static int[] stack1 = new int[1000000];
 	public static int[] stack2 = new int[1000000];
 
