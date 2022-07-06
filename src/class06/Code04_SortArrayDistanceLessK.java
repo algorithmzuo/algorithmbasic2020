@@ -3,6 +3,9 @@ package class06;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/**
+ * 一个无序数组，在排完队后，每个元素移动的距离不超过K
+ */
 public class Code04_SortArrayDistanceLessK {
 
 	public static void sortedArrDistanceLessK(int[] arr, int k) {
@@ -123,5 +126,4 @@ public class Code04_SortArrayDistanceLessK {
 		}
 		System.out.println(succeed ? "Nice!" : "Fucking fucked!");
 	}
-
 }

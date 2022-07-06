@@ -60,6 +60,11 @@ public class Code06_MaxDistance {
 		return map;
 	}
 
+	/**
+	 * 这里填充每个节点的上级节点
+	 * @param head
+	 * @param parentMap
+	 */
 	public static void fillParentMap(Node head, HashMap<Node, Node> parentMap) {
 		if (head.left != null) {
 			parentMap.put(head.left, head);
@@ -71,6 +76,13 @@ public class Code06_MaxDistance {
 		}
 	}
 
+	/**
+	 * 计算距离
+	 * @param parentMap 每个节点和父节点的映射关系
+	 * @param o1 原始节点
+	 * @param o2 子节点
+	 * @return
+	 */
 	public static int distance(HashMap<Node, Node> parentMap, Node o1, Node o2) {
 		HashSet<Node> o1Set = new HashSet<>();
 		Node cur = o1;

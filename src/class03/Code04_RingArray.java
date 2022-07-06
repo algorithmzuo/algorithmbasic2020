@@ -44,7 +44,6 @@ public class Code04_RingArray {
 		private int nextIndex(int i) {
 			return i < limit - 1 ? i + 1 : 0;
 		}
-
 	}
 
 }

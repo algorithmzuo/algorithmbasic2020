@@ -2,6 +2,10 @@ package class14;
 
 import java.util.PriorityQueue;
 
+/**
+ * 小根堆解决
+ * 不用管为什么用这个，具体可以参考哈夫曼编码
+ */
 public class Code02_LessMoneySplitGold {
 
 	// 纯暴力！
@@ -64,8 +68,13 @@ public class Code02_LessMoneySplitGold {
 	}
 
 	public static void main(String[] args) {
-		int testTime = 100000;
-		int maxSize = 6;
+//		int[] arrs = {2,6,6,2,6,3,10,10};
+//		if (lessMoney1(arrs) == lessMoney2(arrs)) {
+//			System.out.println("success");
+//		}
+
+		int testTime = 1000000;
+		int maxSize = 5;
 		int maxValue = 1000;
 		for (int i = 0; i < testTime; i++) {
 			int[] arr = generateRandomArray(maxSize, maxValue);
@@ -75,5 +84,4 @@ public class Code02_LessMoneySplitGold {
 		}
 		System.out.println("finish!");
 	}
-
 }

@@ -143,8 +143,8 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 
 	// 跑大样本随机测试（对数器）
 	public static void main(String[] args) {
-		int testTime = 500000;
-		int maxSize = 100;
+		int testTime = 10;
+		int maxSize = 10;
 		int maxValue = 100;
 		boolean succeed = true;
 		System.out.println("test begin");
@@ -152,11 +152,12 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 			int[] arr1 = generateRandomArray(maxSize, maxValue);
 			int[] arr2 = copyArray(arr1);
 			quickSort1(arr1);
-			quickSort2(arr2);
-			if (!isEqual(arr1, arr2)) {
-				succeed = false;
-				break;
-			}
+			printArray(arr1);
+//			quickSort2(arr2);
+//			if (!isEqual(arr1, arr2)) {
+//				succeed = false;
+//				break;
+//			}
 		}
 		System.out.println("test end");
 		System.out.println("测试" + testTime + "组是否全部通过：" + (succeed ? "是" : "否"));

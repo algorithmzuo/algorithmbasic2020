@@ -269,7 +269,7 @@ public class Code02_SerializeAndReconstructTree {
 	public static void main(String[] args) {
 		int maxLevel = 5;
 		int maxValue = 100;
-		int testTimes = 1000000;
+		int testTimes = 10;
 		System.out.println("test begin");
 		for (int i = 0; i < testTimes; i++) {
 			Node head = generateRandomBST(maxLevel, maxValue);
@@ -277,6 +277,7 @@ public class Code02_SerializeAndReconstructTree {
 			Queue<String> pos = posSerial(head);
 			Queue<String> level = levelSerial(head);
 			Node preBuild = buildByPreQueue(pre);
+			printTree(preBuild);
 			Node posBuild = buildByPosQueue(pos);
 			Node levelBuild = buildByLevelQueue(level);
 			if (!isSameValueStructure(preBuild, posBuild) || !isSameValueStructure(posBuild, levelBuild)) {

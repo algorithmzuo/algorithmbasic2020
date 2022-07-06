@@ -7,7 +7,8 @@ import java.util.List;
  * 多叉树序列化为二叉树
  * 然后用二叉树转为多叉树
  */
-// 本题测试链接：https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree
+// 本题测试链接：https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree   (en)
+	// https://leetcode-cn.com/problems/encode-n-ary-tree-to-binary-tree/    (ch)
 public class Code03_EncodeNaryTreeToBinaryTree {
 
 	// 提交时不要提交这个类

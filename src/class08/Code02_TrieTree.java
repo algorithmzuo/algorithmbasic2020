@@ -1,5 +1,6 @@
 package class08;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 // 该程序完全正确
@@ -286,6 +287,9 @@ public class Code02_TrieTree {
 					int ans1 = trie1.search(arr[j]);
 					int ans2 = trie2.search(arr[j]);
 					int ans3 = right.search(arr[j]);
+					System.out.println("search:"+arr[j]+
+							" ans1:"+ ans1 + " ans2:" + ans2 + " ans3:" + ans3+
+							"   arry" + Arrays.toString(arr));
 					if (ans1 != ans2 || ans2 != ans3) {
 						System.out.println("Oops!");
 					}

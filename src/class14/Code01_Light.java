@@ -2,6 +2,9 @@ package class14;
 
 import java.util.HashSet;
 
+/**
+ * 贪心算法
+ */
 public class Code01_Light {
 
 	public static int minLight1(String road) {
@@ -64,13 +67,13 @@ public class Code01_Light {
 	public static String randomString(int len) {
 		char[] res = new char[(int) (Math.random() * len) + 1];
 		for (int i = 0; i < res.length; i++) {
-			res[i] = Math.random() < 0.5 ? 'X' : '.';
+			res[i] = Math.random() < 0.3 ? 'X' : '.';
 		}
 		return String.valueOf(res);
 	}
 
 	public static void main(String[] args) {
-		int len = 20;
+		int len = 7;
 		int testTime = 100000;
 		for (int i = 0; i < testTime; i++) {
 			String test = randomString(len);

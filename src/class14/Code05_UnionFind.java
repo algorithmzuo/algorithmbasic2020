@@ -1,5 +1,6 @@
 package class14;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
@@ -66,5 +67,23 @@ public class Code05_UnionFind {
 			return sizeMap.size();
 		}
 
+	}
+
+	public static void main(String[] args) {
+		Node<String> node1 = new Node<>("a");
+		Node<String> node2 = new Node<>("b");
+		Node<String> node3 = new Node<>("c");
+		Node<String> node4 = new Node<>("d");
+		List<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		list.add("d");
+
+		UnionFind<String> unionFind = new UnionFind(list);
+		unionFind.union("a","b");
+		unionFind.union("b","c");
+		unionFind.union("c","d");
+		unionFind.findFather(unionFind.nodes.get("d"));
 	}
 }

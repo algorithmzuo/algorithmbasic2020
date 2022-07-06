@@ -1,5 +1,6 @@
 package class02;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -97,6 +98,7 @@ public class Code03_KM {
 				arr[index++] = curNum;
 			}
 		}
+		System.out.println(Arrays.toString(arr));
 		// arr 填好了
 		for (int i = 0; i < arr.length; i++) {
 			// i 位置的数，我想随机和j位置的数做交换
@@ -131,6 +133,8 @@ public class Code03_KM {
 			int[] arr = randomArray(kinds, range, k, m);
 			int ans1 = test(arr, k, m);
 			int ans2 = onlyKTimes(arr, k, m);
+			System.out.println(ans1);
+			System.out.println(ans2);
 			if (ans1 != ans2) {
 				System.out.println(ans1);
 				System.out.println(ans2);
@@ -138,6 +142,7 @@ public class Code03_KM {
 			}
 		}
 		System.out.println("测试结束");
+
 
 	}
 

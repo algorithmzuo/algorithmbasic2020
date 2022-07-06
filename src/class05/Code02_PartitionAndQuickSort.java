@@ -120,7 +120,6 @@ public class Code02_PartitionAndQuickSort {
 		process3(arr, L, equalArea[0] - 1);
 		process3(arr, equalArea[1] + 1, R);
 	}
-
 	// for test
 	public static int[] generateRandomArray(int maxSize, int maxValue) {
 		int[] arr = new int[(int) ((maxSize + 1) * Math.random())];

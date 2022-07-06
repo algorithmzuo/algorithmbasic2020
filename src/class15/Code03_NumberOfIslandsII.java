@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 动态加1
+ */
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands-ii/
 // 所有方法都可以直接通过

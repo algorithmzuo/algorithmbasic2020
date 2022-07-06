@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * 区域问题，这里使用数组的方式解决
+ */
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands/
 // 所有方法都可以直接通过
@@ -35,6 +38,11 @@ public class Code02_NumberOfIslands {
 		infect(board, i, j + 1);
 	}
 
+	/**
+	 * 该方法是比较上和左，如果上和左是1就合并，
+	 * @param board
+	 * @return
+	 */
 	public static int numIslands1(char[][] board) {
 		int row = board.length;
 		int col = board[0].length;
@@ -138,6 +146,12 @@ public class Code02_NumberOfIslands {
 
 	}
 
+	/**
+	 * 将二维数组转为一维数组
+	 *
+	 * @param board
+	 * @return
+	 */
 	public static int numIslands2(char[][] board) {
 		int row = board.length;
 		int col = board[0].length;

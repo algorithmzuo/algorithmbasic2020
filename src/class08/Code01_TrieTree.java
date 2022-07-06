@@ -19,7 +19,7 @@ public class Code01_TrieTree {
 	}
 
 	public static class Trie1 {
-		private Node1 root;
+		public  Node1 root;
 
 		public Trie1() {
 			root = new Node1();
@@ -112,7 +112,7 @@ public class Code01_TrieTree {
 	}
 
 	public static class Trie2 {
-		private Node2 root;
+		public Node2 root;
 
 		public Trie2() {
 			root = new Node2();
@@ -231,6 +231,7 @@ public class Code01_TrieTree {
 			for (String cur : box.keySet()) {
 				if (cur.startsWith(pre)) {
 					count++;
+//					count += box.get(cur);
 				}
 			}
 			return count;
@@ -241,7 +242,7 @@ public class Code01_TrieTree {
 	public static String generateRandomString(int strLen) {
 		char[] ans = new char[(int) (Math.random() * strLen) + 1];
 		for (int i = 0; i < ans.length; i++) {
-			int value = (int) (Math.random() * 6);
+			int value = (int) (Math.random() * 26);
 			ans[i] = (char) (97 + value);
 		}
 		return String.valueOf(ans);

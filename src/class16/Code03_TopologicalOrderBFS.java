@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 拓扑排序，能够把工作做完并且不缺依赖的顺序
+ * 拓扑排序不是唯一的
+ */
 // OJ链接：https://www.lintcode.com/problem/topological-sorting
 public class Code03_TopologicalOrderBFS {
 
@@ -22,10 +26,12 @@ public class Code03_TopologicalOrderBFS {
 	// 提交下面的
 	public static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
 		HashMap<DirectedGraphNode, Integer> indegreeMap = new HashMap<>();
+		// key节点，value入度，初始化入度数为0
 		for (DirectedGraphNode cur : graph) {
 			indegreeMap.put(cur, 0);
 		}
 		for (DirectedGraphNode cur : graph) {
+			// 计算所有节点的入度
 			for (DirectedGraphNode next : cur.neighbors) {
 				indegreeMap.put(next, indegreeMap.get(next) + 1);
 			}

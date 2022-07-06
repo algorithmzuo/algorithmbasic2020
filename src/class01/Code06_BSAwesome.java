@@ -25,7 +25,11 @@ public class Code06_BSAwesome {
 				return mid;
 			}
 		}
+		// 这里返回left，是因为while循环中一直有两个数，且循环中每次都将left置为较小的
 		return left;
 	}
-
+	public static void main(String[] args) {
+		int[] arr = {2,3,4,2,3,4,21,3,4,32,1,2};
+		System.out.println(getLessIndex(arr));
+	}
 }
