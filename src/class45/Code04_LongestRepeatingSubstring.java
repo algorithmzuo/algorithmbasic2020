@@ -5,6 +5,7 @@ package class45;
 // 但是如果你学过DC3算法生成后缀数组的内容
 // 并且听了课上讲了生成高度数组的内容
 // 这道题就是后缀数组的模版题
+// 时间复杂度O(N)，连官方题解都没有做到的时间复杂度，但这才是最优解
 // 测试链接 : https://leetcode.cn/problems/longest-repeating-substring/
 public class Code04_LongestRepeatingSubstring {
 
