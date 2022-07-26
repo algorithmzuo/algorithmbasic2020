@@ -14,34 +14,28 @@ public class Code04_LongestRepeatingSubstring {
 			return 0;
 		}
 		char[] str = s.toCharArray();
-		int N = str.length;
+		int n = str.length;
 		int min = str[0];
 		int max = str[0];
-		for (int i = 1; i < N; i++) {
+		for (int i = 1; i < n; i++) {
 			min = Math.min(min, str[i]);
 			max = Math.max(max, str[i]);
 		}
-		int[] all = new int[N];
-		int index = 0;
-		for (int i = 0; i < N; i++) {
-			all[index++] = str[i] - min + 1;
+		int[] all = new int[n];
+		for (int i = 0; i < n; i++) {
+			all[i] = str[i] - min + 1;
 		}
 		DC3 dc3 = new DC3(all, max - min + 1);
-		int n = all.length;
-		int[] height = dc3.height;
 		int ans = 0;
 		for (int i = 1; i < n; i++) {
-			ans = Math.max(ans, height[i]);
+			ans = Math.max(ans, dc3.height[i]);
 		}
 		return ans;
 	}
 
 	public static class DC3 {
-
 		public int[] sa;
-
 		public int[] rank;
-
 		public int[] height;
 
 		public DC3(int[] nums, int max) {
@@ -162,7 +156,6 @@ public class Code04_LongestRepeatingSubstring {
 		private int[] height(int[] s) {
 			int n = s.length;
 			int[] ans = new int[n];
-			// 依次求h[i] , k = 0
 			for (int i = 0, k = 0; i < n; ++i) {
 				if (rank[i] != 0) {
 					if (k > 0) {
@@ -172,13 +165,32 @@ public class Code04_LongestRepeatingSubstring {
 					while (i + k < n && j + k < n && s[i + k] == s[j + k]) {
 						++k;
 					}
-					// h[i] = k
 					ans[rank[i]] = k;
 				}
 			}
 			return ans;
 		}
 
+	}
+
+	// 为了测试, 不用提交
+	public static String randomString(int n, int r) {
+		char[] str = new char[n];
+		for (int i = 0; i < n; i++) {
+			str[i] = (char) ((int) (Math.random() * r) + 'a');
+		}
+		return String.valueOf(str);
+	}
+
+	// 为了测试, 不用提交
+	public static void main(String[] args) {
+		int n = 500000;
+		int r = 3;
+		long start = System.currentTimeMillis();
+		longestRepeatingSubstring(randomString(n, r));
+		long end = System.currentTimeMillis();
+		System.out.println("字符长度为 " + n + ", 字符种类数为 " + r + " 时");
+		System.out.println("求最长重复子串的运行时间 : " + (end - start) + " 毫秒");
 	}
 
 }
