@@ -1,25 +1,22 @@
 // 不要拷贝包信息的内容
 package class39;
 
-//优化版本
+// 优化版本
+// 这是牛客的测试链接：
+// https://www.nowcoder.com/questionTerminal/d94bb2fa461d42bcb4c0f2b94f5d4281
+// 请同学们务必参考如下代码中关于输入、输出的处理
+// 这是输入输出处理效率很高的写法
+// 提交如下的代码，并把主类名改成"Main"
+// 可以直接通过
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Code02_SnacksWaysMain2 {
-
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		while (sc.hasNext()) {
-			size = sc.nextInt();
-			long w = (long) sc.nextInt();
-			for (int i = 0; i < size; i++) {
-				arr[i] = (long) sc.nextInt();
-			}
-			long ways = ways(w);
-			System.out.println(ways);
-		}
-		sc.close();
-	}
 
 	// 用来收集所有输入的数字
 	public static long[] arr = new long[31];
@@ -32,6 +29,24 @@ public class Code02_SnacksWaysMain2 {
 	public static long[] rightSum = new long[1 << 16];
 	// 准备的数组可能用不完，左部分生成了多少累加和，用leftSize表示
 	public static int rightSize = 0;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer in = new StreamTokenizer(br);
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+		while (in.nextToken() != StreamTokenizer.TT_EOF) {
+			size = (int) in.nval;
+			in.nextToken();
+			int bag = (int) in.nval;
+			for (int i = 0; i < size; i++) {
+				in.nextToken();
+				arr[i] = (int) in.nval;
+			}
+			long ways = ways(bag);
+			out.println(ways);
+			out.flush();
+		}
+	}
 
 	public static long ways(long w) {
 		if (size == 0) {

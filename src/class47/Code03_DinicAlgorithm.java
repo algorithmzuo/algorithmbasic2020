@@ -4,15 +4,55 @@
 // 把如下代码粘贴进网页所提供的java编译器环境中
 // 不需要修改任何内容可以直接通过
 // 请看网页上的题目描述并结合main函数的写法去了解这个模板的用法
+// 请同学们务必参考如下代码中关于输入、输出的处理
+// 这是输入输出处理效率很高的写法
 
 package class47;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Code03_DinicAlgorithm {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer in = new StreamTokenizer(br);
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+		while (in.nextToken() != StreamTokenizer.TT_EOF) {
+			int cases = (int) in.nval;
+			for (int i = 1; i <= cases; i++) {
+				in.nextToken();
+				int n = (int) in.nval;
+				in.nextToken();
+				int s = (int) in.nval;
+				in.nextToken();
+				int t = (int) in.nval;
+				in.nextToken();
+				int m = (int) in.nval;
+				Dinic dinic = new Dinic(n);
+				for (int j = 0; j < m; j++) {
+					in.nextToken();
+					int from = (int) in.nval;
+					in.nextToken();
+					int to = (int) in.nval;
+					in.nextToken();
+					int weight = (int) in.nval;
+					dinic.addEdge(from, to, weight);
+					dinic.addEdge(to, from, weight);
+				}
+				int ans = dinic.maxFlow(s, t);
+				out.println("Case " + i + ": " + ans);
+				out.flush();
+			}
+		}
+	}
 
 	public static class Edge {
 		public int from;
@@ -112,28 +152,6 @@ public class Code03_DinicAlgorithm {
 			}
 			return flow;
 		}
-	}
-
-	public static void main(String[] args) {
-		Scanner cin = new Scanner(System.in);
-		int cases = cin.nextInt();
-		for (int i = 1; i <= cases; i++) {
-			int n = cin.nextInt();
-			int s = cin.nextInt();
-			int t = cin.nextInt();
-			int m = cin.nextInt();
-			Dinic dinic = new Dinic(n);
-			for (int j = 0; j < m; j++) {
-				int from = cin.nextInt();
-				int to = cin.nextInt();
-				int weight = cin.nextInt();
-				dinic.addEdge(from, to, weight);
-				dinic.addEdge(to, from, weight);
-			}
-			int ans = dinic.maxFlow(s, t);
-			System.out.println("Case " + i + ": " + ans);
-		}
-		cin.close();
 	}
 
 }
