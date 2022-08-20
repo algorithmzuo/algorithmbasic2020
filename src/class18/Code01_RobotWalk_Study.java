@@ -9,11 +9,11 @@ public class Code01_RobotWalk_Study {
      * @param n
      * @return
      */
-    public static int ways1(int n,int start,int k,int aim) {
-        if (n <2 ||  start < 1 || start > n|| aim < 1 || aim > n|| k < 1 ) {
-            return -1;
-        }
-    }
+//    public static int ways1(int n,int start,int k,int aim) {
+//        if (n <2 ||  start < 1 || start > n|| aim < 1 || aim > n|| k < 1 ) {
+//            return -1;
+//        }
+//    }
 
     /**
      * 方法一使用暴力递归
@@ -76,14 +76,14 @@ public class Code01_RobotWalk_Study {
     }
 
     /**
-     * 
+     *
      * @param n
      * @param cur
      * @param k
      * @param aim
      * @return
      */
-    public static int way3(int n,int cur,int k,int aim) {
-
-    }
+//    public static int way3(int n,int cur,int k,int aim) {
+//
+//    }
 }
