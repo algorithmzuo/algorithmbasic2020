@@ -15,7 +15,7 @@ public class HeapGreater<T> {
 	private int heapSize;
 	private Comparator<? super T> comp;
 
-	public HeapGreater(Comparator<T> c) {
+	public HeapGreater(Comparator<? super T> c) {
 		heap = new ArrayList<>();
 		indexMap = new HashMap<>();
 		heapSize = 0;

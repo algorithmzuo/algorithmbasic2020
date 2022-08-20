@@ -78,23 +78,27 @@ public class Code03_ZeroLeftOneStringNumber {
 		int[][] tmp = m;
 		for (; p != 0; p >>= 1) {
 			if ((p & 1) != 0) {
-				res = muliMatrix(res, tmp);
+				res = product(res, tmp);
 			}
-			tmp = muliMatrix(tmp, tmp);
+			tmp = product(tmp, tmp);
 		}
 		return res;
 	}
 
-	public static int[][] muliMatrix(int[][] m1, int[][] m2) {
-		int[][] res = new int[m1.length][m2[0].length];
-		for (int i = 0; i < m1.length; i++) {
-			for (int j = 0; j < m2[0].length; j++) {
-				for (int k = 0; k < m2.length; k++) {
-					res[i][j] += m1[i][k] * m2[k][j];
+	// 两个矩阵乘完之后的结果返回
+	public static int[][] product(int[][] a, int[][] b) {
+		int n = a.length;
+		int m = b[0].length;
+		int k = a[0].length; // a的列数同时也是b的行数
+		int[][] ans = new int[n][m];
+		for(int i = 0 ; i < n; i++) {
+			for(int j = 0 ; j < m;j++) {
+				for(int c = 0; c < k; c++) {
+					ans[i][j] += a[i][c] * b[c][j];
 				}
 			}
 		}
-		return res;
+		return ans;
 	}
 
 	public static void main(String[] args) {

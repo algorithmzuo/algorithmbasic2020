@@ -29,7 +29,7 @@ public class Code02_Heap {
 				throw new RuntimeException("heap is full");
 			}
 			heap[heapSize] = value;
-			// value  heapSize
+			// value heapSize
 			heapInsert(heap, heapSize++);
 		}
 
@@ -42,15 +42,10 @@ public class Code02_Heap {
 			return ans;
 		}
 
-		
-		
-		
-		
-		
 		// 新加进来的数，现在停在了index位置，请依次往上移动，
 		// 移动到0位置，或者干不掉自己的父亲了，停！
 		private void heapInsert(int[] arr, int index) {
-			// [index]    [index-1]/2
+			// [index] [index-1]/2
 			// index == 0
 			while (arr[index] > arr[(index - 1) / 2]) {
 				swap(arr, index, (index - 1) / 2);
@@ -124,24 +119,24 @@ public class Code02_Heap {
 
 	}
 
-	
-	public static class MyComparator implements Comparator<Integer>{
+	public static class MyComparator implements Comparator<Integer> {
 
 		@Override
 		public int compare(Integer o1, Integer o2) {
 			return o2 - o1;
 		}
-		
+
 	}
-	
+
 	public static void main(String[] args) {
+
 		// 小根堆
 		PriorityQueue<Integer> heap = new PriorityQueue<>(new MyComparator());
 		heap.add(5);
 		heap.add(5);
 		heap.add(5);
 		heap.add(3);
-		//  5 , 3
+		// 5 , 3
 		System.out.println(heap.peek());
 		heap.add(7);
 		heap.add(0);
@@ -150,16 +145,10 @@ public class Code02_Heap {
 		heap.add(7);
 		heap.add(0);
 		System.out.println(heap.peek());
-		while(!heap.isEmpty()) {
+		while (!heap.isEmpty()) {
 			System.out.println(heap.poll());
 		}
-		
-		
-		
-		
-		
-		
-		
+
 		int value = 1000;
 		int limit = 100;
 		int testTimes = 1000000;

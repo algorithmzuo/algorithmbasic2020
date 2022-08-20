@@ -1,9 +1,11 @@
 package class02;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
+// 输入一定能够保证，数组中所有的数都出现了M次，只有一种数出现了K次
+// 1 <= K < M
+// 返回这种数
 public class Code03_KM {
 
 	public static int test(int[] arr, int k, int m) {
@@ -15,12 +17,14 @@ public class Code03_KM {
 				map.put(num, 1);
 			}
 		}
+		int ans = 0;
 		for (int num : map.keySet()) {
 			if (map.get(num) == k) {
-				return num;
+				ans = num;
+				break;
 			}
 		}
-		return -1;
+		return ans;
 	}
 
 	public static HashMap<Integer, Integer> map = new HashMap<>();
@@ -41,24 +45,13 @@ public class Code03_KM {
 			}
 		}
 		int ans = 0;
+		// 如果这个出现了K次的数，就是0
+		// 那么下面代码中的 : ans |= (1 << i);
+		// 就不会发生
+		// 那么ans就会一直维持0，最后返回0，也是对的！
 		for (int i = 0; i < 32; i++) {
 			if (t[i] % m != 0) {
-				if (t[i] % m == k) {
-					ans |= (1 << i);
-				} else {
-					return -1;
-				}
-			}
-		}
-		if (ans == 0) {
-			int count = 0;
-			for (int num : arr) {
-				if (num == 0) {
-					count++;
-				}
-			}
-			if (count != k) {
-				return -1;
+				ans |= (1 << i);
 			}
 		}
 		return ans;
@@ -72,10 +65,29 @@ public class Code03_KM {
 		}
 	}
 
+	// 更简洁的写法
+	public static int km(int[] arr, int k, int m) {
+		int[] help = new int[32];
+		for (int num : arr) {
+			for (int i = 0; i < 32; i++) {
+				help[i] += (num >> i) & 1;
+			}
+		}
+		int ans = 0;
+		for (int i = 0; i < 32; i++) {
+			help[i] %= m;
+			if (help[i] != 0) {
+				ans |= 1 << i;
+			}
+		}
+		return ans;
+	}
+
+	// 为了测试
 	public static int[] randomArray(int maxKinds, int range, int k, int m) {
 		int ktimeNum = randomNumber(range);
 		// 真命天子出现的次数
-		int times = Math.random() < 0.5 ? k : ((int) (Math.random() * (m - 1)) + 1);
+		int times = k;
 		// 2
 		int numKinds = (int) (Math.random() * maxKinds) + 2;
 		// k * 1 + (numKinds - 1) * m
@@ -98,7 +110,6 @@ public class Code03_KM {
 				arr[index++] = curNum;
 			}
 		}
-		System.out.println(Arrays.toString(arr));
 		// arr 填好了
 		for (int i = 0; i < arr.length; i++) {
 			// i 位置的数，我想随机和j位置的数做交换
@@ -110,11 +121,13 @@ public class Code03_KM {
 		return arr;
 	}
 
+	// 为了测试
 	// [-range, +range]
 	public static int randomNumber(int range) {
-		return ((int) (Math.random() * range) + 1) - ((int) (Math.random() * range) + 1);
+		return (int) (Math.random() * (range + 1)) - (int) (Math.random() * (range + 1));
 	}
 
+	// 为了测试
 	public static void main(String[] args) {
 		int kinds = 5;
 		int range = 30;
@@ -133,17 +146,14 @@ public class Code03_KM {
 			int[] arr = randomArray(kinds, range, k, m);
 			int ans1 = test(arr, k, m);
 			int ans2 = onlyKTimes(arr, k, m);
-			System.out.println(ans1);
-			System.out.println(ans2);
-			if (ans1 != ans2) {
+			int ans3 = km(arr, k, m);
+			if (ans1 != ans2 || ans1 != ans3) {
 				System.out.println(ans1);
-				System.out.println(ans2);
+				System.out.println(ans3);
 				System.out.println("出错了！");
 			}
 		}
 		System.out.println("测试结束");
-
-
 	}
 
 }

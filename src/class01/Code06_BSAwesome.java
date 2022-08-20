@@ -2,9 +2,10 @@ package class01;
 
 public class Code06_BSAwesome {
 
+	// 课上的代码
 	public static int getLessIndex(int[] arr) {
 		if (arr == null || arr.length == 0) {
-			return -1; // no exist
+			return -1;
 		}
 		if (arr.length == 1 || arr[0] < arr[1]) {
 			return 0;
@@ -25,11 +26,51 @@ public class Code06_BSAwesome {
 				return mid;
 			}
 		}
-		// 这里返回left，是因为while循环中一直有两个数，且循环中每次都将left置为较小的
 		return left;
 	}
-	public static void main(String[] args) {
-		int[] arr = {2,3,4,2,3,4,21,3,4,32,1,2};
-		System.out.println(getLessIndex(arr));
+
+	// 验证得到的结果，是不是局部最小
+	public static boolean isRight(int[] arr, int index) {
+		if (arr.length <= 1) {
+			return true;
+		}
+		if (index == 0) {
+			return arr[index] < arr[index + 1];
+		}
+		if (index == arr.length - 1) {
+			return arr[index] < arr[index - 1];
+		}
+		return arr[index] < arr[index - 1] && arr[index] < arr[index + 1];
 	}
+
+	// 为了测试
+	// 生成相邻不相等的数组
+	public static int[] generateRandomArray(int maxSize, int maxValue) {
+		int[] arr = new int[(int) (Math.random() * maxSize) + 1];
+		arr[0] = (int) (Math.random() * maxValue) - (int) (Math.random() * maxValue);
+		for (int i = 1; i < arr.length; i++) {
+			do {
+				arr[i] = (int) (Math.random() * maxValue) - (int) (Math.random() * maxValue);
+			} while (arr[i] == arr[i - 1]);
+		}
+		return arr;
+	}
+
+	// 为了测试
+	public static void main(String[] args) {
+		int testTime = 500000;
+		int maxSize = 30;
+		int maxValue = 100;
+		System.out.println("测试开始");
+		for (int i = 0; i < testTime; i++) {
+			int[] arr = generateRandomArray(maxSize, maxValue);
+			int ans = getLessIndex(arr);
+			if (!isRight(arr, ans)) {
+				System.out.println("出错了！");
+				break;
+			}
+		}
+		System.out.println("测试结束");
+	}
+
 }
