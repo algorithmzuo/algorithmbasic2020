@@ -71,9 +71,6 @@ public class Code04_MoneyProblem {
 			sum += num;
 		}
 		long[][] dp = new long[d.length + 1][sum + 1];
-		for (int i = 0; i <= sum; i++) {
-			dp[0][i] = 0;
-		}
 		for (int cur = d.length - 1; cur >= 0; cur--) {
 			for (int hp = 0; hp <= sum; hp++) {
 				// 如果这种情况发生，那么这个hp必然是递归过程中不会出现的状态

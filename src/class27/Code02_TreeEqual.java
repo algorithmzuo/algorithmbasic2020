@@ -4,47 +4,19 @@ import java.util.ArrayList;
 
 public class Code02_TreeEqual {
 
-	public static class Node {
-		public int value;
-		public Node left;
-		public Node right;
+	public static class TreeNode {
+		public int val;
+		public TreeNode left;
+		public TreeNode right;
 
-		public Node(int v) {
-			value = v;
+		public TreeNode(int v) {
+			val = v;
 		}
 	}
 
-	public static boolean containsTree1(Node big, Node small) {
-		if (small == null) {
-			return true;
-		}
-		if (big == null) {
-			return false;
-		}
-		if (isSameValueStructure(big, small)) {
-			return true;
-		}
-		return containsTree1(big.left, small) || containsTree1(big.right, small);
-	}
-
-	public static boolean isSameValueStructure(Node head1, Node head2) {
-		if (head1 == null && head2 != null) {
-			return false;
-		}
-		if (head1 != null && head2 == null) {
-			return false;
-		}
-		if (head1 == null && head2 == null) {
-			return true;
-		}
-		if (head1.value != head2.value) {
-			return false;
-		}
-		return isSameValueStructure(head1.left, head2.left) 
-				&& isSameValueStructure(head1.right, head2.right);
-	}
-
-	public static boolean containsTree2(Node big, Node small) {
+	// 测试链接 : https://leetcode.cn/problems/subtree-of-another-tree/
+	// 提交如下代码可以直接通过
+	public static boolean isSubtree(TreeNode big, TreeNode small) {
 		if (small == null) {
 			return true;
 		}
@@ -65,17 +37,17 @@ public class Code02_TreeEqual {
 		return getIndexOf(str, match) != -1;
 	}
 
-	public static ArrayList<String> preSerial(Node head) {
+	public static ArrayList<String> preSerial(TreeNode head) {
 		ArrayList<String> ans = new ArrayList<>();
 		pres(head, ans);
 		return ans;
 	}
 
-	public static void pres(Node head, ArrayList<String> ans) {
+	public static void pres(TreeNode head, ArrayList<String> ans) {
 		if (head == null) {
 			ans.add(null);
 		} else {
-			ans.add(String.valueOf(head.value));
+			ans.add(String.valueOf(head.val));
 			pres(head.left, ans);
 			pres(head.right, ans);
 		}
@@ -132,41 +104,6 @@ public class Code02_TreeEqual {
 				return a.equals(b);
 			}
 		}
-	}
-
-	// for test
-	public static Node generateRandomBST(int maxLevel, int maxValue) {
-		return generate(1, maxLevel, maxValue);
-	}
-
-	// for test
-	public static Node generate(int level, int maxLevel, int maxValue) {
-		if (level > maxLevel || Math.random() < 0.5) {
-			return null;
-		}
-		Node head = new Node((int) (Math.random() * maxValue));
-		head.left = generate(level + 1, maxLevel, maxValue);
-		head.right = generate(level + 1, maxLevel, maxValue);
-		return head;
-	}
-
-	public static void main(String[] args) {
-		int bigTreeLevel = 7;
-		int smallTreeLevel = 4;
-		int nodeMaxValue = 5;
-		int testTimes = 100000;
-		System.out.println("test begin");
-		for (int i = 0; i < testTimes; i++) {
-			Node big = generateRandomBST(bigTreeLevel, nodeMaxValue);
-			Node small = generateRandomBST(smallTreeLevel, nodeMaxValue);
-			boolean ans1 = containsTree1(big, small);
-			boolean ans2 = containsTree2(big, small);
-			if (ans1 != ans2) {
-				System.out.println("Oops!");
-			}
-		}
-		System.out.println("test finish!");
-
 	}
 
 }
