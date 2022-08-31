@@ -1,7 +1,15 @@
 package class21;
 
+/**
+ * 给定一个而为数组，一个人必须从左上角出发，一个人必须从右下角沿途只可以向下或者向右走，沿途的数字都累加就是距离累加喝返回最小距离累加和
+ */
 public class Code01_MinPathSum {
 
+	/**
+	 * 在这个表格中，通过比较每个格子的上和左，确定最小的路线，新建一个二维数组，用来存放0，0到i，j格子的最小路径，最后返回最右下角的值
+	 * @param m
+	 * @return
+	 */
 	public static int minPathSum1(int[][] m) {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
 			return 0;
@@ -24,6 +32,9 @@ public class Code01_MinPathSum {
 		return dp[row - 1][col - 1];
 	}
 
+	// 优化，这里将原来n*n表格的数据，用一位数组就表示了，原理是借助依赖关系，在此题中，除了0行，其他行依赖上一行，除了0列，其他列依赖上一列
+	// 因此之类有优化的空间
+	// 空间压缩技巧
 	public static int minPathSum2(int[][] m) {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
 			return 0;
@@ -35,9 +46,14 @@ public class Code01_MinPathSum {
 		for (int j = 1; j < col; j++) {
 			dp[j] = dp[j - 1] + m[0][j];
 		}
+		// dp[0][...] -> arr
+		// arr[0] -> dp[上一行][0]
+		// dp[这一行][0]
 		for (int i = 1; i < row; i++) {
 			dp[0] += m[i][0];
 			for (int j = 1; j < col; j++) {
+				// arr[j-1] -> dp[这一行][j-1]左侧的值
+				// arr[j] -> dp[上一行][j]上侧的值
 				dp[j] = Math.min(dp[j - 1], dp[j]) + m[i][j];
 			}
 		}

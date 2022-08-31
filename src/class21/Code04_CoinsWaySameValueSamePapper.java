@@ -3,6 +3,10 @@ package class21;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+/**
+ * arr货币数组，给定aim，每个值都是一个张货币，值相同的货币认为是一种货币，返回组成aim的方法数
+ * 上一题是无限张可以取*，这题有限制因此要取*减去多余的那个
+ */
 public class Code04_CoinsWaySameValueSamePapper {
 
 	public static class Info {
@@ -90,10 +94,13 @@ public class Code04_CoinsWaySameValueSamePapper {
 		dp[N][0] = 1;
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
+				// 获取下面的值
 				dp[index][rest] = dp[index + 1][rest];
+				// 看下左边的位置
 				if (rest - coins[index] >= 0) {
 					dp[index][rest] += dp[index][rest - coins[index]];
 				}
+				// 看下是否重复了，rest加了极限张数+1还没有越界，那么多出的那个1就是多算的
 				if (rest - coins[index] * (zhangs[index] + 1) >= 0) {
 					dp[index][rest] -= dp[index + 1][rest - coins[index] * (zhangs[index] + 1)];
 				}

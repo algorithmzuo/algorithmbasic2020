@@ -1,5 +1,10 @@
 package class21;
 
+/**
+ * 从记忆话搜索转严格依赖
+ * arr是货币数组，其中的值都是正数，再给定一个正书aim。每个值都认为是一个货币，即便值相同的货币也认为每一张都是不同的，返回组成aim的方法数
+ * 从左往右模型
+ */
 public class Code02_CoinsWayEveryPaperDifferent {
 
 	public static int coinWays(int[] arr, int aim) {

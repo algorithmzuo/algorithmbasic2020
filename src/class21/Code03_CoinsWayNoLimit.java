@@ -1,5 +1,8 @@
 package class21;
 
+/**
+ * 从左往右尝试模型
+ */
 public class Code03_CoinsWayNoLimit {
 
 	public static int coinsWay(int[] arr, int aim) {
@@ -31,6 +34,7 @@ public class Code03_CoinsWayNoLimit {
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				int ways = 0;
+				// 枚举行为，有优化空间
 				for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
 					ways += dp[index + 1][rest - (zhang * arr[index])];
 				}
@@ -49,6 +53,7 @@ public class Code03_CoinsWayNoLimit {
 		dp[N][0] = 1;
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
+				// 这里通过观察严格依赖表格，找到优化空间
 				dp[index][rest] = dp[index + 1][rest];
 				if (rest - arr[index] >= 0) {
 					dp[index][rest] += dp[index][rest - arr[index]];
