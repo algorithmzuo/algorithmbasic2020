@@ -1,5 +1,9 @@
 package class19;
 
+/**
+ * 规定1和A对应，2和B对应。。。。。26和Z对应
+ * 给定一个只有数字字符组成的字符串str，返回有多少中转化的结果
+ */
 public class Code02_ConvertToLetterString {
 
 	// str只含有数字字符0~9
@@ -14,6 +18,7 @@ public class Code02_ConvertToLetterString {
 	// str[0..i-1]转化无需过问
 	// str[i.....]去转化，返回有多少种转化方法
 	public static int process(char[] str, int i) {
+		// 当字符串结束之后，那么就意味着前面的转化是成功的，所以这里需要返回1
 		if (i == str.length) {
 			return 1;
 		}
