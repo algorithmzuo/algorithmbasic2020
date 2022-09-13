@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Code03_PrintAllSubsquences {
+public class Code03_PrintAllSubsequences {
 
 	// s -> "abc" ->
 	public static List<String> subs(String s) {
