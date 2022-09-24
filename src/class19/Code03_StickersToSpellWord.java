@@ -2,6 +2,10 @@ package class19;
 
 import java.util.HashMap;
 
+/**
+ * 给定一个字符串str，给定一个字符串类型的数组str，出现的字符都是小英文字，arr中一个字符代表一个贴纸，可以把字符剪开使用，目的是拼出str来
+ * 返回需要至少多少张贴纸
+ */
 // 本题测试链接：https://leetcode.com/problems/stickers-to-spell-word
 public class Code03_StickersToSpellWord {
 
@@ -84,6 +88,7 @@ public class Code03_StickersToSpellWord {
 			// 尝试第一张贴纸是谁
 			int[] sticker = stickers[i];
 			// 最关键的优化(重要的剪枝!这一步也是贪心!)
+			// 这里做的优化是，先尝试含有第一个字符的卡片
 			if (sticker[target[0] - 'a'] > 0) {
 				StringBuilder builder = new StringBuilder();
 				for (int j = 0; j < 26; j++) {
@@ -116,6 +121,13 @@ public class Code03_StickersToSpellWord {
 		return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
 
+	/**
+	 * 这里就没有必要做严格表结果，因为变量是一个字符串，这个可变范围太大，直接傻缓存就可以了
+	 * @param stickers
+	 * @param t
+	 * @param dp
+	 * @return
+	 */
 	public static int process3(int[][] stickers, String t, HashMap<String, Integer> dp) {
 		if (dp.containsKey(t)) {
 			return dp.get(t);

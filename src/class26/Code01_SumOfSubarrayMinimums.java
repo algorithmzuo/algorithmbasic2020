@@ -78,6 +78,7 @@ public class Code01_SumOfSubarrayMinimums {
 			long start = i - left[i];
 			long end = right[i] - i;
 			ans += start * end * (long) arr[i];
+			// 答案很大，需要模之后返回
 			ans %= 1000000007;
 		}
 		return (int) ans;
