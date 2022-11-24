@@ -131,7 +131,7 @@ public class Code04_MinCoinsOnePaper {
 		for (int i = N - 1; i >= 0; i--) {
 			for (int mod = 0; mod < Math.min(aim + 1, c[i]); mod++) {
 				// 当前面值 X
-				// mod  mod + x   mod + 2*x   mod + 3 * x
+				// mod mod + x mod + 2*x mod + 3 * x
 				LinkedList<Integer> w = new LinkedList<>();
 				w.add(mod);
 				dp[i][mod] = dp[i + 1][mod];
@@ -145,7 +145,11 @@ public class Code04_MinCoinsOnePaper {
 					if (w.peekFirst() == overdue) {
 						w.pollFirst();
 					}
-					dp[i][r] = dp[i + 1][w.peekFirst()] + compensate(w.peekFirst(), r, c[i]);
+					if (dp[i + 1][w.peekFirst()] == Integer.MAX_VALUE) {
+						dp[i][r] = Integer.MAX_VALUE;
+					} else {
+						dp[i][r] = dp[i + 1][w.peekFirst()] + compensate(w.peekFirst(), r, c[i]);
+					}
 				}
 			}
 		}
