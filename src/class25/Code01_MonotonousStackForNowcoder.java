@@ -23,7 +23,7 @@ public class Code01_MonotonousStackForNowcoder {
 	//          位置  0  1  2  3  4  5  6  7
 	// 如果位置依次压栈，
 	// stack1中的记录是（位置） : 0 1 2 3 4 5 6 7
-	// stack1中的记录是（位置） : 2 4 7
+	// stack2中的记录是（位置） : 2 4 7
 	public static int[] stack1 = new int[1000000];
 	public static int[] stack2 = new int[1000000];
 
