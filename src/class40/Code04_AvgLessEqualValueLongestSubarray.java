@@ -24,28 +24,45 @@ public class Code04_AvgLessEqualValueLongestSubarray {
 	}
 
 	// 想实现的解法2，时间复杂度O(N*logN)
+	// 题目要求平均值<=v的最长子数组。
+	// 那么我们可以转化一下，
+	// 比如数组如下：7，4，3，9，6
+	// v=5
+	// 我们可以让每个数字减去5，得到如下转化数组：
+	// 2，-1，-2，4，1
+	// 原数组平均值<=5的最长子数组，就等同于：
+	// 累加和<=0的最长子数组。
+	// 想通这个，就好办了。
+	// 然后就是在转化数组里求：
+	// 子数组必须以i结尾的情况下，累加和<=0的最长子数组。
+	// 代码中的sum，就是每一步从原始数组的值先转化，然后把转化后的值累加起来的前缀和。
+	// 比如，转化数组
+	// 2，-1，-2，4，1
+	// sum依次为 : 2、1、-1、3、4
+	// 那么，比如当你来到一个位置i，
+	// sum就是0...i的转化前缀和，假设是100
+	// 那么就找>=100且距离100最近的转化前缀和最早出现在哪。
 	public static int ways2(int[] arr, int v) {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
-		TreeMap<Integer, Integer> origins = new TreeMap<>();
-		int ans = 0;
-		int modify = 0;
 		for (int i = 0; i < arr.length; i++) {
-			int p1 = arr[i] <= v ? 1 : 0;
-			int p2 = 0;
-			int querry = -arr[i] - modify;
-			if (origins.floorKey(querry) != null) {
-				p2 = i - origins.get(origins.floorKey(querry)) + 1;
-			}
-			ans = Math.max(ans, Math.max(p1, p2));
-			int curOrigin = -modify - v;
-			if (origins.floorKey(curOrigin) == null) {
-				origins.put(curOrigin, i);
-			}
-			modify += arr[i] - v;
+			arr[i] -= v;
 		}
-		return ans;
+		TreeMap<Integer, Integer> sortedMap = new TreeMap<>();
+		sortedMap.put(0, -1);
+		int sum = 0;
+		int len = 0;
+		for (int i = 0; i < arr.length; i++) {
+			sum += arr[i];
+			Integer ceiling = sortedMap.ceilingKey(sum);
+			if (ceiling != null) {
+				len = Math.max(len, i - sortedMap.get(ceiling));
+			} else {
+				sortedMap.put(sum, i);
+			}
+		}
+		return len;
 	}
 
 	// 想实现的解法3，时间复杂度O(N)
