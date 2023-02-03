@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+// 课上讲的并查集实现
+// 请务必看补充的Code06_UnionFind
+// 那是数组实现的并查集，并且有测试链接
+// 可以直接通过
+// 这个文件的并查集是用map实现的
+// 但是笔试或者平时用的并查集一律用数组实现
+// 所以Code06_UnionFind更具实战意义
+// 一定要看！
 public class Code05_UnionFind {
 
 	public static class Node<V> {
