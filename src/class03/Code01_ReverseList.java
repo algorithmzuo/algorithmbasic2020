@@ -208,7 +208,7 @@ public class Code01_ReverseList {
 
 			DoubleNode node4 = generateRandomDoubleList(len, value);
 			List<Integer> list4 = getDoubleListOriginOrder(node4);
-			node4 = reverseDoubleList(node4);
+			node4 = testReverseDoubleList(node4);
 			if (!checkDoubleListReverse(list4, node4)) {
 				System.out.println("Oops4!");
 			}
