@@ -4,6 +4,7 @@ package class46;
 public class Code01_BurstBalloons {
 
 	public static int maxCoins0(int[] arr) {
+		// 多加俩元素防止数组过界
 		// [3,2,1,3]
 		// [1,3,2,1,3,1]
 		int N = arr.length;

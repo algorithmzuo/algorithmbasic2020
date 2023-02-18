@@ -51,6 +51,15 @@ public class Code02_RemoveBoxes {
 		return ans;
 	}
 
+	/**
+	 * 这个发放相对于上一个没有根本的不同，主要优化了下常数时间上的值，减少了递归次数
+	 * @param boxes
+	 * @param L
+	 * @param R
+	 * @param K
+	 * @param dp
+	 * @return
+	 */
 	public static int process2(int[] boxes, int L, int R, int K, int[][][] dp) {
 		if (L > R) {
 			return 0;

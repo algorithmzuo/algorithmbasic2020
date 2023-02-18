@@ -1,5 +1,9 @@
 package class45;
 
+/**
+ * DC3使用技巧
+ * 字典序
+ */
 public class Code01_InsertS2MakeMostAlphabeticalOrder {
 
 	// 暴力方法

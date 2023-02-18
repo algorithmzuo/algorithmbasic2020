@@ -38,14 +38,6 @@ public class Code01_Swap {
 		
 		System.out.println(arr[i] + " , " + arr[j]);
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		System.out.println(arr[0]);
 		System.out.println(arr[2]);
 		

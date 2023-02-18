@@ -1,16 +1,20 @@
 package class44;
 
+/**
+ * DC3算法的地位
+ *
+ */
 public class DC3 {
 
-	public int[] sa;
+	public int[] sa;// 后缀字符串排名和位置
 
-	public int[] rank;
+	public int[] rank;// 对sa的行进行重排列
 
 	public int[] height;
 
 	// 构造方法的约定:
 	// 数组叫nums，如果你是字符串，请转成整型数组nums
-	// 数组中，最小值>=1
+	// 数组中，最小值>=1，因为这里会对数组最后的值进行补0，所以这里需要>=1
 	// 如果不满足，处理成满足的，也不会影响使用
 	// max, nums里面最大值是多少
 	public DC3(int[] nums, int max) {
