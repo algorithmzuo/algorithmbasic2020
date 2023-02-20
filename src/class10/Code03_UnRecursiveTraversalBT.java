@@ -18,7 +18,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.print("pre-order: ");
 		if (head != null) {
 			Stack<Node> stack = new Stack<Node>();
-			stack.add(head);
+			stack.push(head);
 			while (!stack.isEmpty()) {
 				head = stack.pop();
 				System.out.print(head.value + " ");
