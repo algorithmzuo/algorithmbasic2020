@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 // OJ链接：https://www.lintcode.com/problem/topological-sorting
-public class Code03_TopologicalOrderBFS {
+public class Code03_TopologicalOrderBFS1 {
 
 	// 不要提交这个类
 	public static class DirectedGraphNode {
