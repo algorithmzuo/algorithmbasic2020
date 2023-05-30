@@ -19,7 +19,7 @@ public class Code05_ShellSort {
 		// 然后再来到每个数，每次跳1步往前交换，直到往前1步的数<=当前的数，停止
 		int[] step = { 5, 2, 1 };
 		for (int s = 0; s < step.length; s++) {
-			for (int i = 0; i < arr.length; i++) {
+			for (int i = step[s]; i < arr.length; i++) {
 				for (int j = i - step[s]; j >= 0 && arr[j] > arr[j + step[s]]; j -= step[s]) {
 					swap(arr, j, j + step[s]);
 				}
