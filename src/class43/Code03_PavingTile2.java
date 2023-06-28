@@ -6,9 +6,6 @@ package class43;
 // 请同学们务必参考如下代码中关于输入、输出的处理
 // 这是输入输出处理效率很高的写法
 // 提交以下的code，提交时请把类名改成"Main"
-// 本文件是轮廓线dp的版本，轮廓线dp的讲解在每周直播课 : 
-// 2022年9月第4周的课，看了就能懂
-// 这是很难的一类题型，不做要求，大厂几乎不考
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +13,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 
+// 本文件是轮廓线dp的版本，轮廓线dp的讲解在每周直播课 : 
+// 2022年9月第4周的课，看了就能懂
+// 这是很难的一类题型，不做要求，大厂几乎不考
 public class Code03_PavingTile2 {
 
 	public static void main(String[] args) throws IOException {
